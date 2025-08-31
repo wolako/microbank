@@ -14,7 +14,7 @@ async function seedAdmin() {
     if (rows.length === 0) {
       await db.query(`
         INSERT INTO users (id, username, email, firstName, lastName, password_hash, role, is_verified, phone)
-        VALUES ($1, $2, $3, 'Super', 'Admin', $4, 'admin', true)
+        VALUES ($1, $2, $3, 'Super', 'Admin', $4, 'admin', true, $5)
       `, [adminId, adminUsername, 'admin@example.com', hashedPassword, 90000000]);
 
       await db.query(`
