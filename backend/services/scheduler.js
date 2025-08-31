@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 const db = require('../config/db');
-const Notification = require('../models/notification');
+const Notification = require('../models/Notification');
 const SMSService = require('./sms');
 
 async function checkLoanDueDates() {
