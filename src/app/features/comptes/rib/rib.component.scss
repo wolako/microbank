@@ -1,0 +1,90 @@
+@import '../../../../assets/variables';
+
+.rib-container {
+  background: $color-light-card-bg;
+  color: $text-primary;
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  max-width: 600px;
+  margin: auto;
+  transition: background 0.4s ease, color 0.4s ease;
+
+  h2 { color: $primary-color; margin-bottom: 1.5rem; }
+
+  p {
+    margin-bottom: 1rem;
+    strong { color: $text-primary; }
+  }
+
+  button.btn {
+    transition: all 0.3s ease;
+    &.btn-outline-primary { color: $primary-color; border-color: $primary-color; }
+    &.btn-outline-info { color: $primary-color; border-color: $primary-color; }
+    &.btn-success { background-color: $primary-color; color: $text-light; border: none; }
+
+    &:hover {
+      &.btn-outline-primary, &.btn-outline-info { background-color: $primary-color; color: $text-light; }
+      &.btn-success { opacity: 0.85; }
+    }
+  }
+}
+
+/* Modal backdrop */
+.modal-backdrop-custom {
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex; justify-content: center; align-items: center;
+  z-index: 1050;
+  transition: background-color 0.3s ease;
+}
+
+.fade-in-backdrop { background-color: rgba(0,0,0,0.5); }
+.fade-out-backdrop { background-color: rgba(0,0,0,0); }
+
+/* Modal content */
+.modal-custom {
+  background: $color-light-card-bg;
+  color: $text-primary;
+  border-radius: 0.75rem;
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.2);
+  padding: 1.5rem;
+  width: 100%;
+  max-width: 400px;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.4s ease, color 0.4s ease;
+}
+
+.fade-in { opacity: 1; transform: translateY(0); }
+.fade-out { opacity: 0; transform: translateY(-20px); }
+
+.modal-header { border-bottom: none; padding-bottom: 0.5rem; }
+.modal-body { padding-top: 0.5rem; }
+
+/* ===== Dark Mode ===== */
+:host-context(.dark-mode) {
+  .rib-container {
+    background: $color-dark-card-bg;
+    color: $color-dark-section-text;
+
+    h2 { color: $primary-color; }
+    p { color: $color-dark-section-text; strong { color: $color-dark-section-text; } }
+
+    button.btn {
+      &.btn-outline-primary { color: $primary-color; border-color: $primary-color; }
+      &.btn-outline-info { color: $primary-color; border-color: $primary-color; }
+      &.btn-success { background-color: $primary-color; color: $text-light; border: none; }
+
+      &:hover {
+        &.btn-outline-primary, &.btn-outline-info { background-color: $primary-color; color: $text-light; }
+        &.btn-success { opacity: 0.85; }
+      }
+    }
+  }
+
+  .modal-custom {
+    background: $color-dark-card-bg;
+    color: $color-dark-section-text;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.4);
+  }
+}

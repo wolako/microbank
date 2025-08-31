@@ -1,0 +1,61 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.container {
+  padding: 1rem;
+}
+
+.card {
+  border-radius: 0.5rem;
+  transition: box-shadow 0.3s;
+}
+
+.card:hover {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.card-text {
+  font-size: 1rem;
+}
+
+.chart-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  width: 100%;
+  overflow-x: auto;
+}
+
+ngx-charts-pie-chart {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+// ✅ Responsive Layout
+@media (max-width: 768px) {
+  .card-title {
+    font-size: 1rem;
+  }
+
+  .card-text {
+    font-size: 0.9rem;
+  }
+
+  ngx-charts-pie-chart {
+    min-width: 280px;
+  }
+}

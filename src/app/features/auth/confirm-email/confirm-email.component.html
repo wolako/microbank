@@ -1,0 +1,16 @@
+<div class="container mt-5 text-center">
+  <ng-container *ngIf="isLoading">
+    <p>⏳ Vérification en cours...</p>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoading && success">
+    <h2>✅ Email confirmé avec succès</h2>
+    <p>Vous allez être redirigé vers la page de connexion...</p>
+  </ng-container>
+
+  <ng-container *ngIf="!isLoading && !success">
+    <h2>❌ Lien invalide ou expiré</h2>
+    <p>Veuillez vérifier le lien ou demander un nouvel email de confirmation.</p>
+    <a routerLink="/" class="btn btn-secondary mt-3">Retour à l’accueil</a>
+  </ng-container>
+</div>

@@ -1,0 +1,27 @@
+# Angular / Frontend
+/dist
+/.angular/cache
+/node_modules
+/src/environments/*.ts   # si tu veux ignorer les environnements locaux
+
+# Backend
+/site-microfinance/backend/node_modules
+/site-microfinance/backend/dist
+backend/.env
+
+# Logs et fichiers temporaires
+npm-debug.log*
+yarn-error.log*
+*.log
+
+# IDE / Editors
+.idea/
+.vscode/
+*.sublime-workspace
+*.code-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+backend/.env
+backend/.env

@@ -1,0 +1,161 @@
+@import '../../../../assets/variables';
+
+.auth-container {
+  min-height: 100vh;
+  @include flex-center;
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.35s ease, color 0.35s ease;
+
+  // Dark mode (hérité via :host-context)
+  :host-context(.dark-mode) & {
+    background-color: $dark-bg;
+    color: $color-dark-section-text;
+  }
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+  padding: $spacing-unit * 2;
+  border-radius: $border-radius;
+  background-color: $light-card-bg;
+  box-shadow: $box-shadow;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  :host-context(.dark-mode) & {
+    background-color: $dark-card-bg;
+    color: $color-dark-section-text;
+  }
+
+  .auth-header {
+    margin-bottom: $spacing-unit * 2;
+
+    .logo {
+      max-width: 90px;
+      margin-bottom: $spacing-half;
+    }
+
+    h2 {
+      margin: 0;
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: $text-primary; // <-- UTILISE COULEUR DE TEXTE
+      transition: color 0.3s ease;
+
+      :host-context(.dark-mode) & {
+        color: $color-dark-section-text; // <-- S'ADAPTE AU MODE SOMBRE
+      }
+    }
+  }
+
+  .auth-form {
+    .form-group {
+      display: flex;
+      flex-direction: column;
+
+      label {
+        font-weight: 600;
+        margin-bottom: $spacing-quarter;
+        color: $text-primary;
+        transition: color 0.3s ease;
+
+        :host-context(.dark-mode) & {
+          color: $color-dark-section-text;
+        }
+      }
+
+      input {
+        padding: $spacing-half $spacing-unit;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        font-size: 1rem;
+        background-color: transparent;
+        color: inherit;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: $color-light-primary;
+          box-shadow: 0 0 0 4px rgba($color-light-primary, 0.08);
+        }
+
+        :host-context(.dark-mode) & {
+          border-color: darken($dark-card-bg, 6%);
+          color: $color-dark-section-text;
+
+          &:focus {
+            border-color: $color-dark-primary;
+            box-shadow: 0 0 0 4px rgba($color-dark-primary, 0.08);
+          }
+        }
+      }
+    }
+
+    .forgot-password {
+      font-size: 0.9rem;
+      color: $text-primary; // <-- couleur texte normale
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover { text-decoration: underline; }
+
+      :host-context(.dark-mode) & {
+        color: $color-dark-section-text; // <-- s'adapte au sombre
+      }
+    }
+
+    .btn.btn-primary {
+      margin-top: $spacing-unit;
+      padding: $spacing-half $spacing-unit;
+      background-color: $color-light-primary;
+      color: $color-light-btn-text;
+      border: none;
+      border-radius: $border-radius;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.2s ease;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-3px);
+        background-color: $primary-light;
+      }
+
+      &:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+
+      :host-context(.dark-mode) & {
+        background-color: $color-dark-primary;
+        color: $color-dark-btn-text;
+
+        &:hover:not(:disabled) {
+          background-color: lighten($color-dark-primary, 6%);
+        }
+      }
+    }
+  }
+
+  .auth-footer {
+    p {
+      font-size: 0.95rem;
+      color: $text-secondary;
+      transition: color 0.3s ease;
+
+      :host-context(.dark-mode) & {
+        color: $color-dark-section-text;
+      }
+
+      a {
+        color: $text-primary; // <-- couleur de texte normale
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.2s ease;
+
+        &:hover { text-decoration: underline; }
+
+        :host-context(.dark-mode) & {
+          color: $color-dark-section-text; // <-- s'adapte au sombre
+        }
+      }
+    }
+  }
+}

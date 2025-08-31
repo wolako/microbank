@@ -1,0 +1,23 @@
+.container {
+  margin-top: 2rem;
+
+  h3 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  table {
+    th, td {
+      vertical-align: middle;
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      padding: 4px 10px;
+    }
+
+    .btn {
+      font-size: 0.75rem;
+    }
+  }
+}

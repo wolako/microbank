@@ -1,0 +1,167 @@
+<div class="loan-details-container" *ngIf="!loading && loan">
+  <h2>Détails du prêt</h2>
+
+  <div class="summary">
+    <p><strong>Montant :</strong> {{ loan.amount | currencyXof }}</p>
+    <p><strong>Durée :</strong> {{ loan.termMonths }} mois</p>
+    <p><strong>Taux d'intérêt :</strong> {{ loan.interestRate }}%</p>
+    <p><strong>Statut :</strong> 
+      <span [ngClass]="{
+        'status-paid': loan.status === 'paid',
+        'status-active': loan.status !== 'paid'
+      }">{{ loan.status }}</span>
+    </p>
+    <p><strong>Mensualité :</strong> {{ loan.monthlyPayment | currencyXof }}</p>
+    <p><strong>Montant remboursé :</strong> {{ loan.totalPaid | currencyXof }}</p>
+    <p><strong>Reste à payer :</strong> {{ loan.remainingAmount | currencyXof }}</p>
+    <p><strong>Prochaine échéance :</strong> {{ loan.nextPaymentDate | date }}</p>
+  </div>
+
+  <h3>Échéancier</h3>
+  <table class="table table-bordered" *ngIf="loan.installments?.length">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Montant</th>
+        <th>Date d'échéance</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let i of loan.installments; let index = index">
+        <td>{{ index + 1 }}</td>
+        <td>{{ i.amount | currencyXof }}</td>
+        <td>{{ i.due_date | date }}</td>
+        <td>
+          <span [ngClass]="{
+            'status-paid': i.status === 'paid',
+            'status-pending': i.status === 'pending',
+            'status-late': i.status === 'late'
+          }">{{ i.status }}</span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3>Effectuer un paiement</h3>
+  <form [formGroup]="paymentForm" (ngSubmit)="repayLoan()" class="payment-form mb-4" novalidate>
+    
+    <!-- Montant à payer désactivé -->
+    <div class="mb-3">
+      <label for="amount" class="form-label">Montant à payer (XOF)</label>
+      <input
+        id="amount"
+        type="number"
+        formControlName="amount"
+        class="form-control"
+        readonly
+      />
+      <small class="form-text text-muted">
+        Montant correspondant à la prochaine échéance. Mise à jour automatique après paiement.
+      </small>
+
+      <div class="invalid-feedback" *ngIf="paymentForm.get('amount')?.hasError('required')">
+        Le montant est requis.
+      </div>
+      <div class="invalid-feedback" *ngIf="paymentForm.get('amount')?.hasError('min')">
+        Le montant doit être au moins 1000 XOF.
+      </div>
+      <div class="invalid-feedback" *ngIf="paymentForm.get('amount')?.hasError('max')">
+        Le montant ne peut pas dépasser le reste à payer.
+      </div>
+    </div>
+
+
+    <div class="mb-3">
+      <label for="method" class="form-label">Méthode de paiement</label>
+      <select
+        id="method"
+        formControlName="method"
+        class="form-select"
+      >
+        <option value="internal">Compte interne</option>
+        <option value="card">Carte bancaire</option>
+        <option value="mobile_money">Mobile Money</option>
+      </select>
+    </div>
+
+    <!-- Champs Mobile Money -->
+    <div *ngIf="paymentForm.get('method')?.value === 'mobile_money'" class="mb-3">
+      <label for="phone" class="form-label">Numéro Mobile Money</label>
+      <input
+        id="phone"
+        type="tel"
+        formControlName="phone"
+        class="form-control"
+        placeholder="+228 90 00 00 00"
+        [class.is-invalid]="paymentForm.get('phone')?.invalid && paymentForm.get('phone')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="paymentForm.get('phone')?.hasError('required')">Le numéro Mobile Money est requis.</div>
+      <div class="invalid-feedback" *ngIf="paymentForm.get('phone')?.hasError('pattern')">Format du numéro invalide.</div>
+    </div>
+
+    <!-- Champs Carte Bancaire -->
+    <div *ngIf="paymentForm.get('method')?.value === 'card'">
+      <div class="mb-3">
+        <label for="cardNumber" class="form-label">Numéro de carte</label>
+        <input
+          id="cardNumber"
+          type="text"
+          formControlName="cardNumber"
+          maxlength="16"
+          class="form-control"
+          [class.is-invalid]="paymentForm.get('cardNumber')?.invalid && paymentForm.get('cardNumber')?.touched"
+        />
+        <div class="invalid-feedback" *ngIf="paymentForm.get('cardNumber')?.hasError('required')">Le numéro de carte est requis.</div>
+        <div class="invalid-feedback" *ngIf="paymentForm.get('cardNumber')?.hasError('pattern')">Le numéro doit contenir 16 chiffres.</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="cardExpiry" class="form-label">Date d'expiration (MM/AA)</label>
+        <input
+          id="cardExpiry"
+          type="text"
+          formControlName="cardExpiry"
+          maxlength="5"
+          placeholder="MM/AA"
+          class="form-control"
+          [class.is-invalid]="paymentForm.get('cardExpiry')?.invalid && paymentForm.get('cardExpiry')?.touched"
+        />
+        <div class="invalid-feedback" *ngIf="paymentForm.get('cardExpiry')?.hasError('required')">La date d'expiration est requise.</div>
+        <div class="invalid-feedback" *ngIf="paymentForm.get('cardExpiry')?.hasError('pattern')">Format invalide (MM/AA).</div>
+      </div>
+
+      <div class="mb-3">
+        <label for="cardCvc" class="form-label">Code CVC</label>
+        <input
+          id="cardCvc"
+          type="text"
+          formControlName="cardCvc"
+          maxlength="4"
+          class="form-control"
+          [class.is-invalid]="paymentForm.get('cardCvc')?.invalid && paymentForm.get('cardCvc')?.touched"
+        />
+        <div class="invalid-feedback" *ngIf="paymentForm.get('cardCvc')?.hasError('required')">Le code CVC est requis.</div>
+        <div class="invalid-feedback" *ngIf="paymentForm.get('cardCvc')?.hasError('pattern')">Code CVC invalide.</div>
+      </div>
+    </div>
+
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="isSubmitting || paymentForm.invalid"
+    >
+      {{ isSubmitting ? 'Paiement en cours...' : 'Payer' }}
+    </button>
+  </form>
+
+  <div *ngIf="paymentSuccess" class="alert alert-success">
+    {{ paymentSuccess }}
+  </div>
+  <div *ngIf="paymentError" class="alert alert-danger">
+    {{ paymentError }}
+  </div>
+</div>
+
+<div *ngIf="loading" class="text-center">Chargement...</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>

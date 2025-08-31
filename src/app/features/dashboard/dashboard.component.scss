@@ -1,0 +1,502 @@
+@import '../../../assets/variables';
+
+// ================================
+// Mixins utiles
+// ================================
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin card-style($bg: $dark-card-bg) {
+  background: $bg;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+// Texte dynamique selon le thème
+@mixin text-color($light, $dark) {
+  color: $primary-light;
+  body.light-mode & {
+    color: $primary-dark;
+  }
+}
+
+// ================================
+// Base styles
+// ================================
+body {
+  background-color: $dark-bg;
+  color: $text-light;
+  transition: $transition;
+}
+
+body.light-mode {
+  background-color: $light-bg;
+  color: $text-dark;
+}
+
+// ================================
+// Dashboard Container
+// ================================
+.dashboard-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  // Header
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      @include text-color($text-dark, $text-light);
+      font-weight: 600;
+      margin: 0;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      span {
+        @include text-color($text-dark, $text-light);
+      }
+
+      .avatar {
+        @include flex-center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, $primary-color, $secondary-color);
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+      }
+    }
+  }
+
+  // Alert
+  .alert {
+    @include card-style($dark-card-bg);
+    background-color: rgba($error-color, 0.2);
+    border-left: 4px solid $error-color;
+    @include text-color(lighten($error-color, 10%), lighten($error-color, 30%));
+    margin-bottom: 2rem;
+  }
+  body.light-mode .alert {
+    background-color: rgba($error-color, 0.1);
+  }
+
+  // Bank Access
+  .bank-access {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    .btn {
+      margin: 0;
+    }
+  }
+
+  // Stats Grid
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+
+    .stat-card {
+      @include card-style;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: transform 0.3s ease;
+
+      &:hover {
+        transform: translateY(-5px);
+      }
+
+      .stat-icon {
+        @include flex-center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: rgba($primary-color, 0.2);
+        color: $primary-color;
+        font-size: 1.5rem;
+      }
+
+      .stat-content {
+        h3 {
+          @include text-color($text-dark, $text-light);
+          margin: 0;
+          font-size: 1.5rem;
+        }
+
+        p {
+          @include text-color($text-dark, $text-light);
+          margin: 0.25rem 0 0;
+          font-size: 0.9rem;
+        }
+      }
+    }
+  }
+
+  // Current Loan Summary
+  .current-loan-summary {
+    @include card-style;
+
+    h3 {
+      @include text-color($text-dark, $text-light);
+      margin-top: 0;
+    }
+
+    p {
+      margin: 0.75rem 0;
+      strong {
+        @include text-color($text-dark, $text-light);
+        display: inline-block;
+        width: 200px;
+      }
+    }
+
+    .badge {
+      font-size: 0.8rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+
+  // Payment Reminders
+  .payment-reminders {
+    @include card-style;
+
+    h3 {
+      @include text-color($text-dark, $text-light);
+      margin-top: 0;
+    }
+
+    .installment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+
+      .installment-card {
+        @include card-style($dark-card-bg);
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255,255,255,0.1);
+        border-radius: $border-radius;
+        padding: 1rem;
+        transition: all 0.3s ease;
+        body.light-mode & {
+          background: $light-card-bg;
+          border: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .installment-header {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.5rem;
+
+          .installment-date {
+            @include text-color($text-dark, $text-light);
+            font-weight: 500;
+          }
+
+          .installment-status {
+            font-size: 0.8rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+
+            &.pending {
+              background-color: rgba($warning-color, 0.2);
+              @include text-color(lighten($warning-color, 30%), lighten($warning-color, 30%));
+            }
+            &.paid {
+              background-color: rgba($secondary-color, 0.2);
+              @include text-color(lighten($secondary-color, 30%), lighten($secondary-color, 30%));
+            }
+            &.overdue {
+              background-color: rgba($error-color, 0.2);
+              @include text-color(lighten($error-color, 30%), lighten($error-color, 30%));
+            }
+          }
+        }
+
+        .installment-amount {
+          @include text-color($text-dark, $text-light);
+          font-size: 1.25rem;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .text-muted {
+      color: #7f8c8d;
+      font-style: italic;
+    }
+  }
+
+  // New Loan CTA
+  .new-loan-cta {
+    @include card-style;
+    text-align: center;
+    background: linear-gradient(135deg, rgba($primary-color, 0.2), rgba($secondary-color, 0.2));
+    body.light-mode & {
+      background: linear-gradient(135deg, $primary-light 0%, $secondary-light 100%);
+    }
+
+    h4 {
+      @include text-color($text-dark, $text-light);
+      margin-top: 0;
+    }
+
+    .btn {
+      margin-top: 1rem;
+    }
+  }
+
+  // Charts Row
+  .charts-row {
+    display: flex;
+    gap: 2rem;
+    margin: 2rem 0;
+
+    canvas {
+      @include card-style($dark-card-bg);
+      flex: 1;
+      height: 300px !important;
+      body.light-mode & {
+        background: $light-card-bg;
+      }
+    }
+  }
+
+  // Recent Transactions
+  .recent-transactions {
+    @include card-style;
+
+    h3 {
+      @include text-color($text-dark, $text-light);
+      margin-top: 0;
+    }
+
+    .transaction-list {
+      margin: 1.5rem 0;
+
+      .transaction-item {
+        display: flex;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        body.light-mode & {
+          border-color: rgba(0,0,0,0.1);
+        }
+
+        .tx-icon {
+          @include flex-center;
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          background-color: rgba($primary-color, 0.2);
+          color: $primary-color;
+          margin-right: 1rem;
+          font-size: 1.2rem;
+        }
+
+        .tx-details {
+          flex: 1;
+
+          strong {
+            @include text-color($text-dark, $text-light);
+            display: block;
+            margin-bottom: 0.25rem;
+          }
+
+          span {
+            @include text-color($text-dark, $text-light);
+            font-size: 0.9rem;
+          }
+
+          .small {
+            font-size: 0.8rem;
+          }
+
+          .tx-link {
+            font-size: 0.9rem;
+            color: $primary-color;
+            text-decoration: none;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+        }
+
+        .tx-amount {
+          font-weight: 600;
+          color: $error-color;
+
+          &.credit {
+            color: $secondary-color;
+          }
+        }
+      }
+
+      .view-all {
+        display: inline-block;
+        color: $primary-color;
+        text-decoration: none;
+        font-weight: 500;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}
+
+// Loading Template
+.loading-container {
+  @include flex-center;
+  flex-direction: column;
+  height: 50vh;
+
+  .spinner-border {
+    width: 3rem;
+    height: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    @include text-color($text-dark, $text-light);
+    font-size: 1.2rem;
+  }
+}
+
+// Modal Overlay
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  @include flex-center;
+  background-color: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(6px);
+  z-index: 1050;
+  padding: 1rem;
+}
+
+// Modal Box
+.modal-content {
+  background: $dark-card-bg;
+  @include text-color($text-light, $text-dark);
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  width: 100%;
+  max-width: 400px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  position: relative;
+  animation: fadeInScale 0.25s ease-in-out;
+
+  h4 {
+    @include text-color($text-dark, $text-light);
+    margin: 0;
+    font-size: 1.25rem;
+  }
+
+  input.form-control,
+  select.form-control {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    @include text-color($text-dark, $text-light);
+    border-radius: $border-radius;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.95rem;
+  }
+  body.light-mode & input.form-control,
+  body.light-mode & select.form-control {
+    background: $light-card-bg;
+    border: 1px solid rgba(0,0,0,0.1);
+  }
+
+  .btn-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    &:hover {
+      background-color: darken($primary-color, 10%);
+      border-color: darken($primary-color, 10%);
+    }
+  }
+
+  .btn-secondary {
+    background-color: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    @include text-color($text-light, $text-dark);
+    &:hover {
+      background-color: rgba(255,255,255,0.15);
+    }
+  }
+}
+
+// Animations
+@keyframes fadeInScale {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+// Responsive
+@include respond-md {
+  .dashboard-container {
+    padding: 1rem;
+
+    .header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .charts-row {
+      flex-direction: column;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .dashboard-container {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .bank-access {
+      flex-direction: column;
+      align-items: flex-end;
+    }
+  }
+}

@@ -1,0 +1,142 @@
+@import '../../../../assets/variables';
+
+.registration-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  padding: $spacing-unit * 2;
+
+  .card {
+    background-color: $light-card-bg;
+    padding: $spacing-unit * 4;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    width: 100%;
+    max-width: 450px;
+    transition: all 0.4s ease;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 0.6s forwards;
+
+    h2 {
+      text-align: center;
+      margin-bottom: $spacing-unit * 3;
+      color: $text-primary; // <-- utilise couleur texte claire
+      transition: color 0.4s ease;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-unit * 2;
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+
+        label {
+          margin-bottom: $spacing-quarter;
+          font-weight: 600;
+          color: $text-primary; // <-- adapte en clair
+          transition: color 0.4s ease;
+        }
+
+        input {
+          padding: $spacing-half $spacing-unit;
+          border-radius: $border-radius;
+          border: 1px solid $border-color;
+          font-size: 1rem;
+          transition: all 0.3s ease;
+          background-color: transparent;
+          color: inherit;
+
+          &:focus {
+            outline: none;
+            border-color: $color-light-primary;
+            box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+          }
+        }
+
+        .error {
+          font-size: 0.85rem;
+          color: $error-color;
+          margin-top: $spacing-quarter;
+        }
+      }
+
+      button {
+        margin-top: $spacing-unit;
+        padding: $spacing-half $spacing-unit;
+        border-radius: $border-radius;
+        font-weight: 600;
+        background-color: $color-light-primary;
+        color: $color-light-btn-text;
+        border: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+
+        &:disabled { opacity: 0.7; cursor: not-allowed; }
+        &:hover:not(:disabled) { transform: scale(1.02); }
+      }
+
+      .error-message {
+        color: $error-color;
+        margin-top: $spacing-half;
+        font-size: 0.9rem;
+        text-align: center;
+      }
+    }
+  }
+
+  // ========================
+  // Dark Mode
+  // ========================
+  :host-context(.dark-mode) {
+    background-color: $dark-bg;
+    color: $color-dark-section-text;
+
+    .card {
+      background-color: $dark-card-bg;
+      color: $color-dark-section-text;
+
+      h2 { color: $color-dark-section-text; } // <-- titre suit le texte global
+
+      form {
+        label { color: $color-dark-section-text; }
+
+        input {
+          background-color: transparent;
+          color: $color-dark-section-text;
+          border-color: darken($dark-card-bg, 6%);
+
+          &:focus {
+            border-color: $color-dark-primary;
+            box-shadow: 0 0 0 2px rgba($color-dark-primary, 0.2);
+          }
+        }
+
+        .error { color: $error-color; }
+        button { background-color: $color-dark-primary; color: $color-dark-btn-text; }
+        .error-message { color: $error-color; }
+      }
+    }
+  }
+
+  // ========================
+  // Animations
+  // ========================
+  @keyframes fadeInUp {
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    .card { padding: $spacing-unit * 3; }
+  }
+}

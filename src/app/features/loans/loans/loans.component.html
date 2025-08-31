@@ -1,0 +1,37 @@
+<section class="loans-section">
+  <div class="container">
+    <div class="section-header">
+      <h1>Nos solutions de prêt</h1>
+      <p>Choisissez le prêt qui correspond à vos besoins</p>
+    </div>
+
+    <div class="loan-products-grid">
+      <div class="product-card"
+           *ngFor="let product of loanProducts"
+           [class.selected]="product === selectedProduct">
+        <div class="product-icon">
+          <i [class]="getProductIcon(product.type)"></i>
+        </div>
+        <h3>{{ product.name }}</h3>
+        <div class="product-details">
+          <p><strong>Taux:</strong> {{ product.interestRate }}%</p>
+          <p><strong>Montant:</strong> {{ product.minAmount | currency }} - {{ product.maxAmount | currency }}</p>
+          <p><strong>Durée:</strong> {{ product.minTerm }} à {{ product.maxTerm }} mois</p>
+        </div>
+        <button type="button"
+                class="btn btn-outline"
+                (click)="requestLoan(product); $event.stopPropagation()">
+          Demander ce prêt
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL 2FA -->
+  <app-two-fa-modal
+    [visible]="show2FAModal"
+    (onConfirm)="submit2FAToken($event)"
+    (onCancel)="show2FAModal = false"
+    [message]="'Veuillez entrer votre code 2FA pour accéder au formulaire de prêt.'">
+  </app-two-fa-modal>
+</section>

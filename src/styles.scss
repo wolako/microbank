@@ -1,0 +1,262 @@
+// ================================
+// Import variables centralisées
+// ================================
+@import './assets/variables';
+
+// ================================
+// Import bibliothèques
+// ================================
+@import 'bootstrap/scss/bootstrap';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+// ================================
+// Base styles
+// ================================
+html {
+  scroll-behavior: smooth;
+}
+
+.app-container {
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.3s ease, color 0.3s ease;
+
+  &.dark-mode {
+    background: linear-gradient(135deg, $primary-dark, $dark-card-bg, $secondary-dark);
+    color: $text-light;
+  }
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+// ================================
+// Boutons
+// ================================
+.btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: $border-radius;
+  font-weight: 600;
+  transition: $transition;
+  cursor: pointer;
+
+  &-primary {
+    background-color: $primary-color;
+    border-color: $primary-color;
+    color: $text-light;
+
+    .app-container.dark-mode & {
+      background-color: $primary-dark;
+      border-color: $primary-dark;
+      color: $text-light;
+    }
+
+    &:hover {
+      background-color: $primary-light;
+      border-color: $primary-light;
+
+      .app-container.dark-mode & {
+        background-color: $primary-color;
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  &-outline-danger {
+    background: transparent;
+    color: $error-color;
+    border: 1px solid $error-color;
+
+    .app-container.dark-mode & {
+      color: $error-color;
+      border-color: $error-color;
+    }
+
+    &:hover {
+      background: rgba($error-color, 0.1);
+      color: lighten($error-color, 10%);
+      border-color: lighten($error-color, 10%);
+    }
+  }
+
+  &-outline {
+    border: 2px solid $text-light;
+    color: $text-light;
+    background: transparent;
+
+    .app-container.dark-mode & {
+      border: 2px solid $text-light;
+      color: $text-light;
+    }
+
+    &:hover {
+      background: $text-light;
+      color: $primary-color;
+
+      .app-container.dark-mode & {
+        color: $primary-dark;
+      }
+    }
+  }
+}
+
+// ================================
+// Sections et service-detail
+// ================================
+section,
+.service-detail {
+  background-color: $light-card-bg;
+  color: $text-primary;
+  border-color: transparent;
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  padding: 0;
+
+  .app-container.dark-mode & {
+    background-color: $dark-card-bg;
+    color: $text-light;
+    border-color: $primary-dark;
+  }
+}
+
+// Service-detail spécifique
+.service-detail {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+
+  h2 {
+    font-size: 2.2rem;
+    color: $primary-color;
+
+    .app-container.dark-mode & {
+      color: $primary-light;
+    }
+
+    margin-bottom: 1.2rem;
+  }
+
+  p {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: $text-secondary;
+    margin-bottom: 1rem;
+
+    .app-container.dark-mode & {
+      color: lighten($text-secondary, 40%);
+    }
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+
+    li::before {
+      content: '✔';
+      color: $primary-color;
+      margin-right: 0.5rem;
+
+      .app-container.dark-mode & {
+        color: $primary-light;
+      }
+    }
+  }
+
+  .highlight-box {
+    background: $light-bg;
+    border-left: 4px solid $primary-color;
+    padding: 1rem 1.2rem;
+    border-radius: $border-radius;
+    margin: 2rem 0;
+
+    .app-container.dark-mode & {
+      background: $dark-card-bg;
+      border-left-color: $primary-dark;
+    }
+  }
+
+  .loan-illustration {
+    width: 100%;
+    max-height: 300px;
+    object-fit: cover;
+    border-radius: $border-radius;
+    margin: 2rem 0;
+    box-shadow: $box-shadow;
+  }
+
+  .cta-box {
+    background: linear-gradient(135deg, $primary-color, $primary-light);
+    padding: 2rem;
+    border-radius: 10px;
+    color: $text-light;
+    text-align: center;
+    margin-top: 3rem;
+
+    .app-container.dark-mode & {
+      background: linear-gradient(135deg, $primary-dark, $secondary-dark);
+    }
+
+    h4 {
+      font-size: 1.6rem;
+      margin-bottom: 0.8rem;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 1.2rem;
+      color: lighten($primary-color, 60%);
+
+      .app-container.dark-mode & {
+        color: lighten($text-light, 20%);
+      }
+    }
+
+    a {
+      background: $text-light;
+      color: $primary-color;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.3s;
+
+      .app-container.dark-mode & {
+        background: $primary-dark;
+        color: $text-light;
+      }
+
+      &:hover {
+        background: lighten($primary-color, 60%);
+
+        .app-container.dark-mode & {
+          background: $secondary-dark;
+          color: $text-light;
+        }
+      }
+    }
+  }
+
+  @include respond-md {
+    padding: 2rem 1rem;
+
+    h2 {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+// ================================
+// Transition globale
+// ================================
+.app-container,
+section,
+.service-detail,
+.btn,
+a {
+  transition: all 0.3s ease;
+}

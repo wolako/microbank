@@ -1,0 +1,75 @@
+<div class="home-page">
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="hero-content">
+      <h1 class="hero-title">Votre partenaire financier de confiance</h1>
+      <p class="hero-subtitle">Des solutions bancaires adaptées à vos besoins</p>
+      <div class="hero-actions">
+        <a routerLink="/register" class="btn btn-primary">Ouvrir un compte</a>
+        <!-- <a routerLink="/services" class="btn btn-outline">Découvrir nos services</a> -->
+        <!-- ✅ Bouton admin visible seulement pour les admins connectés -->
+        <a 
+          *ngIf="authService.currentUserValue?.role === 'admin'" 
+          routerLink="/admin"
+          class="btn btn-outline-warning"
+          style="margin-left: 10px;">
+          👑 Espace Admin
+        </a>
+      </div>
+    </div>
+    <!-- <div class="hero-image">
+      <img src="assets/images/hero-banking.png" alt="Services bancaires" loading="lazy">
+    </div> -->
+  </section>
+
+  <!-- Services Section -->
+  <section class="services-section">
+    <div class="section-header">
+      <h2>Nos solutions financières</h2>
+      <p>Découvrez une gamme complète de services conçus pour vous</p>
+    </div>
+
+    <div class="services-grid">
+      <div class="service-card" *ngFor="let service of services">
+        <div class="service-icon">
+          <i [class]="service.id.includes('prets') ? 'bi bi-cash-coin' : 'bi bi-bank'"></i>
+        </div>
+        <h3>{{ service.title }}</h3>
+        <p>{{ service.description }}</p>
+        <button class="service-link btn btn-outline" (click)="goToService(service.id)">
+          En savoir plus →
+        </button>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- Calculator Section -->
+  <section class="calculator-section" id="loans">
+    <h2>Simuler vos prêts</h2>
+    <app-loan-calculator></app-loan-calculator>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials-section">
+    <div class="section-header">
+      <h2>Ils nous font confiance</h2>
+      <p>Découvrez ce que nos clients disent de nous</p>
+    </div>
+
+    <div class="testimonials-grid" @staggerIn>
+      <div class="testimonial-card" *ngFor="let testimonial of testimonials">
+        <div class="testimonial-content">
+          <p>"{{ testimonial.text }}"</p>
+        </div>
+        <div class="testimonial-author">
+          <img [src]="testimonial.avatar" [alt]="testimonial.name">
+          <div>
+            <strong>{{ testimonial.name }}</strong>
+            <span>{{ testimonial.position }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

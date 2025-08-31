@@ -1,0 +1,360 @@
+<div class="account-page">
+  <div class="account-header">
+    <div class="container">
+      <div class="user-profile">
+        <div class="avatar">
+          {{ userData?.firstName?.charAt(0) }}{{ userData?.lastName?.charAt(0) }}
+        </div>
+        <div class="user-info">
+          <h1>{{ userData?.firstName }} {{ userData?.lastName }}</h1>
+          <p>Membre depuis {{ userData?.joinDate | date }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="account-container">
+    <div class="account-sidebar">
+      <nav>
+        <ul>
+          <li [class.active]="activeTab === 'profile'" (click)="activeTab = 'profile'">
+            <i class="bi bi-person"></i> Profil
+          </li>
+          <li [class.active]="activeTab === 'security'" (click)="activeTab = 'security'">
+            <i class="bi bi-shield-lock"></i> Sécurité
+          </li>
+          <li [class.active]="activeTab === 'documents'" (click)="activeTab = 'documents'">
+            <i class="bi bi-folder"></i> Documents
+          </li>
+          <li [class.active]="activeTab === 'notifications'" (click)="activeTab = 'notifications'">
+            <i class="bi bi-bell"></i> Notifications
+          </li>
+          <li [class.active]="activeTab === 'transactions'" (click)="activeTab = 'transactions'">
+            <i class="bi bi-currency-exchange"></i> Transactions
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="account-content">
+      @if (activeTab === 'profile') {
+        <div class="profile-section">
+          <div class="section-header">
+            <h2>Informations personnelles</h2>
+            @if (!isEditing) {
+              <button class="btn btn-outline" (click)="isEditing = true">
+                <i class="bi bi-pencil"></i> Modifier
+              </button>
+            }
+          </div>
+
+          @if (isEditing) {
+            <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Prénom : </label>
+                  <input type="text" formControlName="firstName">
+                </div>
+                <div class="form-group">
+                  <label>Nom : </label>
+                  <input type="text" formControlName="lastName">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Email : </label>
+                <input type="email" formControlName="email">
+              </div>
+
+              <div class="form-group">
+                <label>Téléphone : </label>
+                <input type="tel" formControlName="phone">
+              </div>
+
+              <div class="form-actions">
+                <button type="button" class="btn btn-outline" (click)="isEditing = false">
+                  Annuler
+                </button>
+                <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                  @if (isLoading) {
+                    <span class="spinner-border spinner-border-sm"></span>
+                  } @else {
+                    Enregistrer
+                  }
+                </button>
+              </div>
+            </form>
+          } @else {
+            <div class="profile-info">
+              <div class="info-item">
+                <label>Email</label>
+                <p>{{ userData?.email }}</p>
+              </div>
+              <div class="info-item">
+                <label>Téléphone</label>
+                <p>{{ userData?.phone || 'Non renseigné' }}</p>
+              </div>
+              <!-- <div class="info-item">
+                <label>Adresse</label>
+                <p>
+                  {{ userData?.address?.street || 'Non renseignée' }}<br>
+                  {{ userData?.address?.postalCode }} {{ userData?.address?.city }}
+                </p>
+              </div> -->
+            </div>
+          }
+        </div>
+      }
+
+      <!-- Section Sécurité -->
+      @if (activeTab === 'security') {
+        <div class="security-section">
+          <h2>Sécurité du compte</h2>
+          
+          @if (showPasswordForm) {
+            <div class="password-form card">
+              <div class="card-header">
+                <h3>Changer le mot de passe</h3>
+              </div>
+              <div class="card-body">
+                @if (passwordError) {
+                  <div class="alert alert-danger">{{ passwordError }}</div>
+                }
+                
+                @if (passwordSuccess) {
+                  <div class="alert alert-success">Mot de passe changé avec succès!</div>
+                }
+                
+                <form [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+                  <div class="form-group">
+                    <label>Ancien mot de passe</label>
+                    <input type="password" formControlName="oldPassword" class="form-control">
+                    @if (passwordForm.get('oldPassword')?.invalid && passwordForm.get('oldPassword')?.touched) {
+                      <small class="text-danger">Ce champ est requis</small>
+                    }
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Nouveau mot de passe</label>
+                    <input type="password" formControlName="newPassword" class="form-control">
+                    <div class="form-hint mt-2">
+                      <small>Le mot de passe doit contenir :</small>
+                      <ul class="list-unstyled">
+                        <li [class.text-success]="hasMinLength()">
+                          <i class="bi" [class.bi-check-circle]="hasMinLength()" [class.bi-x-circle]="!hasMinLength()"></i>
+                          8 caractères minimum
+                        </li>
+                        <li [class.text-success]="hasUpperCase()">
+                          <i class="bi" [class.bi-check-circle]="hasUpperCase()" [class.bi-x-circle]="!hasUpperCase()"></i>
+                          1 majuscule
+                        </li>
+                        <li [class.text-success]="hasLowerCase()">
+                          <i class="bi" [class.bi-check-circle]="hasLowerCase()" [class.bi-x-circle]="!hasLowerCase()"></i>
+                          1 minuscule
+                        </li>
+                        <li [class.text-success]="hasNumber()">
+                          <i class="bi" [class.bi-check-circle]="hasNumber()" [class.bi-x-circle]="!hasNumber()"></i>
+                          1 chiffre
+                        </li>
+                        <li [class.text-success]="hasSpecialChar()">
+                          <i class="bi" [class.bi-check-circle]="hasSpecialChar()" [class.bi-x-circle]="!hasSpecialChar()"></i>
+                          1 caractère spécial (&#64;$!%*?&)
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label>Confirmer le nouveau mot de passe</label>
+                    <input type="password" formControlName="confirmPassword" class="form-control">
+                    @if (passwordForm.hasError('mismatch')) {
+                      <small class="text-danger">Les mots de passe ne correspondent pas</small>
+                    }
+                  </div>
+                  
+                  <div class="form-actions mt-4">
+                    <button type="button" class="btn btn-outline-secondary" (click)="showPasswordForm = false">
+                      Annuler
+                    </button>
+                    <button type="submit" class="btn btn-primary" [disabled]="isLoading || passwordForm.invalid">
+                      @if (isLoading) {
+                        <span class="spinner-border spinner-border-sm"></span>
+                        <span class="ms-2">Enregistrement...</span>
+                      } @else {
+                        Enregistrer
+                      }
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          } @else {
+            <div class="security-settings">
+              <div class="security-card card mb-3">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                    <div class="security-icon bg-primary text-white me-3">
+                      <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <div>
+                      <h5 class="mb-1">Mot de passe</h5>
+                      <p class="mb-0 text-muted">
+                        Dernière modification : 
+                        {{ userData?.passwordUpdatedAt ? (userData.passwordUpdatedAt | date:'mediumDate') : 'Jamais' }}
+                      </p>
+                    </div>
+                  </div>
+                  <button class="btn btn-outline-primary" (click)="showPasswordForm = true">
+                    Modifier
+                  </button>
+                </div>
+              </div>
+              
+              <div class="security-card card">
+                <div class="card-body d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                    <div class="security-icon bg-warning text-white me-3">
+                      <i class="bi bi-shield-lock"></i>
+                    </div>
+                    <div>
+                      <h5 class="mb-1">Authentification à deux facteurs</h5>
+                      <p class="mb-0 text-muted">Ajoutez une couche de sécurité supplémentaire</p>
+                    </div>
+                  </div>
+                  <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" [checked]="twoFactorEnabled" (change)="toggleTwoFactor($event)" id="twoFactorSwitch">
+                    <label class="form-check-label" for="twoFactorSwitch"></label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal 2FA -->
+              <div class="modal-overlay" *ngIf="show2FAModal">
+                <div class="modal-content card p-3">
+                  <h4>Configuration 2FA</h4>
+                  <p>Scannez le QR code avec votre application Authenticator et entrez le code ci-dessous :</p>
+                  <img [src]="qrCodeUrl" alt="QR Code 2FA" class="mb-3" style="width:200px;height:200px;">
+                  <input type="text" class="form-control mb-2" placeholder="Code à 6 chiffres" [(ngModel)]="twoFactorToken">
+                  <div *ngIf="twoFactorError" class="text-danger mb-2">{{ twoFactorError }}</div>
+                  <button class="btn btn-primary w-100" (click)="confirmTwoFactor()" [disabled]="isLoading2FA">
+                    <span *ngIf="isLoading2FA">Chargement...</span>
+                    <span *ngIf="!isLoading2FA">Activer 2FA</span>
+                  </button>
+                  <button class="btn btn-outline-secondary w-100 mt-2" (click)="show2FAModal=false">Annuler</button>
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      }
+
+      @if (activeTab === 'documents') {
+        <div class="documents-section card p-3">
+          <h2 class="card-title mb-3">Mes documents</h2>
+
+          <!-- Bouton d'ajout -->
+          <div class="mb-3">
+            <label class="btn btn-primary">
+              <i class="bi bi-plus"></i> Ajouter un document
+              <input type="file" hidden (change)="onFileSelected($event)">
+            </label>
+            <span *ngIf="uploading" class="ms-2">Upload en cours...</span>
+          </div>
+
+          <!-- Message si aucun document -->
+          <div *ngIf="documents.length === 0" class="text-center py-5 text-muted">
+            <i class="bi bi-folder-x display-4 mb-3"></i>
+            <p>Aucun document disponible</p>
+            <small>Vous pouvez ajouter vos documents personnels et financiers.</small>
+          </div>
+
+          <!-- Tableau des documents -->
+          <div *ngIf="documents.length > 0" class="table-responsive">
+            <table class="table table-striped align-middle">
+              <thead>
+                <tr>
+                  <th>Nom</th>
+                  <th>Type</th>
+                  <th>Taille</th>
+                  <th>Ajouté le</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let doc of documents">
+                  <td>{{ doc.original_name }}</td>
+                  <td>{{ doc.mime_type }}</td>
+                  <td>{{ (doc.size / 1024).toFixed(2) }} KB</td>
+                  <td>{{ doc.created_at | date:'short' }}</td>
+                  <td>
+                    <button class="btn btn-sm btn-outline-primary me-1"
+                            (click)="downloadDocument(doc)">
+                      <i class="bi bi-download"></i> Télécharger
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger"
+                            (click)="deleteDocument(doc.id)">
+                      <i class="bi bi-trash"></i> Supprimer
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      }
+
+      @if (activeTab === 'notifications') {
+        <div class="notifications-section card">
+          <div class="card-body">
+            <h2 class="card-title">Préférences de notification</h2>
+            <p class="card-subtitle text-muted mb-4">Configurez comment vous recevez nos communications</p>
+
+            <form [formGroup]="notificationForm" class="notification-settings">
+           
+              <!-- EMAIL NOTIFICATIONS -->
+              <div class="setting-item d-flex justify-content-between align-items-center mb-3 p-3 border rounded">
+                <div>
+                  <h5 class="mb-1">Emails</h5>
+                  <p class="mb-0 text-muted">Recevoir les newsletters et offres spéciales</p>
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="emailNotifications"
+                    [formControl]="emailNotificationsControl"
+                    (change)="updateNotificationPreferences()"
+                  >
+                  <label class="form-check-label" for="emailNotifications"></label>
+                </div>
+              </div>
+
+              <!-- SMS NOTIFICATIONS -->
+              <div class="setting-item d-flex justify-content-between align-items-center p-3 border rounded">
+                <div>
+                  <h5 class="mb-1">SMS</h5>
+                  <p class="mb-0 text-muted">Alertes importantes et notifications de transaction</p>
+                </div>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    id="smsNotifications"
+                    [formControl]="smsNotificationsControl"
+                    (change)="updateNotificationPreferences()"
+                  >
+                  <label class="form-check-label" for="smsNotifications"></label>
+                </div>
+              </div>
+
+            </form>
+          </div>
+        </div>
+      }
+
+      @if (activeTab === 'transactions') {
+        <app-transactions></app-transactions>
+      }
+    </div>
+  </div>
+</div>

@@ -1,0 +1,261 @@
+// .loan-form {
+//       background: #f9f9f9;
+//       padding: 2rem;
+//       border-radius: 10px;
+//       margin-top: 3rem;
+//       box-shadow: 0 0 10px rgba(0,0,0,0.05);
+//     }
+
+//     h3 {
+//       color: #003366;
+//       margin-bottom: 1.5rem;
+//     }
+
+//     .row {
+//       display: flex;
+//       gap: 1.5rem;
+//       flex-wrap: wrap;
+//     }
+
+//     .form-group {
+//       flex: 1;
+//       display: flex;
+//       flex-direction: column;
+//       margin-bottom: 1rem;
+//     }
+
+//     .form-group.full {
+//       flex: 100%;
+//     }
+
+//     label {
+//       font-weight: bold;
+//       margin-bottom: 0.3rem;
+//     }
+
+//     input, textarea {
+//       padding: 0.6rem;
+//       border: 1px solid #ccc;
+//       border-radius: 5px;
+//     }
+
+//     .btn-submit {
+//       background: #007bff;
+//       color: white;
+//       padding: 0.7rem 1.5rem;
+//       border: none;
+//       border-radius: 5px;
+//       font-weight: bold;
+//       cursor: pointer;
+//     }
+
+//     .btn-submit:hover {
+//       background: #0056b3;
+//     }
+
+
+// Variables (cohérentes avec les précédentes)
+$primary-color: #1976d2;
+$primary-dark: #0d47a1;
+$primary-light: #63a4ff;
+$secondary-color: #03a9f4;
+$dark-bg: #121f2f;
+$darker-bg: #0c1622;
+$card-bg: #1a2a3a;
+$text-primary: #e0e0e0;
+$text-secondary: #b0bec5;
+$success-color: #4caf50;
+$error-color: #f44336;
+$border-radius: 8px;
+$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+$transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+.loan-form {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2.5rem;
+  background: $card-bg;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  border: 1px solid rgba($primary-color, 0.1);
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background: linear-gradient(90deg, $primary-color, $secondary-color);
+  }
+
+  h3 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    color: white;
+    text-align: center;
+    background: linear-gradient(90deg, $primary-color, $secondary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba($primary-color, 0.2);
+  }
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 1rem;
+  position: relative;
+
+  &.full {
+    flex: 0 0 100%;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: $text-primary;
+    font-weight: 500;
+    font-size: 0.95rem;
+
+    input[type="checkbox"] {
+      margin-right: 0.5rem;
+    }
+  }
+
+  input:not([type="checkbox"]) {
+    width: 100%;
+    padding: 0.8rem 1rem;
+    background-color: rgba(white, 0.05);
+    border: 1px solid rgba($primary-color, 0.3);
+    border-radius: $border-radius;
+    color: $text-primary;
+    font-size: 1rem;
+    transition: $transition;
+
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+      background-color: rgba(white, 0.08);
+    }
+
+    &::placeholder {
+      color: rgba($text-secondary, 0.5);
+    }
+
+    &:required:invalid {
+      border-left: 3px solid $error-color;
+    }
+
+    &:required:valid {
+      border-left: 3px solid rgba($success-color, 0.5);
+    }
+  }
+
+  input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba($primary-color, 0.5);
+    border-radius: 4px;
+    background-color: transparent;
+    position: relative;
+    transition: $transition;
+    cursor: pointer;
+
+    &:checked {
+      background-color: $primary-color;
+      border-color: $primary-color;
+
+      &::after {
+        content: '✓';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 0.8rem;
+      }
+    }
+  }
+}
+
+.btn-submit {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: linear-gradient(135deg, $primary-color, $primary-dark);
+  color: white;
+  border: none;
+  border-radius: $border-radius;
+  font-weight: 500;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: $transition;
+  margin-top: 1.5rem;
+  box-shadow: 0 4px 15px rgba($primary-color, 0.2);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    background: linear-gradient(135deg, lighten($primary-color, 5%), lighten($primary-dark, 5%));
+    box-shadow: 0 6px 20px rgba($primary-color, 0.3);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &:disabled {
+    background: linear-gradient(135deg, desaturate($primary-color, 50%), desaturate($primary-dark, 50%));
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  &::after {
+    content: '→';
+    margin-left: 8px;
+    transition: $transition;
+  }
+
+  &:hover:not(:disabled)::after {
+    transform: translateX(3px);
+  }
+}
+
+// Validation states
+.ng-invalid.ng-touched:not(form) {
+  border-left: 3px solid $error-color !important;
+}
+
+// Responsive
+@media (max-width: 768px) {
+  .loan-form {
+    padding: 1.5rem;
+
+    h3 {
+      font-size: 1.5rem;
+    }
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .form-group {
+    min-width: 100%;
+  }
+}

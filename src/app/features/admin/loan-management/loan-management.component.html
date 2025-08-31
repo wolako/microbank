@@ -1,0 +1,112 @@
+<div class="container">
+  <h3>📁 Gestion des prêts</h3>
+
+  <!-- Filtres & Export CSV -->
+  <form class="row g-3 align-items-end mb-4" (ngSubmit)="applyFilters()">
+    <div class="col-md-2">
+      <label>Status</label>
+      <select class="form-select" [(ngModel)]="filters.status" name="status">
+        <option value="">Tous</option>
+        <option value="pending">En attente</option>
+        <option value="approved">Approuvé</option>
+        <option value="active">Actif</option>
+        <option value="paid">Remboursé</option>
+      </select>
+    </div>
+    <div class="col-md-2">
+      <label>Montant min</label>
+      <input type="number" class="form-control" [(ngModel)]="filters.minAmount" name="minAmount">
+    </div>
+    <div class="col-md-2">
+      <label>Montant max</label>
+      <input type="number" class="form-control" [(ngModel)]="filters.maxAmount" name="maxAmount">
+    </div>
+    <div class="col-md-3 d-flex gap-2">
+      <button class="btn btn-primary" type="submit">Filtrer</button>
+      <button class="btn btn-secondary" type="button" (click)="resetFilters()">Réinit</button>
+    </div>
+    <div class="col-md-3 text-end">
+      <button class="btn btn-outline-success" type="button" (click)="exportCSV()">📥 Export CSV</button>
+    </div>
+  </form>
+
+  <!-- Tableau -->
+  <table class="table table-hover table-bordered">
+    <thead class="table-light">
+      <tr>
+        <th>Client</th>
+        <th>Montant</th>
+        <th>Durée</th>
+        <th>Mensualité</th>
+        <th>Statut</th>
+        <th>Produit</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loan of loans">
+        <td>{{ loan.user_firstname }} {{ loan.user_lastname }}</td>
+        <td>{{ loan.amount | currencyXof }} </td>
+        <td>{{ loan.term_months }} mois</td>
+        <td>{{ loan.monthly_payment | currencyXof }} </td>
+        <td>
+          <span class="badge"
+                [ngClass]="{
+                  'bg-secondary': loan.status === 'pending',
+                  'bg-success': loan.status === 'approved',
+                  'bg-warning': loan.status === 'active',
+                  'bg-danger': loan.status === 'rejected'
+                }">{{ loan.status }}</span>
+        </td>
+        <td>{{ loan.product_name }}</td>
+        <td>
+          <button *ngIf="loan.status === 'pending'" class="btn btn-success btn-sm me-2" (click)="approveLoan(loan.id)">
+            ✅ Approuver
+          </button>
+          <button *ngIf="loan.status === 'approved'" class="btn btn-warning btn-sm me-2" (click)="activateLoan(loan.id)">
+            🚀 Activer
+          </button>
+          <button class="btn btn-info btn-sm" (click)="openDetails(loan)">
+            ℹ️ Détails
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loans.length" class="text-muted">Aucun prêt trouvé.</p>
+
+  <!-- Pagination -->
+  <div class="d-flex justify-content-between align-items-center mt-3">
+    <div>Total: {{ totalLoans }}</div>
+    <div>
+      <button class="btn btn-outline-primary btn-sm me-2" (click)="changePage(-1)" [disabled]="page === 1">←</button>
+      Page {{ page }}
+      <button class="btn btn-outline-primary btn-sm ms-2" (click)="changePage(1)" [disabled]="loans.length < pageSize">→</button>
+    </div>
+  </div>
+</div>
+
+<!-- Détails modal -->
+<div class="modal fade show" tabindex="-1" [ngStyle]="{'display': showModal ? 'block' : 'none'}">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Détails prêt - {{ selectedLoan?.id }}</h5>
+        <button type="button" class="btn-close" (click)="closeDetails()"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Client:</strong> {{ selectedLoan?.user_firstname }} {{ selectedLoan?.user_lastname }}</p>
+        <p><strong>Produit:</strong> {{ selectedLoan?.product_name }}</p>
+        <p><strong>Montant:</strong> {{ selectedLoan?.amount | currencyXof }} </p>
+        <p><strong>Mensualité:</strong> {{ selectedLoan?.monthly_payment | currencyXof }} </p>
+        <p><strong>Durée:</strong> {{ selectedLoan?.term_months }} mois</p>
+        <p><strong>Status:</strong> {{ selectedLoan?.status }}</p>
+        <p><strong>Date création:</strong> {{ selectedLoan?.created_at | date:'dd MMM yyyy' }}</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="closeDetails()">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>

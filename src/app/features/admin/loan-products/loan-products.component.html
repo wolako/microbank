@@ -1,0 +1,24 @@
+<div class="container">
+  <h3>💼 Produits de prêt</h3>
+
+  <table class="table table-bordered mt-3">
+    <thead class="table-light">
+      <tr>
+        <th>Nom</th>
+        <th>Type</th>
+        <th>Taux</th>
+        <th>Montant min/max</th>
+        <th>Durée min/max</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let p of products">
+        <td>{{ p.name }}</td>
+        <td>{{ p.type }}</td>
+        <td>{{ p.interestRate }} %</td>
+        <td>{{ p.minAmount }} - {{ p.maxAmount }}</td>
+        <td>{{ p.minTerm }} - {{ p.maxTerm }} mois</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

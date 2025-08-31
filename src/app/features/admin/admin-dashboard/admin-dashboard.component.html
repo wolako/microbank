@@ -1,0 +1,52 @@
+<div class="container mt-4">
+  <h2>📊 Tableau de bord Admin</h2>
+
+  <nav class="nav nav-pills mb-4">
+    <a *ngIf="canAccess('stats')" class="nav-link" routerLink="/admin">Statistiques</a>
+    <a *ngIf="canAccess('users')" class="nav-link" routerLink="/admin/users">Utilisateurs</a>
+    <a *ngIf="canAccess('loans')" class="nav-link" routerLink="/admin/loans">Gestion des prêts</a>
+    <a *ngIf="canAccess('approvals')" class="nav-link" routerLink="/admin/approvals">Approbation de prêts</a>
+    <a *ngIf="canAccess('products')" class="nav-link" routerLink="/admin/products">Produits de prêts</a>
+    <a *ngIf="canAccess('roles')" class="nav-link" routerLink="/admin/roles">Gestion des rôles</a>
+  </nav>
+
+  <div *ngIf="canAccess('stats')" class="row mb-4">
+    <div class="col-md-4 mb-3" *ngIf="stats.totalRequested">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">💰 Montant total demandé</h5>
+          <p class="card-text">{{ stats.totalRequested | number:'1.0-2' }} FCFA</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3" *ngIf="stats.totalApproved">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">✅ Montant total approuvé</h5>
+          <p class="card-text">{{ stats.totalApproved | number:'1.0-2' }} FCFA</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-4 mb-3" *ngIf="stats.approved !== undefined">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">📈 Statut des prêts</h5>
+          <ul class="list-unstyled">
+            <li>En attente : <strong>{{ stats.pending }}</strong></li>
+            <li>Approuvés : <strong>{{ stats.approved }}</strong></li>
+            <li>Rejetés : <strong>{{ stats.rejected }}</strong></li>
+            <li>Annulés : <strong>{{ stats.cancelled }}</strong></li>
+            <li>Terminés : <strong>{{ stats.completed }}</strong></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  
+
+
+  <router-outlet></router-outlet>
+</div>

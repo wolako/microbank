@@ -1,0 +1,23 @@
+.container {
+  margin-top: 2rem;
+
+  h3 {
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+  }
+
+  table {
+    th, td {
+      vertical-align: middle;
+    }
+
+    td {
+      font-size: 0.9rem;
+    }
+
+    .btn {
+      font-size: 0.75rem;
+      margin-right: 0.5rem;
+    }
+  }
+}

@@ -1,0 +1,31 @@
+<div class="loan-list-container">
+  <h2>Mes demandes de prêt</h2>
+
+  <div *ngIf="loading" class="alert alert-info">Chargement des prêts en cours...</div>
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <table class="table table-bordered table-striped" *ngIf="!loading && loans.length > 0">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Montant</th>
+        <th>Durée</th>
+        <th>Status</th>
+        <th>Détails</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loan of loans">
+        <td>{{ loan.createdAt | date:'d MMM y' }}</td>
+        <td>{{ loan.amount | currency }}</td>
+        <td>{{ loan.termMonths }} mois</td>
+        <td><span [ngClass]="getStatusColor(loan.status)">{{ loan.status | titlecase }}</span></td>
+        <td><a [routerLink]="['/loans', loan.id]" class="btn btn-sm btn-outline-primary">Voir</a></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="!loading && loans.length === 0" class="alert alert-secondary">
+    Aucun prêt trouvé.
+  </div>
+</div>

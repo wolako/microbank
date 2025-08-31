@@ -1,0 +1,256 @@
+@import '../../../../assets/variables'; // Vérifie le chemin
+
+// ================================
+// Navbar
+// ================================
+.navbar {
+  background: $color-light-bg; // fond par défaut
+  padding: 1rem 0;
+  border-bottom: 1px solid rgba($primary-color, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: $z-header;
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  // Mode sombre
+  &.dark-mode {
+    background: linear-gradient(135deg, $primary-dark, $dark-card-bg, $secondary-dark);
+    border-bottom: 1px solid rgba($primary-light, 0.2);
+  }
+}
+
+// ================================
+// Navbar brand / logo
+// ================================
+.navbar-brand {
+  color: $text-dark;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: $transition;
+  background: linear-gradient(90deg, $primary-color, $secondary-color);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+
+  &:hover {
+    opacity: 0.9;
+  }
+
+  .dark-mode & {
+    color: $text-light;
+  }
+}
+
+// ================================
+// Toggler mobile
+// ================================
+.navbar-toggler {
+  background: transparent;
+  border: 1px solid rgba($primary-color, 0.3);
+  border-radius: $border-radius;
+  padding: 0.5rem 0.75rem;
+  cursor: pointer;
+  display: none;
+
+  .navbar-toggler-icon {
+    display: inline-block;
+    width: 1.5rem;
+    height: 1.5rem;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255,255,255,0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100%;
+  }
+}
+
+// ================================
+// Toggle thème
+// ================================
+.theme-toggle {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 1rem;
+  z-index: $z-tooltip;
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background-color: $primary-color;
+  color: $text-light;
+
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+
+  .dark-mode & {
+    background-color: $primary-dark;
+    color: $text-light;
+
+    &:hover {
+      background-color: lighten($primary-dark, 10%);
+    }
+  }
+}
+
+// ================================
+// Nav links
+// ================================
+.navbar-collapse {
+  display: flex;
+  flex-grow: 1;
+  align-items: center;
+  justify-content: space-between;
+
+  &.show {
+    display: flex;
+  }
+}
+
+.navbar-nav {
+  display: flex;
+  flex-direction: row;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+
+  &.me-auto { margin-right: auto; }
+  &.ms-auto { margin-left: auto; }
+}
+
+.nav-item {
+  position: relative;
+  margin: 0 0.5rem;
+}
+
+.nav-link {
+  display: block;
+  padding: 0.5rem 1rem;
+  color: $text-dark;
+  text-decoration: none;
+  transition: $transition;
+  font-weight: 500;
+  border-radius: $border-radius;
+
+  &:hover {
+    color: $primary-light;
+    background: rgba($primary-color, 0.1);
+  }
+
+  &.active {
+    color: $primary-light;
+    background: rgba($primary-color, 0.2);
+  }
+
+  .dark-mode & {
+    color: $text-light;
+
+    &:hover {
+      color: $primary-light;
+      background: rgba($primary-light, 0.1);
+    }
+
+    &.active {
+      color: $primary-light;
+      background: rgba($primary-light, 0.2);
+    }
+  }
+}
+
+// ================================
+// Boutons
+// ================================
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius;
+  font-weight: 500;
+  transition: $transition;
+  cursor: pointer;
+
+  &-primary {
+    background: linear-gradient(135deg, $primary-color, $primary-dark);
+    color: $text-light;
+    border: none;
+    box-shadow: 0 4px 15px rgba($primary-color, 0.2);
+
+    &:hover {
+      background: linear-gradient(135deg, lighten($primary-color, 5%), lighten($primary-dark, 5%));
+      box-shadow: 0 6px 20px rgba($primary-color, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .dark-mode & {
+      background: linear-gradient(135deg, $primary-dark, $dark-card-bg, $secondary-dark);
+      color: $text-light;
+
+      &:hover {
+        background: linear-gradient(135deg, lighten($primary-dark, 5%), lighten($dark-card-bg, 5%), lighten($secondary-dark, 5%));
+      }
+    }
+  }
+
+  &-outline-danger {
+    background: transparent;
+    color: $error-color;
+    border: 1px solid $error-color;
+
+    &:hover {
+      background: rgba($error-color, 0.1);
+      color: lighten($error-color, 10%);
+      border-color: lighten($error-color, 10%);
+    }
+  }
+}
+
+// ================================
+// Responsive
+// ================================
+@media (max-width: 992px) {
+  .navbar-toggler { display: block; }
+
+  .navbar-collapse {
+    flex-basis: 100%;
+    flex-direction: column;
+    overflow: hidden;        // important pour cacher le contenu
+    max-height: 0;           // menu fermé
+    padding: 0;              // supprimer padding fermé
+    transition: max-height 0.35s ease, padding 0.35s ease;
+
+    &.show {
+      display: flex;
+      max-height: 1000px;   // valeur assez grande pour contenir le menu
+      padding: 1rem 0;
+    }
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+    margin: 0.5rem 0;
+    align-items: center;
+
+    .nav-item { margin: 0.25rem 0; }
+
+    .btn { width: 100%; margin: 0.5rem 0; }
+  }
+
+  .theme-toggle {
+    position: static;
+    transform: none;
+    margin-bottom: 0.5rem;
+  }
+}

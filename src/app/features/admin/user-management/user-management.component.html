@@ -1,0 +1,55 @@
+<div class="container">
+  <h3>👥 Gestion des utilisateurs</h3>
+
+  <table class="table table-bordered mt-3" *ngIf="!loading">
+    <thead class="table-light">
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>KYC</th>
+        <th>Actions</th>
+        <th>Approbation</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.firstname }} {{ user.lastname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone }}</td>
+        <td>
+          <span class="badge" [ngClass]="{
+            'bg-success': user.kyc_verified,
+            'bg-danger': !user.kyc_verified
+          }">
+            {{ user.kyc_verified ? '✔️ Vérifié' : '❌ Non vérifié' }}
+          </span>
+        </td>
+        <td>
+          <button class="btn btn-sm btn-outline-success" *ngIf="!user.kyc_verified"
+            (click)="verifyKYC(user.id)">
+            Vérifier KYC
+          </button>
+        </td>
+        <td>
+          <ng-container *ngIf="user.role === 'user'">
+            <ng-container *ngIf="!user.is_approved; else approvedBlock">
+              <span class="badge bg-danger">⏳ En attente</span>
+              <button class="btn btn-sm btn-outline-primary mt-1"
+                (click)="approveUser(user)">
+                Approuver
+              </button>
+            </ng-container>
+            <ng-template #approvedBlock>
+              <span class="badge bg-success">✅ Approuvé</span>
+            </ng-template>
+          </ng-container>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="loading" class="text-center mt-3">
+    <span class="spinner-border text-primary" role="status"></span> Chargement...
+  </div>
+</div>

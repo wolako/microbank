@@ -1,0 +1,12 @@
+<div class="service-layout">
+  <div class="content">
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Appel à l'action masqué si connecté -->
+  <div class="cta-box" *ngIf="!isAuthenticated">
+    <h4>Prêt à faire le premier pas ?</h4>
+    <p>Ouvrez un compte ou contactez-nous dès aujourd’hui pour discuter de vos besoins financiers.</p>
+    <a routerLink="/register">Ouvrir un compte</a>
+  </div>
+</div>

@@ -1,0 +1,46 @@
+<app-service-layout *ngIf="service">
+  <div class="service-detail">
+    <h2>{{ service.title }}</h2>
+    <p>{{ service.description }}</p>
+    <img [src]="service.image" alt="{{ service.title }}" class="loan-illustration" />
+
+    <ul>
+      <li *ngFor="let benefit of service.benefits">{{ benefit }}</li>
+    </ul>
+
+    <!-- Call-to-action uniquement pour les services de type prêt -->
+    <div *ngIf="service.showLoanForm" class="mt-4">
+      <!-- Utilisateur connecté : bouton d'accès au formulaire -->
+      <div *ngIf="isAuthenticated; else needAuth" class="text-center">
+        <button class="btn btn-primary btn-lg" (click)="goToLoanForm()">
+          Demander ce prêt
+        </button>
+      </div>
+
+      <!-- Utilisateur non connecté : invite à se connecter/s'inscrire -->
+      <ng-template #needAuth>
+        <div class="alert alert-warning mt-3">
+          <p class="mb-2">
+            ⚠️ Vous devez être connecté pour faire une demande de prêt.
+          </p>
+          <div class="d-flex gap-2">
+            <a
+              [routerLink]="['/login']"
+              [queryParams]="{ returnUrl: '/services/' + service.id }"
+              class="btn btn-primary"
+            >
+              Se connecter
+            </a>
+            <!-- <a [routerLink]="['/register']" class="btn btn-outline">
+              Créer un compte
+            </a> -->
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</app-service-layout>
+
+<div *ngIf="!service" class="not-found">
+  <p>Service introuvable</p>
+</div>

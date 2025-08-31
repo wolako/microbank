@@ -1,0 +1,18 @@
+<div class="verify-email">
+  <h2>📧 Confirmez votre email</h2>
+  <p>Un email de confirmation a été envoyé à votre adresse. Veuillez vérifier votre boîte de réception.</p>
+
+  @if (message) {
+    <div class="alert alert-success mt-2">{{ message }}</div>
+  }
+
+  <button class="btn btn-outline-primary mt-3" (click)="resendEmail()" [disabled]="loading">
+    @if (loading) {
+      <span class="spinner-border spinner-border-sm me-2"></span>
+    } @else {
+      Renvoyer l'email de confirmation
+    }
+  </button>
+
+  <a routerLink="/" class="btn btn-link mt-4 d-block">Retour à l’accueil</a>
+</div>

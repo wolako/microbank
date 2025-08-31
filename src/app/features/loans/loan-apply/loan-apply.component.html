@@ -1,0 +1,62 @@
+<form [formGroup]="form" class="loan-form" (ngSubmit)="onSubmit()">
+  <h3>Formulaire de demande de prêt</h3>
+
+  <div class="row">
+    <!-- Colonne 1 -->
+    <div class="col-md-6">
+      <div class="form-group mb-3">
+        <label>Nom complet <small class="text-muted">(doit correspondre à votre profil)</small></label>
+        <input formControlName="fullName" type="text" class="form-control" placeholder="Entrez votre nom complet" required />
+        <div *ngIf="fieldErrors.fullName" class="text-danger mt-1">{{ fieldErrors.fullName }}</div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Email <small class="text-muted">(doit correspondre à votre profil)</small></label>
+        <input formControlName="email" type="email" class="form-control" placeholder="Entrez votre email" required />
+        <div *ngIf="fieldErrors.email" class="text-danger mt-1">{{ fieldErrors.email }}</div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Téléphone <small class="text-muted">(doit correspondre à votre profil)</small></label>
+        <input formControlName="phone" type="tel" class="form-control" placeholder="Entrez votre numéro de téléphone" required />
+        <div *ngIf="fieldErrors.phone" class="text-danger mt-1">{{ fieldErrors.phone }}</div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Montant souhaité</label>
+        <input formControlName="amount" type="number" class="form-control" placeholder="Entrez le montant souhaité" required />
+        <div *ngIf="form.get('amount')?.invalid && form.get('amount')?.touched" class="text-danger mt-1">
+          Montant invalide (minimum : {{ product?.minAmount }} XOF)
+        </div>
+      </div>
+    </div>
+
+    <!-- Colonne 2 -->
+    <div class="col-md-6">
+      <div class="form-group mb-3">
+        <label>Durée (en mois)</label>
+        <input formControlName="term" type="number" class="form-control" placeholder="Entrez la durée en mois" required />
+        <div *ngIf="form.get('term')?.invalid && form.get('term')?.touched" class="text-danger mt-1">
+          Durée invalide (minimum : {{ product?.minTerm }} mois)
+        </div>
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Taux d’intérêt (%)</label>
+        <input formControlName="interestRate" type="number" readonly class="form-control" />
+      </div>
+
+      <div class="form-group mb-3">
+        <label>Objet du prêt</label>
+        <input formControlName="reason" type="text" class="form-control" placeholder="Indiquez l'objet du prêt" />
+      </div>
+
+      <div class="form-group mt-4 text-end">
+        <button type="submit" class="btn btn-primary" [disabled]="loading">Soumettre</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger mt-3">{{ error }}</div>
+  <div *ngIf="success" class="alert alert-success mt-3">{{ success }}</div>
+</form>

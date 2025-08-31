@@ -1,0 +1,72 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <div class="auth-header text-center">
+      <img src="assets/logo.png" alt="Logo" class="logo mb-2">
+      <h2>Connexion à votre compte</h2>
+    </div>
+
+    <!-- Formulaire login -->
+    <form *ngIf="!twoFARequired" [formGroup]="form" (ngSubmit)="onSubmit()" class="auth-form">
+      <div class="form-group mb-3">
+        <label for="login">Login</label>
+        <input
+          type="text"
+          id="login"
+          class="form-control"
+          formControlName="login"
+          placeholder="Email ou nom d’utilisateur"
+        />
+      </div>
+
+      <div class="form-group mb-3">
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control"
+          formControlName="password"
+          placeholder="********"
+        />
+        <div class="text-end mt-1">
+          <a routerLink="/forgot-password" class="forgot-password">Mot de passe oublié ?</a>
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger text-center">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="form.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+        <span *ngIf="!isLoading">Se connecter</span>
+      </button>
+    </form>
+
+    <!-- Formulaire 2FA -->
+    <form *ngIf="twoFARequired" [formGroup]="twoFAForm" (ngSubmit)="onSubmit2FA()" class="auth-form">
+      <div class="form-group mb-3">
+        <label for="token">Code 2FA</label>
+        <input
+          type="text"
+          id="token"
+          class="form-control"
+          formControlName="token"
+          placeholder="Entrez votre code 2FA"
+        />
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger text-center">
+        {{ errorMessage }}
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="twoFAForm.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
+        <span *ngIf="!isLoading">Valider le code 2FA</span>
+      </button>
+    </form>
+
+    <div class="auth-footer text-center mt-4">
+      <p>Nouveau chez MicroFinance ? <a routerLink="/register">Créer un compte</a></p>
+    </div>
+  </div>
+</div>

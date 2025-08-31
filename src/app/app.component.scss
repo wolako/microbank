@@ -1,0 +1,32 @@
+@import '../assets/variables';
+
+// ================================
+// Bouton toggle mode jour/nuit
+// ================================
+// .theme-toggle {
+//   z-index: $z-tooltip;           // au-dessus du header
+//   position: fixed;
+//   top: 1rem;
+//   right: 1rem;
+//   padding: 0.5rem 1rem;
+//   border-radius: 50px;
+//   background-color: $primary-color;
+//   color: $color-light-btn-text;
+//   font-weight: 600;
+//   cursor: pointer;
+//   transition: all 0.3s ease;
+
+//   &:hover {
+//     background-color: darken($primary-color, 10%);
+//   }
+
+//   // Mode sombre
+//   body.dark-mode & {
+//     background-color: $primary-dark;
+//     color: $color-dark-btn-text;
+
+//     &:hover {
+//       background-color: lighten($primary-dark, 10%);
+//     }
+//   }
+// }

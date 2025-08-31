@@ -1,0 +1,96 @@
+<div class="admin-create-page">
+  <div class="container">
+    <div class="card shadow-lg p-4">
+      <h3 class="mb-4 text-center">👤 Création d’un membre de l’équipe</h3>
+
+      <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <!-- Prénom + Nom -->
+        <div class="row g-3">
+          <div class="col-md-6">
+            <label for="firstName" class="form-label">Prénom</label>
+            <input id="firstName" type="text" formControlName="firstName" class="form-control">
+            <div class="text-danger mt-1 small" *ngIf="form.get('firstName')?.touched && form.get('firstName')?.invalid">
+              <span *ngIf="form.get('firstName')?.errors?.['required']">Prénom requis</span>
+              <span *ngIf="form.get('firstName')?.errors?.['minlength']">Au moins 2 caractères</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="lastName" class="form-label">Nom</label>
+            <input id="lastName" type="text" formControlName="lastName" class="form-control">
+            <div class="text-danger mt-1 small" *ngIf="form.get('lastName')?.touched && form.get('lastName')?.invalid">
+              <span *ngIf="form.get('lastName')?.errors?.['required']">Nom requis</span>
+              <span *ngIf="form.get('lastName')?.errors?.['minlength']">Au moins 2 caractères</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Email + Téléphone -->
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <input id="email" type="email" formControlName="email" class="form-control">
+            <div class="text-danger mt-1 small" *ngIf="form.get('email')?.touched && form.get('email')?.invalid">
+              <span *ngIf="form.get('email')?.errors?.['required']">Email requis</span>
+              <span *ngIf="form.get('email')?.errors?.['email']">Email invalide</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="phone" class="form-label">Téléphone</label>
+            <input id="phone" type="text" formControlName="phone" class="form-control">
+            <div class="text-danger mt-1 small" *ngIf="form.get('phone')?.touched && form.get('phone')?.invalid">
+              <span *ngIf="form.get('phone')?.errors?.['required']">Téléphone requis</span>
+              <span *ngIf="form.get('phone')?.errors?.['pattern']">Numéro invalide</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rôle -->
+        <div class="mb-3 mt-2">
+          <label for="role" class="form-label">Rôle</label>
+          <select id="role" class="form-select" formControlName="role">
+            <option value="">Sélectionner un rôle</option>
+            <option *ngFor="let role of roles" [value]="role.value">{{ role.label }}</option>
+          </select>
+          <div class="text-danger mt-1 small" *ngIf="form.get('role')?.touched && form.get('role')?.invalid">
+            <span *ngIf="form.get('role')?.errors?.['required']">Rôle requis</span>
+          </div>
+        </div>
+
+        <!-- MDP + Confirmation -->
+        <div class="row g-3 mt-2">
+          <div class="col-md-6">
+            <label for="password" class="form-label">Mot de passe</label>
+            <input id="password" type="password" formControlName="password" class="form-control">
+            <div class="text-danger mt-1 small" *ngIf="form.get('password')?.touched && form.get('password')?.invalid">
+              <span *ngIf="form.get('password')?.errors?.['required']">Mot de passe requis</span>
+              <span *ngIf="form.get('password')?.errors?.['minlength']">Au moins 6 caractères</span>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <label for="confirmPassword" class="form-label">Confirmer le mot de passe</label>
+            <input id="confirmPassword" type="password" formControlName="confirmPassword" class="form-control">
+            <div class="text-danger mt-1 small" *ngIf="form.get('confirmPassword')?.touched && form.get('confirmPassword')?.invalid">
+              <span *ngIf="form.get('confirmPassword')?.errors?.['required']">Confirmation requise</span>
+              <span *ngIf="form.errors?.['passwordMismatch']">Les mots de passe ne correspondent pas</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bouton -->
+        <div class="d-grid mt-4">
+          <button class="btn btn-primary btn-lg" type="submit" [disabled]="form.invalid">
+            Créer le compte
+          </button>
+        </div>
+      </form>
+
+      <!-- Messages -->
+      <div *ngIf="successMessage" class="alert alert-success mt-4 text-center">
+        {{ successMessage }}
+      </div>
+      <div *ngIf="errorMessage" class="alert alert-danger mt-4 text-center">
+        {{ errorMessage }}
+      </div>
+    </div>
+  </div>
+</div>

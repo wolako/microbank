@@ -1,0 +1,221 @@
+<div *ngIf="showPasswordModal" class="modal">
+  <div class="modal-content">
+    <h4>Confirmez votre mot de passe</h4>
+
+    <form (ngSubmit)="verifyPasswordAndViewRIB()">
+      <label>Mot de passe :</label>
+      <input type="password" [(ngModel)]="enteredPassword" name="password" required class="form-control" />
+
+      <div *ngIf="passwordError" class="text-danger mt-2">{{ passwordError }}</div>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" [disabled]="verifying">
+          {{ verifying ? 'Vérification...' : 'Confirmer' }}
+        </button>
+        <button type="button" class="btn btn-secondary" (click)="closePasswordModal()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="dashboard-container">
+  <!-- En-tête utilisateur -->
+  <div class="header">
+    <h1>Tableau de bord</h1>
+    <div class="user-info">
+      <span>Bienvenue, {{ userData?.firstName }} {{ userData?.lastName }}</span>
+      <div class="avatar">{{ userData?.firstName?.charAt(0) }}{{ userData?.lastName?.charAt(0) }}</div>
+    </div>
+  </div>
+
+  <!-- Alerte de prêts en retard -->
+  <div class="alert alert-danger" *ngIf="loanStats && loanStats.overdue_loans > 0">
+    ⚠️ Vous avez {{ loanStats?.overdue_loans }} prêt(s) en retard. Veuillez régulariser rapidement.
+  </div>
+
+  <!-- Accès rapide aux comptes -->
+  <div class="bank-access" style="margin-bottom: 2rem;">
+    <a routerLink="/accounts" class="btn btn-primary">
+      <i class="bi bi-bank"></i> Accéder à mon compte bancaire
+    </a>
+    <a class="btn btn-outline-secondary mt-2" (click)="openPasswordModal()">
+      <i class="bi bi-file-earmark-text"></i> Voir mon RIB
+    </a>
+  </div>
+
+  <!-- Statistiques -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-wallet2"></i></div>
+      <div class="stat-content">
+        <h3>{{ accountBalance | currencyXof }}</h3>
+        <p>Solde du compte</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-cash-stack"></i></div>
+      <div class="stat-content">
+        <h3>{{ loanStats?.active_loans }}</h3>
+        <p>Prêts actifs</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-currency-exchange"></i></div>
+      <div class="stat-content">
+        <h3>{{ loanStats?.total_borrowed | currencyXof }}</h3>
+        <p>Montant total emprunté</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-clock-history"></i></div>
+      <div class="stat-content">
+        <h3>{{ loanStats?.unpaid_installments }}</h3>
+        <p>Échéances impayées</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon"><i class="bi bi-bar-chart-line"></i></div>
+      <div class="stat-content">
+      <h3>{{ creditScore }}/100</h3>
+      <p>Score crédit</p>
+      <div class="progress mt-2" style="height: 8px;">
+        <div 
+          class="progress-bar"
+          [ngClass]="getCreditScoreColor(creditScore)"
+          role="progressbar"
+          [style.width.%]="creditScore"
+          aria-valuemin="0"
+          aria-valuemax="100">
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </div>
+
+  <!-- Résumé du prêt actuel -->
+  <div class="current-loan-summary" *ngIf="loanStats && loanStats.active_loans > 0">
+    <h3>📋 Prêt en cours</h3>
+    <p><strong>Montant total emprunté:</strong> {{ loanStats?.total_borrowed | currencyXof }}</p>
+    <p><strong>Montant remboursé:</strong> {{ loanStats?.total_interest_paid | currencyXof }}</p>
+    <p>
+      <strong>Prochaine échéance:</strong>
+      {{ loanStats?.next_payment_date | date:'d MMM yyyy' }}
+      <span *ngIf="loanStats?.next_payment_date && isSoon(loanStats.next_payment_date!)"
+            class="badge bg-danger ms-2">⚠️ Bientôt</span>
+    </p>
+    <p><strong>Montant à payer:</strong> {{ loanStats?.next_payment_amount | currencyXof }}</p>
+    <!-- ✅ Bouton pour lancer le paiement -->
+    <button class="btn btn-success mt-2"
+            *ngIf="loanStats?.next_payment_amount && loanStats?.current_loan_id"
+            (click)="openPaymentModal()">
+      💳 Payer maintenant
+    </button>
+
+    <!-- ✅ Lien vers la page de détails du prêt -->
+    <a *ngIf="loanStats?.current_loan_id"
+       [routerLink]="['/loans', loanStats?.current_loan_id]"
+       class="btn btn-outline-primary mt-2">
+      📄 Voir les détails du prêt
+    </a>
+  </div>
+
+  <!-- Échéances à venir -->
+  <div class="payment-reminders">
+    <h3>📅 Prochaines échéances</h3>
+
+    <div class="installment-grid" *ngIf="upcomingInstallments.length > 0; else noInstallments">
+      <div class="installment-card" *ngFor="let i of upcomingInstallments">
+        <div class="installment-header">
+          <span class="installment-date">{{ i.dueDate | date: 'd MMM yyyy' }}</span>
+          <span class="installment-status" [ngClass]="i.status">{{ i.status | titlecase }}</span>
+        </div>
+        <div class="installment-amount">{{ i.amount | currencyXof }}</div>
+      </div>
+    </div>
+
+    <ng-template #noInstallments>
+      <p class="text-muted">Aucune échéance à venir.</p>
+    </ng-template>
+  </div>
+
+  <!-- Appel à action : demande de prêt -->
+  <div class="new-loan-cta">
+    <h4>Besoin d’un nouveau financement ?</h4>
+    <a routerLink="/loans" class="btn btn-primary">Faire une demande de prêt</a>
+  </div>
+
+  <!-- Graphiques -->
+  <div class="charts-row">
+    <canvas baseChart
+      *ngIf="distributionData"
+      [data]="distributionData"
+      [type]="'doughnut'"
+      [options]="doughnutChartOptions">
+    </canvas>
+
+    <canvas baseChart
+      *ngIf="monthlyPaymentsData"
+      [data]="monthlyPaymentsData"
+      [type]="'bar'"
+      [options]="barChartOptions">
+    </canvas>
+  </div>
+
+  <!-- Dernières transactions -->
+  <div class="recent-transactions">
+    <h3>Dernières transactions</h3>
+    <div class="transaction-list">
+      <div class="transaction-item" *ngFor="let tx of recentTransactions">
+        <div class="tx-icon">
+          <i [class]="getTransactionIcon(tx.type)"></i>
+        </div>
+        <div class="tx-details">
+          <strong>{{ tx.description }}</strong>
+          <span>{{ tx.created_at | date:'d MMMM y à HH:mm' }}</span>
+          <div *ngIf="tx.channel" class="text-muted small">via {{ tx.channel }}</div>
+          <div *ngIf="tx.type === 'transfer' || tx.type === 'wire'">
+            <a [routerLink]="['/transactions', tx.id]" class="tx-link">Détails</a>
+          </div>
+        </div>
+        <div class="tx-amount" [class.credit]="tx.amount > 0">{{ tx.amount | currencyXof }}</div>
+      </div>
+    </div>
+    <a routerLink="/transactions/history" class="view-all">Voir toutes les transactions →</a>
+  </div>
+</div>
+
+<ng-template #loading>
+  <div class="loading-container">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Chargement...</span>
+    </div>
+    <p>Chargement de votre tableau de bord...</p>
+  </div>
+</ng-template>
+
+<!-- Paiement Modal -->
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <h4>Effectuer un paiement</h4>
+
+    <form (ngSubmit)="confirmPayment()">
+      <label>Montant :</label>
+      <input type="number" [(ngModel)]="paymentAmount" name="amount" required class="form-control" />
+
+      <label>Méthode :</label>
+      <select [(ngModel)]="paymentMethod" name="method" required class="form-control">
+        <option value="wallet">Portefeuille</option>
+        <option value="mobile_money">Mobile Money</option>
+        <option value="card">Carte Bancaire</option>
+      </select>
+
+      <div class="mt-3">
+        <button type="submit" class="btn btn-primary" 
+        [disabled]="isPaying || paymentAmount <= 0">Payer</button>
+        <button type="button" class="btn btn-secondary" (click)="closeModal()">Annuler</button>
+      </div>
+    </form>
+  </div>
+</div>

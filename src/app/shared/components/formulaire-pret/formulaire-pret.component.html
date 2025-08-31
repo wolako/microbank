@@ -1,0 +1,47 @@
+<form [formGroup]="form" class="loan-form" (ngSubmit)="onSubmit()">
+  <h3>Formulaire de demande de prêt</h3>
+
+  <!-- <p><strong>Produit sélectionné :</strong> {{ selectedProduct?.name }}</p> -->
+
+  <div class="row">
+    <div class="form-group">
+      <label>Nom complet</label>
+      <input formControlName="fullName" type="text" required />
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input formControlName="email" type="email" required />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group">
+      <label>Montant souhaité</label>
+      <input formControlName="amount" type="number" required />
+    </div>
+    <div class="form-group">
+      <label>Durée (en mois)</label>
+      <input formControlName="termMonths" type="number" required />
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="form-group">
+      <label>Taux d’intérêt (%)</label>
+      <input formControlName="interestRate" type="number" [value]="selectedProduct?.interestRate" readonly />
+    </div>
+    <div class="form-group">
+      <label>Objet du prêt</label>
+      <input formControlName="purpose" type="text" />
+    </div>
+  </div>
+
+  <div class="form-group full">
+    <label>
+      <input type="checkbox" formControlName="disburseImmediately" />
+      Débloquer les fonds immédiatement
+    </label>
+  </div>
+
+  <button type="submit" class="btn-submit">Soumettre la demande</button>
+</form>

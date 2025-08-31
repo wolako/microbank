@@ -1,0 +1,31 @@
+<footer class="footer" [ngClass]="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h3>MicroBank</h3>
+        <p>Des solutions financières pour tous depuis {{ currentYear }}</p>
+      </div>
+
+      <div class="col-md-4">
+        <h4>Liens utiles</h4>
+        <ul>
+          <li><a routerLink="/about">À propos</a></li>
+          <li><a routerLink="/contact">Contact</a></li>
+          <li><a routerLink="/faq">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="col-md-4">
+        <h4>Contact</h4>
+        <address>
+          email.&#64;microbank.com<br>
+          +228 00 00 00 00
+        </address>
+      </div>
+    </div>
+
+    <div class="copyright">
+      &copy; {{ currentYear }} MicroBank. Tous droits réservés.
+    </div>
+  </div>
+</footer>

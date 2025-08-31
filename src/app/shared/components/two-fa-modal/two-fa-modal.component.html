@@ -1,0 +1,25 @@
+<div class="modal-backdrop" *ngIf="visible">
+  <div class="modal-dialog">
+    <div class="modal-content p-4 shadow-lg rounded-3">
+      
+      <div class="modal-header border-0 pb-0">
+        <h5 class="modal-title d-flex align-items-center gap-2 text-white">
+          🔒 Validation 2FA requise
+        </h5>
+        <button type="button" class="btn-close" (click)="close()"></button>
+      </div>
+      
+      <div class="modal-body pt-2 text-white">
+        <p class="text-light">{{ message || 'Veuillez saisir votre code 2FA pour continuer.' }}</p>
+        <input #tokenInput type="text" class="form-control form-control-lg mt-2" [(ngModel)]="token" placeholder="Code 2FA" autofocus />
+        <div *ngIf="error" class="text-danger mt-2">{{ error }}</div>
+      </div>
+      
+      <div class="modal-footer border-0 pt-3 justify-content-between">
+        <button type="button" class="btn btn-outline-light" (click)="close()">Annuler</button>
+        <button type="button" class="btn btn-light text-dark" (click)="confirm()">Valider</button>
+      </div>
+
+    </div>
+  </div>
+</div>

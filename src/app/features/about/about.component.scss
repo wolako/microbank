@@ -1,0 +1,269 @@
+@import '../../../assets/variables';
+
+.about-page {
+  font-family: 'Inter', sans-serif;
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.4s ease, color 0.4s ease;
+
+  // ========================
+  // Hero Section
+  // ========================
+  .hero-section {
+    padding: $spacing-unit * 6 $spacing-unit * 2;
+    text-align: center;
+    background-color: $color-light-section-bg;
+    transition: background-color 0.4s ease;
+
+    h1 {
+      font-size: 2.8rem;
+      font-weight: 700;
+      color: $color-light-primary;
+      transition: color 0.4s ease;
+      margin-bottom: $spacing-half;
+
+      @media (max-width: $breakpoint-md) { font-size: 2.2rem; }
+      @media (max-width: $breakpoint-sm) { font-size: 1.8rem; }
+    }
+
+    .lead {
+      font-size: 1.2rem;
+      color: $text-secondary;
+      transition: color 0.4s ease;
+
+      @media (max-width: $breakpoint-md) { font-size: 1rem; }
+    }
+  }
+
+  // ========================
+  // Story Section
+  // ========================
+  .story-section {
+    padding: $spacing-unit * 4 $spacing-unit * 2;
+    background-color: $color-light-section-bg;
+    transition: background-color 0.4s ease;
+
+    .section-header {
+      text-align: center;
+      margin-bottom: $spacing-unit * 3;
+
+      h2 { color: $color-light-primary; transition: color 0.4s ease; }
+      .divider {
+        width: 60px;
+        height: 3px;
+        background-color: $color-light-primary;
+        margin: $spacing-half auto $spacing-unit auto;
+        border-radius: 2px;
+        transition: background-color 0.4s ease;
+      }
+    }
+
+    .story-content {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+      p {
+        font-size: 1rem;
+        color: $text-secondary;
+        margin-bottom: $spacing-unit;
+        line-height: 1.6;
+        transition: color 0.4s ease;
+      }
+    }
+  }
+
+  // ========================
+  // Stats Section
+  // ========================
+  .stats-section {
+    padding: $spacing-unit * 4 $spacing-unit * 2;
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: $spacing-unit * 2;
+      text-align: center;
+
+      @media (max-width: $breakpoint-lg) { grid-template-columns: repeat(2, 1fr); }
+      @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; }
+    }
+
+    .stat-item {
+      background-color: $light-card-bg;
+      padding: $spacing-unit * 2;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      transition: all 0.4s ease;
+
+      .stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $color-light-primary;
+        margin-bottom: $spacing-half;
+        transition: color 0.4s ease;
+      }
+
+      .stat-label {
+        font-size: 0.95rem;
+        color: $text-secondary;
+        transition: color 0.4s ease;
+      }
+    }
+  }
+
+  // ========================
+  // Team Section
+  // ========================
+  .team-section {
+    padding: $spacing-unit * 4 $spacing-unit * 2;
+
+    .section-header {
+      text-align: center;
+      margin-bottom: $spacing-unit * 3;
+      h2 { color: $color-light-primary; transition: color 0.4s ease; }
+      .divider {
+        width: 60px;
+        height: 3px;
+        background-color: $color-light-primary;
+        margin: $spacing-half auto $spacing-unit auto;
+        border-radius: 2px;
+        transition: background-color 0.4s ease;
+      }
+      .section-subtitle { color: $text-secondary; transition: color 0.4s ease; }
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: $spacing-unit * 2;
+      @media (max-width: $breakpoint-lg) { grid-template-columns: repeat(2, 1fr); }
+      @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; }
+    }
+
+    .team-card {
+      background-color: $light-card-bg;
+      padding: $spacing-unit * 2;
+      border-radius: $border-radius;
+      text-align: center;
+      box-shadow: $box-shadow;
+      transition: all 0.4s ease;
+
+      h3 { color: $color-light-primary; transition: color 0.4s ease; margin-bottom: $spacing-half; }
+      .team-role { color: $text-secondary; margin-bottom: $spacing-half; transition: color 0.4s ease; }
+      p { color: $text-secondary; font-size: 0.95rem; transition: color 0.4s ease; }
+
+      .social-links {
+        margin-top: $spacing-half;
+        a {
+          margin: 0 $spacing-quarter;
+          color: $color-light-primary;
+          font-size: 1.2rem;
+          transition: color 0.3s ease;
+          &:hover { color: $secondary-color; }
+        }
+      }
+    }
+  }
+
+  // ========================
+  // Timeline Section
+  // ========================
+  .timeline-section {
+    padding: $spacing-unit * 4 $spacing-unit * 2;
+
+    .section-header {
+      text-align: center;
+      margin-bottom: $spacing-unit * 3;
+      h2 { color: $color-light-primary; transition: color 0.4s ease; }
+      .divider {
+        width: 60px;
+        height: 3px;
+        background-color: $color-light-primary;
+        margin: $spacing-half auto $spacing-unit auto;
+        border-radius: 2px;
+        transition: background-color 0.4s ease;
+      }
+    }
+
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-unit * 3;
+
+      .timeline-item {
+        display: flex;
+        gap: $spacing-unit * 2;
+        flex-wrap: wrap;
+
+        .timeline-year {
+          font-weight: 700;
+          font-size: 1.5rem;
+          color: $color-light-primary;
+          flex: 0 0 80px;
+          transition: color 0.4s ease;
+        }
+
+        .timeline-content {
+          flex: 1;
+          h3 { color: $color-light-primary; margin-bottom: $spacing-half; transition: color 0.4s ease; }
+          p { color: $text-secondary; transition: color 0.4s ease; }
+        }
+      }
+    }
+  }
+
+  // ========================
+  // CTA Section
+  // ========================
+  .cta-section {
+    padding: $spacing-unit * 6 $spacing-unit * 2;
+    text-align: center;
+    background-color: $color-light-section-bg;
+    transition: background-color 0.4s ease;
+
+    h2 { color: $color-light-primary; margin-bottom: $spacing-half; transition: color 0.4s ease; }
+    p { color: $text-secondary; margin-bottom: $spacing-unit * 2; transition: color 0.4s ease; }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: $spacing-half;
+      flex-wrap: wrap;
+
+      .btn {
+        padding: $spacing-half $spacing-unit;
+        font-weight: 600;
+        border-radius: $border-radius;
+        transition: all 0.3s ease;
+      }
+    }
+  }
+
+  // ========================
+  // Dark Mode
+  // ========================
+  :host-context(.dark-mode) {
+    background-color: $color-dark-bg;
+    color: $color-dark-section-text;
+
+    .hero-section,
+    .story-section,
+    .stats-section,
+    .team-section,
+    .timeline-section,
+    .cta-section {
+      background-color: $color-dark-section-bg;
+
+      h1, h2, h3 { color: $color-dark-primary; transition: color 0.4s ease; }
+      p, .lead, .section-subtitle, .timeline-content p, .team-role { color: $color-dark-section-text; transition: color 0.4s ease; }
+
+      .divider { background-color: $color-dark-primary; transition: background-color 0.4s ease; }
+      .stat-number, .team-card h3, .timeline-year { color: $color-dark-primary; transition: color 0.4s ease; }
+
+      .team-card, .stat-item { background-color: $color-dark-card-bg; }
+      .social-links a { color: $color-dark-primary; transition: color 0.3s ease; &:hover { color: $secondary-dark; } }
+      .cta-buttons .btn-primary { background-color: $color-dark-primary; color: $color-dark-btn-text; }
+      .cta-buttons .btn-outline { border-color: $color-dark-primary; color: $color-dark-primary; }
+    }
+  }
+}

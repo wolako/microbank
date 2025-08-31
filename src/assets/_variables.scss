@@ -1,0 +1,108 @@
+// ================================
+// Couleurs principales
+// ================================
+$primary-color: #3498db;           // bleu principal
+$primary-dark: #0d1b3d;            // bleu nuit foncé
+$primary-light: #559cff;           // bleu clair
+
+$secondary-color: #6a1b9a;         // violet léger pour accent
+$secondary-dark: #230c30;          // violet plus foncé
+$secondary-light: #9c47cc;
+
+$success-color: #2ecc71;
+$error-color: #e74c3c;
+$warning-color: #f39c12;
+$info-color: #3498db;
+
+// ================================
+// Couleurs mode clair / sombre
+// ================================
+// Mode Jour
+$color-light-bg: #f9f7fcfb;          // blanc cassé
+$color-light-card-bg: #ffffff;
+$color-light-section-bg: #ffffff;
+$color-light-section-text: #333;
+$color-light-btn-text: #2c3e50;    // gris foncé
+$color-light-primary: $primary-color;
+$color-light-accent: $secondary-color;
+
+// Mode Nuit
+$dark-card-bg: #1a1a2a;            // gris sombre
+$color-dark-bg: linear-gradient(
+  165deg,
+  $primary-dark 0%,       
+  $secondary-dark 20%    
+  $dark-card-bg 80%,      
+);
+$color-dark-card-bg: $dark-card-bg;
+$color-dark-section-bg: $dark-card-bg;
+$color-dark-section-text: #ccc;    // gris clair
+$color-dark-btn-text: #ffffff;
+$color-dark-primary: $primary-dark;
+$color-dark-accent: $secondary-dark;
+
+// ================================
+// Textes
+$text-primary: #2c3e50;            // gris foncé
+$text-secondary: #7f8c8d;          // gris moyen
+$text-light: #ffffff;               // blanc
+$text-dark: #2c3e50;                // gris foncé
+
+// ================================
+// Bordures
+$border-color: #ddd;
+$border-radius: 4px;
+
+// ================================
+// Ombres
+$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+// ================================
+// Espacements
+$spacing-unit: 1rem;
+$spacing-half: 0.5rem;
+$spacing-quarter: 0.25rem;
+
+// ================================
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;
+
+// ================================
+// Transitions
+$transition: all 0.3s ease;
+
+// ================================
+// Z-index
+$z-header: 1000;
+$z-modal: 1050;
+$z-tooltip: 1100;
+
+// ================================
+// Mixins utiles
+// ================================
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin respond-md {
+  @media (max-width: $breakpoint-md) {
+    @content;
+  }
+}
+
+// ================================
+// Aliases pour compatibilité avec styles.scss et app.component.scss
+// ================================
+$light-bg: $color-light-bg;
+$dark-bg: $color-dark-bg;
+
+$light-card-bg: $color-light-card-bg;
+$dark-card-bg: $color-dark-card-bg;
+
+$color-light-btn-text: $color-light-btn-text;
+$color-dark-btn-text: $color-dark-btn-text;

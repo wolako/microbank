@@ -1,0 +1,114 @@
+<div class="about-page">
+  <!-- Section Hero -->
+  <section class="hero-section">
+    <div class="container">
+      <h1>Notre mission</h1>
+      <p class="lead">Rendre les services financiers accessibles à tous</p>
+    </div>
+  </section>
+
+  <!-- Section Notre histoire -->
+  <section class="story-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Notre histoire</h2>
+        <div class="divider"></div>
+      </div>
+      
+      <div class="story-content">
+        <p>
+          Fondée en 2015, MicroFinance est née de la volonté de combler le fossé financier 
+          dans notre communauté. Nous croyons que chacun mérite un accès équitable à des 
+          services bancaires de qualité, indépendamment de son statut social ou économique.
+        </p>
+        
+        <p>
+          Ce qui a commencé comme une petite initiative locale est devenu une plateforme 
+          financière innovante, touchant des milliers de vies à travers la région.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Chiffres clés -->
+  <section class="stats-section">
+    <div class="container">
+      <div class="stats-grid">
+        <div class="stat-item">
+          <div class="stat-number">10 000+</div>
+          <div class="stat-label">Clients satisfaits</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">25M€</div>
+          <div class="stat-label">De prêts accordés</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">95%</div>
+          <div class="stat-label">Taux de remboursement</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">15</div>
+          <div class="stat-label">Communautés desservies</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Équipe -->
+  <section class="team-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Notre équipe</h2>
+        <div class="divider"></div>
+        <p class="section-subtitle">Des professionnels dévoués à votre service</p>
+      </div>
+      
+      <div class="team-grid">
+        <div class="team-card" *ngFor="let member of teamMembers">
+          <div class="team-avatar">
+            <!-- <img [src]="member.avatar" [alt]="member.name"> -->
+          </div>
+          <h3>{{ member.name }}</h3>
+          <div class="team-role">{{ member.role }}</div>
+          <p>{{ member.bio }}</p>
+          <div class="social-links">
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+            <a href="#"><i class="bi bi-twitter-x"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Historique -->
+  <section class="timeline-section">
+    <div class="container">
+      <div class="section-header">
+        <h2>Nos réalisations</h2>
+        <div class="divider"></div>
+      </div>
+      
+      <div class="timeline">
+        <div class="timeline-item" *ngFor="let item of milestones">
+          <div class="timeline-year">{{ item.year }}</div>
+          <div class="timeline-content">
+            <h3>{{ item.title }}</h3>
+            <p>{{ item.description }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section CTA -->
+  <section class="cta-section">
+    <div class="container">
+      <h2>Prêt à nous rejoindre ?</h2>
+      <p>Découvrez comment nous pouvons vous aider à réaliser vos projets</p>
+      <div class="cta-buttons">
+        <a routerLink="/contact" class="btn btn-primary">Nous contacter</a>
+        <a routerLink="/services" class="btn btn-outline">Nos services</a>
+      </div>
+    </div>
+  </section>
+</div>

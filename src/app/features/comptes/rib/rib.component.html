@@ -1,0 +1,23 @@
+<div class="rib-container" *ngIf="accountData">
+  <h2>🧾 Relevé d’Identité Bancaire</h2>
+
+  <p><strong>Nom :</strong> {{ accountData.firstname }} {{ accountData.lastname }}</p>
+  <p><strong>Email :</strong> {{ accountData.email }}</p>
+  <p>
+    <strong>Numéro de compte (RIB) :</strong> 
+    <span>{{ accountData.accountnumber }}</span>
+    <button class="btn btn-sm btn-outline-primary ms-2" (click)="copyToClipboard()">Copier</button>
+  </p>
+  <p><strong>Solde actuel :</strong> {{ accountData.balance | currencyXof }}</p>
+
+  <button class="btn btn-outline-info mt-3" (click)="sendRibByEmail()">
+    📤 Partager mon RIB par email
+  </button>
+
+  <button class="btn btn-success mt-3" (click)="downloadPDF()">
+    Télécharger le RIB en PDF
+  </button>
+</div>
+
+<div *ngIf="loading" class="text-muted">Chargement...</div>
+<div *ngIf="error" class="alert alert-danger">{{ error }}</div>

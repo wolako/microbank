@@ -1,0 +1,29 @@
+.service-layout {
+    max-width: 1000px;
+    margin: auto;
+    padding: 2rem 1rem;
+    
+
+    .cta-box {
+      margin-top: 3rem;
+      padding: 2rem;
+      background: linear-gradient(135deg, #007bff, #0056b3);
+      border-radius: 10px;
+      color: white;
+      text-align: center;
+    }
+
+    .cta-box a {
+      background: white;
+      color: #007bff;
+      padding: 0.7rem 1.5rem;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: 0.3s;
+    }
+
+    .cta-box a:hover {
+      background: #e0ecff;
+    }
+}

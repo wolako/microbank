@@ -1,0 +1,41 @@
+<div class="transaction-details" *ngIf="!isLoading && transaction">
+  <div class="actions mb-4">
+    <button class="btn btn-secondary me-2" (click)="goBack()">⬅️ Retour</button>
+    <button class="btn btn-outline-primary" (click)="printReceipt()">🖨️ Imprimer le reçu</button>
+    <button class="btn btn-outline-success" (click)="downloadPDF()">📥 Télécharger le reçu (PDF)</button>
+  </div>
+
+  <h2>Détails de la transaction</h2>
+  <ul class="list-unstyled">
+    <li><strong>ID :</strong> {{ transaction.id }}</li>
+    <li><strong>Type :</strong> {{ transaction.type }}</li>
+    <li><strong>Montant :</strong> {{ transaction.amount | currency:'XOF':'symbol':'1.0-0' }}</li>
+    <li><strong>Description :</strong> {{ transaction.description || '—' }}</li>
+    <li><strong>Date :</strong> {{ transaction.created_at | date:'medium' }}</li>
+    <li><strong>Solde après transaction :</strong> {{ transaction.balance_after | currency:'XOF':'symbol':'1.0-0' }}</li>
+    <li><strong>Canal :</strong> {{ transaction.channel || '—' }}</li>
+  </ul>
+
+  <div *ngIf="transaction.type === 'facture' || transaction.type === 'Paiement de facture'" class="mt-3">
+    <h5>📄 Détails de la facture</h5>
+    <ul class="list-unstyled">
+      <li><strong>Facturier :</strong> {{ transaction.billerName || '—' }}</li>
+      <li><strong>Service :</strong> {{ transaction.service || '—' }}</li>
+      <li><strong>Numéro client :</strong> {{ transaction.clientNumber || '—' }}</li>
+      <li *ngIf="transaction.period"><strong>Période :</strong> {{ transaction.period }}</li>
+      <li *ngIf="transaction.reference"><strong>Référence :</strong> {{ transaction.reference }}</li>
+    </ul>
+  </div>
+
+  <div *ngIf="transaction.type === 'purchase'" class="mt-3">
+    <h5>🛒 Détails de l'achat</h5>
+    <ul class="list-unstyled">
+      <li><strong>Marchand :</strong> {{ transaction.merchant || '—' }}</li>
+      <li><strong>Produit :</strong> {{ transaction.product || '—' }}</li>
+      <li><strong>Référence commande :</strong> {{ transaction.orderRef || '—' }}</li>
+    </ul>
+  </div>
+</div>
+
+<div *ngIf="isLoading">Chargement...</div>
+<div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>

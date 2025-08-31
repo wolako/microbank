@@ -1,0 +1,27 @@
+<div class="container">
+  <h3>📝 Prêts en attente d’approbation</h3>
+
+  <table class="table mt-4">
+    <thead>
+      <tr>
+        <th>Client</th>
+        <th>Montant</th>
+        <th>Durée</th>
+        <th>Mensualité</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let loan of pendingLoans">
+        <td>{{ loan.user_firstname }} {{ loan.user_lastname }}</td>
+        <td>{{ loan.amount }} XOF</td>
+        <td>{{ loan.term_months }} mois</td>
+        <td>{{ loan.monthly_payment }} XOF</td>
+        <td>
+          <button class="btn btn-success btn-sm" (click)="approve(loan.id)">✅</button>
+          <button class="btn btn-danger btn-sm" (click)="reject(loan.id)">❌</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

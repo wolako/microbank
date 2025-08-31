@@ -1,0 +1,208 @@
+@import '../../../../assets/variables';
+
+.loan-calculator {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: $spacing-unit * 4;
+  padding: $spacing-unit * 4;
+  min-height: 100vh;
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  flex-wrap: wrap;
+
+  // Formulaire
+  .calculator-form {
+    flex: 1 1 350px;
+    background-color: $light-card-bg;
+    padding: $spacing-unit * 3;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
+    animation: fadeInUp 0.6s ease forwards;
+
+    .form-group {
+      margin-bottom: $spacing-unit * 3;
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: $spacing-half;
+        color: $text-primary;
+        transition: color 0.3s ease;
+      }
+
+      .input-group {
+        display: flex;
+        align-items: center;
+        gap: $spacing-half;
+
+        .input-group-text {
+          background-color: $light-bg;
+          border: 1px solid $border-color;
+          padding: $spacing-half $spacing-unit;
+          border-radius: $border-radius;
+          font-weight: 600;
+          color: inherit;
+          transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+        }
+
+        input[type="range"] {
+          flex: 1;
+          accent-color: $color-light-primary;
+          cursor: pointer;
+          height: 4px;
+          background: lighten($color-light-primary, 40%);
+          border-radius: $border-radius;
+          outline: none;
+          transition: background-color 0.3s ease;
+        }
+
+        input[type="number"] {
+          width: 100px;
+          padding: $spacing-half;
+          border: 1px solid $border-color;
+          border-radius: $border-radius;
+          background-color: transparent;
+          color: inherit;
+          font-size: 1rem;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+          &:focus {
+            outline: none;
+            border-color: $color-light-primary;
+            box-shadow: 0 0 0 3px rgba($color-light-primary, 0.15);
+          }
+        }
+      }
+
+      .range-labels {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.85rem;
+        color: $text-secondary;
+        margin-top: $spacing-quarter;
+        transition: color 0.3s ease;
+      }
+    }
+
+    .btn.btn-primary {
+      width: 100%;
+      padding: $spacing-half $spacing-unit;
+      background-color: $color-light-primary;
+      color: $color-light-btn-text;
+      font-weight: 700;
+      border: none;
+      border-radius: $border-radius;
+      cursor: pointer;
+      transition: transform 0.15s ease, background-color 0.3s ease;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-3px);
+        background-color: $primary-light;
+      }
+
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+    }
+  }
+
+  // Résultats
+  .calculator-results {
+    flex: 1 1 250px;
+    background-color: $light-card-bg;
+    padding: $spacing-unit * 3;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    animation: fadeInUp 0.6s ease forwards;
+
+    .result-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $spacing-unit * 2;
+      font-size: 1rem;
+      font-weight: 500;
+      color: $text-primary;
+      transition: color 0.3s ease;
+
+      strong {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: $color-light-primary;
+        transition: color 0.3s ease;
+      }
+    }
+  }
+
+  // Mode sombre
+  :host-context(.dark-mode) & {
+    background-color: $dark-bg;
+    color: $color-dark-section-text;
+
+    .calculator-form,
+    .calculator-results {
+      background-color: $dark-card-bg;
+      color: $color-dark-section-text;
+      box-shadow: $box-shadow;
+
+      label { color: $color-dark-section-text; }
+      .range-labels { color: lighten($color-dark-section-text, 15%); }
+
+      .input-group-text {
+        background-color: $dark-bg;
+        border-color: darken($dark-card-bg, 5%);
+      }
+
+      input[type="range"] {
+        accent-color: $color-dark-primary;
+        background: lighten($color-dark-primary, 20%);
+      }
+
+      input[type="number"] {
+        border-color: darken($dark-card-bg, 6%);
+        color: $color-dark-section-text;
+
+        &:focus {
+          border-color: $color-dark-primary;
+          box-shadow: 0 0 0 3px rgba($color-dark-primary, 0.2);
+        }
+      }
+
+      .btn.btn-primary {
+        background-color: $color-dark-primary;
+        color: $color-dark-btn-text;
+
+        &:hover:not(:disabled) {
+          background-color: lighten($color-dark-primary, 6%);
+        }
+      }
+
+      .result-item strong {
+        color: $color-dark-primary;
+      }
+    }
+  }
+
+  // Animations
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  // Responsive
+  @media (max-width: $breakpoint-lg) {
+    flex-direction: column;
+    align-items: stretch;
+    padding: $spacing-unit * 2;
+
+    .calculator-form,
+    .calculator-results {
+      max-width: 100%;
+    }
+  }
+}

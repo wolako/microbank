@@ -1,0 +1,45 @@
+<div class="container mt-4">
+  <h3>👥 Gestion des rôles des utilisateurs</h3>
+
+  <!-- Messages -->
+  <div *ngIf="successMessage" class="alert alert-success mt-3">
+    {{ successMessage }}
+  </div>
+  <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
+
+  <!-- Tableau -->
+  <table class="table table-bordered mt-4">
+    <thead>
+      <tr>
+        <th>Nom</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Rôle actuel</th>
+        <th>Changer de rôle</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.firstname }} {{ user.lastname }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone }}</td>
+        <td>{{ user.role }}</td>
+        <td>
+          <select class="form-select"
+                  [ngModel]="user.role"
+                  (ngModelChange)="updateUserRole(user.id, $event)">
+            <option *ngFor="let role of roles" [value]="role.value">{{ role.label }}</option>
+          </select>
+        </td>
+        <td>
+          <button class="btn btn-danger btn-sm" (click)="deleteUser(user.id)">
+            Supprimer
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

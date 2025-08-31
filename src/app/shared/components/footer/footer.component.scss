@@ -1,0 +1,128 @@
+@import '../../../../assets/variables';
+
+.footer {
+  background-color: $light-bg;
+  color: $text-primary;
+  padding: 4rem 0 2rem;
+  position: relative;
+  border-top: 1px solid rgba($primary-color, 0.1);
+  transition: all 0.3s ease;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: radial-gradient(circle at 70% 20%, rgba($primary-color, 0.05) 0%, transparent 50%);
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -1rem 2rem;
+  }
+
+  [class*="col-md-"] {
+    padding: 0 1rem;
+    margin-bottom: 2rem;
+  }
+
+  h3, h4 { margin-bottom: 1.5rem; display: inline-block; }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    background: linear-gradient(90deg, $primary-color, $secondary-color);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: all 0.3s ease;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+
+  p, address {
+    line-height: 1.6;
+    margin-top: 1rem;
+    color: $text-secondary;
+    transition: all 0.3s ease;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin-bottom: 0.8rem;
+
+      a {
+        color: $text-secondary;
+        text-decoration: none;
+        transition: all 0.3s ease;
+
+        &:hover {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+
+  .copyright {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid rgba($primary-color, 0.1);
+    color: $text-secondary;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+  }
+
+  // ===== Dark mode =====
+  &.dark-mode {
+    background: linear-gradient(135deg, $primary-dark, $dark-card-bg, $secondary-dark);
+    color: $text-light;
+
+    &::before {
+      background: radial-gradient(circle at 70% 20%, rgba($primary-dark, 0.05) 0%, transparent 50%);
+    }
+
+    h3, h4, p, address, .copyright {
+      color: $text-light;
+    }
+
+    ul li a {
+      color: $text-light;
+
+      &:hover {
+        color: $primary-light;
+      }
+    }
+  }
+
+  // Responsive
+  @media (max-width: 768px) {
+    padding: 3rem 0 1.5rem;
+
+    [class*="col-md-"] {
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+
+    h3 { font-size: 1.3rem; }
+    h4 { font-size: 1.1rem; }
+  }
+}

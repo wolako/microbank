@@ -1,0 +1,73 @@
+<nav class="navbar navbar-expand-lg" [ngClass]="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }">
+  <div class="container">
+    <!-- Logo -->
+    <a class="navbar-brand" (click)="navigateTo('/')">MicroBank</a>
+
+    <!-- Menu burger mobile -->
+    <button class="navbar-toggler" type="button" (click)="isMenuCollapsed = !isMenuCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" [class.show]="!isMenuCollapsed">
+      <!-- Navigation principale (liens invités ou utilisateurs) -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0"
+          *ngIf="!(authService.user$ | async)?.role || (authService.user$ | async)?.role === 'user'">
+        @for (link of navLinks; track link.path) {
+          <li class="nav-item">
+            <a class="nav-link"
+              *ngIf="link.label !== 'Prêts'; else loanLink"
+              [routerLink]="link.path"
+              [fragment]="link.fragment"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: link.exact }"
+              (click)="onLinkClick()">
+              {{ link.label }}
+            </a>
+            <ng-template #loanLink>
+              <a class="nav-link" href="javascript:void(0)" (click)="scrollToLoans()">
+                {{ link.label }}
+              </a>
+            </ng-template>
+          </li>
+        }
+      </ul>
+
+      <!-- Liens utilisateur / invités et toggle -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+        <!-- Toggle thème -->
+        <li class="nav-item me-2">
+          <button class="btn theme-toggle" (click)="toggleTheme()">
+            {{ isDarkMode ? '🌙' : '☀️' }}
+          </button>
+        </li>
+
+        <!-- Utilisateur connecté -->
+        <ng-container *ngIf="authService.user$ | async as user; else guestLinks">
+          <li *ngIf="user.role === 'user'" class="nav-item">
+            <a class="nav-link" [class.active]="isActive('/dashboard')" (click)="navigateTo('/dashboard')">
+              Tableau de bord
+            </a>
+          </li>
+          <li *ngIf="['admin','account_manager','loan_officer','support'].includes(user.role)" class="nav-item">
+            <a class="nav-link" [class.active]="isActive('/admin')" (click)="navigateTo('/admin')">
+              Tableau de bord
+            </a>
+          </li>
+          <li class="nav-item">
+            <button class="btn btn-outline-danger ms-2" (click)="logout()">Déconnexion</button>
+          </li>
+        </ng-container>
+
+        <!-- Liens invités -->
+        <ng-template #guestLinks>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="isActive('/login')" (click)="navigateTo('/login'); onLinkClick()">Connexion</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-primary ms-2" (click)="navigateTo('/register'); onLinkClick()">Inscription</a>
+          </li>
+        </ng-template>
+      </ul>
+    </div>
+  </div>
+</nav>

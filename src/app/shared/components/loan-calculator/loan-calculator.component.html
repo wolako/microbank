@@ -1,0 +1,67 @@
+<div class="loan-calculator">
+  <div class="calculator-form">
+    <div class="form-group">
+      <label for="amount">Montant du prêt</label>
+      <div class="input-group">
+        <span class="input-group-text">$</span>
+        <input type="range" 
+               id="amount" 
+               [(ngModel)]="amount" 
+               [min]="minAmount" 
+               [max]="maxAmount"
+               (input)="calculateLoan()">
+        <input type="number" 
+               class="form-control" 
+               [(ngModel)]="amount" 
+               [min]="minAmount" 
+               [max]="maxAmount"
+               (change)="calculateLoan()">
+      </div>
+      <div class="range-labels">
+        <span>{{ minAmount | currency }}</span>
+        <span>{{ maxAmount | currency }}</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="term">Durée (mois)</label>
+      <div class="input-group">
+        <input type="range" 
+               id="term" 
+               [(ngModel)]="term" 
+               [min]="minTerm" 
+               [max]="maxTerm"
+               (input)="calculateLoan()">
+        <input type="number" 
+               class="form-control" 
+               [(ngModel)]="term" 
+               [min]="minTerm" 
+               [max]="maxTerm"
+               (change)="calculateLoan()">
+      </div>
+      <div class="range-labels">
+        <span>{{ minTerm }} mois</span>
+        <span>{{ maxTerm }} mois</span>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" (click)="calculateLoan()">
+      Calculer
+    </button>
+  </div>
+
+  <div class="calculator-results" *ngIf="monthlyPayment">
+    <div class="result-item">
+      <span>Paiement mensuel:</span>
+      <strong>{{ monthlyPayment | currency }}</strong>
+    </div>
+    <div class="result-item">
+      <span>Total des intérêts:</span>
+      <strong>{{ totalInterest | currency }}</strong>
+    </div>
+    <div class="result-item">
+      <span>Total à rembourser:</span>
+      <strong>{{ totalPayment | currency }}</strong>
+    </div>
+  </div>
+</div>

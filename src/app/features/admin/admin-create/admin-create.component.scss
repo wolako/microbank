@@ -1,0 +1,165 @@
+@import '../../../../assets/variables';
+
+.admin-create-page {
+  padding: $spacing-unit;
+  min-height: 100vh;
+  color: $text-primary;
+  transition: $transition;
+
+  .container {
+    max-width: 800px;
+    margin: 0 auto;
+
+    .card {
+      border-radius: $border-radius * 2;
+      padding: $spacing-unit * 2;
+      box-shadow: $box-shadow;
+      background-color: $light-card-bg;
+      transition: $transition;
+
+      h3 {
+        font-weight: 600;
+        text-align: center;
+        margin-bottom: $spacing-unit * 2;
+        color: $primary-light;
+      }
+
+      form {
+        .form-label {
+          font-weight: 500;
+          color: $text-primary;
+        }
+
+        .form-control,
+        .form-select {
+          border: 1px solid $border-color;
+          border-radius: $border-radius * 2;
+          padding: $spacing-half $spacing-unit;
+          font-size: 0.95rem;
+          transition: $transition;
+          background-color: $light-card-bg;
+          color: $text-primary;
+
+          &:focus {
+            border-color: $primary-light;
+            box-shadow: 0 0 0 0.2rem rgba($primary-color, 0.25);
+          }
+        }
+
+        .text-danger {
+          font-size: 0.85rem;
+          margin-top: $spacing-quarter;
+          display: block;
+          color: $error-color;
+        }
+
+        .btn {
+          border-radius: $border-radius * 2;
+          font-weight: 600;
+          transition: $transition;
+          color: $color-light-btn-text;
+          background-color: $primary-light;
+
+          &:hover {
+            background-color: darken($primary-light, 8%);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+          }
+
+          &:disabled {
+            background-color: $border-color;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .alert {
+        border-radius: $border-radius * 2;
+        font-weight: 500;
+        text-align: center;
+        margin-top: $spacing-unit;
+
+        &.alert-success {
+          background-color: lighten($success-color, 40%);
+          color: $success-color;
+        }
+
+        &.alert-danger {
+          background-color: lighten($error-color, 40%);
+          color: $error-color;
+        }
+      }
+    }
+  }
+
+  // ==============================
+  // Mode nuit
+  // ==============================
+  &.dark-mode {
+    background-color: $dark-bg;
+    color: $color-dark-section-text;
+
+    .card {
+      background-color: $color-dark-card-bg;
+
+      h3 {
+        color: $color-dark-primary;
+      }
+
+      form {
+        .form-label {
+          color: $color-dark-section-text;
+        }
+
+        .form-control,
+        .form-select {
+          background-color: $color-dark-section-bg;
+          color: $color-dark-section-text;
+          border: 1px solid lighten($color-dark-section-text, 40%);
+
+          &:focus {
+            border-color: $color-dark-primary;
+            box-shadow: 0 0 0 0.2rem rgba($color-dark-primary, 0.25);
+          }
+        }
+
+        .btn {
+          color: $color-dark-btn-text;
+          background-color: $color-dark-primary;
+
+          &:hover {
+            background-color: lighten($color-dark-primary, 5%);
+          }
+        }
+
+        .text-danger {
+          color: $error-color;
+        }
+      }
+
+      .alert {
+        &.alert-success {
+          background-color: darken($success-color, 15%);
+          color: $light-card-bg;
+        }
+        &.alert-danger {
+          background-color: darken($error-color, 15%);
+          color: $light-card-bg;
+        }
+      }
+    }
+  }
+
+  // Responsive
+  @include respond-md {
+    padding: $spacing-half;
+
+    .card {
+      padding: $spacing-unit * 1.5;
+
+      .btn {
+        font-size: 0.95rem;
+        padding: $spacing-half $spacing-unit;
+      }
+    }
+  }
+}

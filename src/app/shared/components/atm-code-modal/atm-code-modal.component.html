@@ -1,0 +1,18 @@
+<div class="modal-backdrop" *ngIf="visible">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">💳 Code ATM</h5>
+            <button type="button" class="btn-close" (click)="onCancel.emit()"></button>
+          </div>
+          <div class="modal-body">
+            <p>Veuillez entrer le code ATM que vous avez reçu par SMS/email.</p>
+            <input type="text" [(ngModel)]="code" class="form-control" maxlength="6" placeholder="6 chiffres" />
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" (click)="onCancel.emit()">Annuler</button>
+            <button class="btn btn-primary" (click)="onConfirm.emit(code)">Valider</button>
+          </div>
+        </div>
+      </div>
+</div>
