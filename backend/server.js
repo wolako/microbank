@@ -7,6 +7,8 @@ const db = require('./config/db');
 const seedAdmin = require('./seedAdmin');
 const { errorHandler } = require('./middleware/error');
 const { startScheduler } = require('./services/scheduler');
+
+// Routes
 const billRoutes = require('./routes/bills');
 const webhookRoutes = require('./routes/webhook');
 const purchaseRoutes = require('./routes/purchase');
@@ -15,28 +17,32 @@ const documentsRoutes = require('./routes/documents');
 
 const app = express();
 
+// =======================
+// Middleware
+// =======================
 
-// ✅ Sécurité des headers HTTP
+// Sécurité des headers HTTP
 app.use(helmet());
 
-// ✅ CORS
+// CORS
 app.use(cors({
-  // origin: 'http://localhost:4200',
-  origin: process.env.FRONTEND_URL,
+  origin: process.env.FRONTEND_URL || '*',
   credentials: true
 }));
 
-// ✅ Parsing
+// Parsing JSON et URL encoded
 app.use(express.json({ limit: '50kb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// ✅ Logger
+// Logger simple
 app.use((req, res, next) => {
   console.log(`${req.method} ${req.path}`);
   next();
 });
 
-// ✅ Routes
+// =======================
+// Routes API
+// =======================
 app.use('/api', require('./routes/api'));
 app.use('/api/users', require('./routes/users'));
 app.use('/api/accounts', require('./routes/accounts'));
@@ -49,32 +55,40 @@ app.use('/api', purchaseRoutes);
 app.use('/api/2fa', twoFARoutes);
 app.use('/api/documents', documentsRoutes);
 
-
-// ✅ Fichiers Angular
-// app.use(express.static(path.join(__dirname, 'dist', 'site-microfinance')));
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'dist', 'site-microfinance', 'index.html'));
-// });
-
+// =======================
+// Angular / Frontend
+// =======================
 const angularDistPath = path.join(__dirname, '../dist/site-microfinance');
 app.use(express.static(angularDistPath));
-app.get('*', (req, res) => {
+
+// Servir Angular pour toutes les routes sauf celles commençant par /api
+app.get(/^\/(?!api).*/, (req, res) => {
   res.sendFile(path.join(angularDistPath, 'index.html'));
 });
 
-// ✅ Erreurs
+// =======================
+// Gestion des erreurs
+// =======================
 app.use(errorHandler);
 
-// ✅ Démarrage serveur
+// =======================
+// Démarrage serveur
+// =======================
 async function startServer() {
   try {
+    // Test connexion DB
     await db.query('SELECT 1');
+
+    // Démarrer le scheduler
     startScheduler();
+
+    // Seed admin si nécessaire
     await seedAdmin();
 
     const PORT = process.env.PORT || 3000;
-    // app.listen(PORT, () => console.log(`✅ Serveur sur http://localhost:${PORT}`));
-    app.listen(PORT, () => console.log(`✅ Serveur Render en production sur le port ${PORT}`));
+    app.listen(PORT, () => {
+      console.log(`✅ Serveur Render en production sur le port ${PORT}`);
+    });
   } catch (err) {
     console.error('❌ Erreur au démarrage:', err);
     process.exit(1);
