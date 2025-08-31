@@ -4,8 +4,6 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "build:frontend": "cd .. && ng build --configuration production",
-    "postinstall": "npm run build:frontend",
     "start": "node server.js"
   },
   "keywords": [],
