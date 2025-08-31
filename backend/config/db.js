@@ -10,7 +10,9 @@ const pool = new Pool({
   connectionTimeoutMillis: 5000,
   idleTimeoutMillis: 30000,
   max: 20,
-  ssl: false,
+  ssl: {
+    rejectUnauthorized: false // permet de se connecter avec le certificat auto-signé de Render
+  },
 });
 
 let poolEnded = false;
@@ -36,7 +38,6 @@ module.exports = {
         console.log('✅ Pool PostgreSQL fermé.');
       } catch (err) {
         console.error('⚠️ Erreur lors de pool.end():', err);
-        // On ne rethrow pas, pour éviter un unhandled rejection
       }
     } else {
       console.log('ℹ️ pool.end() déjà appelé, on ignore.');
