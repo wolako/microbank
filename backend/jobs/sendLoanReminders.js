@@ -1,5 +1,5 @@
 const db = require('../config/db');
-const Notification = require('../models/notification');
+const Notification = require('../models/Notification');
 const SMSService = require('../services/sms');
 const Mailer = require('../utils/mailer');
 

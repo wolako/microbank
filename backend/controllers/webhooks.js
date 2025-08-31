@@ -1,7 +1,7 @@
 // controllers/webhook.js
 const crypto = require('crypto');
 const db = require('../config/db');
-const Loan = require('../models/loan');
+const Loan = require('../models/Loan');
 const User = require('../models/User');
 const Bill = require('../models/Bills');
 const smsService = require('../services/sms');

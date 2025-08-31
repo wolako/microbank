@@ -1,4 +1,4 @@
-const Notification = require('../models/notification');
+const Notification = require('../models/Notification');
 const { ApiError } = require('../middleware/error');
 
 exports.getNotifications = async (req, res, next) => {

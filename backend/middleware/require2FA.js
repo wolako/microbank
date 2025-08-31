@@ -1,4 +1,3 @@
-// middleware/require2FA.js
 const db = require('../config/db');
 
 const TWO_FA_EXPIRATION_MINUTES = 5; // Durée de validité du flag 2FA

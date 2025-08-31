@@ -1,4 +1,4 @@
-const Notification = require('../models/notification');
+const Notification = require('../models/Notification');
 
 async function checkUnreadNotifications(req, res, next) {
   if (req.user) {

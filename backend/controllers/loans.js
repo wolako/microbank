@@ -1,7 +1,7 @@
 const Loan = require('../models/Loan');
 const PaymentService = require('../services/payment');
 const { ApiError } = require('../middleware/error');
-const Notification = require('../models/notification');
+const Notification = require('../models/Notification');
 const SMSService = require('../services/sms');
 const db = require('../config/db');
 const { calculateInstallment } = require('../utils/finance');
