@@ -2,8 +2,7 @@
   "name": "site-microfinance",
   "version": "0.0.0",
   "scripts": {
-    "build": "npx ng build --configuration production",
-    "build:frontend": "npx ng build --configuration production",
+    "build": "ng build --configuration production && cd backend && npm install",
     "watch": "npx ng build --watch --configuration development",
     "start": "echo 'Use backend server to run the app'"
   },
