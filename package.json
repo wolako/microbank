@@ -3,9 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "build": "ng build --configuration production",
-    "build:frontend": "ng build --configuration production",
-    "watch": "ng build --watch --configuration development",
-    "start": "echo 'Use backend server to run the app'"
+    "postinstall": "npm run build",
+    "start": "cd backend && npm start"
   },
   "private": true,
   "dependencies": {
