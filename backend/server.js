@@ -58,7 +58,7 @@ app.use('/api/documents', documentsRoutes);
 // =======================
 // Angular / Frontend
 // =======================
-const angularDistPath = path.join(__dirname, 'dist/site-microfinance');
+const angularDistPath = path.join(__dirname, '../dist/site-microfinance');
 app.use(express.static(angularDistPath));
 
 // Servir Angular pour toutes les routes sauf celles commençant par /api
