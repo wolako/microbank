@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../../core/services/auth/auth.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -22,10 +23,8 @@ export class AdminDashboardComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.http.get('/api/admin/stats').subscribe({
-      next: (res: any) => {
-        this.stats = res;
-      },
+    this.http.get(`${environment.apiUrl}/admin/stats`).subscribe({
+      next: (res: any) => { this.stats = res; },
       error: err => console.error(err)
     });
 
