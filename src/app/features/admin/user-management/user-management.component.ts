@@ -52,7 +52,7 @@ export class UserManagementComponent implements OnInit {
   }
 
   approveUser(user: any): void {
-    const url = `http://localhost:3000/api/admin/users/${user.id}/approve`;
+    const url = `admin/users/${user.id}/approve`;
     this.http.post<any>(url, {}, { headers: this.api['getHeaders']() }).subscribe({
       next: res => {
         if (res.user) {
