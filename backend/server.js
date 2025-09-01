@@ -18,10 +18,10 @@ const documentsRoutes = require('./routes/documents');
 const app = express();
 
 // Forcer UTF-8 pour toutes les réponses JSON
-app.use((req, res, next) => {
-  res.setHeader('Content-Type', 'application/json; charset=utf-8');
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+//   next();
+// });
 
 // =======================
 // Middleware
