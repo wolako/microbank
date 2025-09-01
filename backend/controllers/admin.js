@@ -101,7 +101,7 @@ exports.getStats = async (req, res, next) => {
     const [users, loans, late] = await Promise.all([
       db.query(`SELECT COUNT(*) FROM users`),
       db.query(`SELECT COUNT(*) FROM loans`),
-      db.query(`SELECT COUNT(*) FROM installments WHERE status = 'late'`)
+      db.query(`SELECT COUNT(*) FROM loan_installments WHERE status = 'late'`)
     ]);
 
     res.json({
