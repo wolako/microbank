@@ -354,19 +354,28 @@ export class TransactionsComponent implements OnInit {
       descriptionControl?.setValue(descriptions[type] || '');
     }
   }
-
   submit() {
     if (this.transactionsForm.invalid) return;
     this.isLoading = true;
     this.successMessage = '';
     this.errorMessage = '';
+
     const type = this.transactionsForm.get('type')?.value;
     const amount = this.transactionsForm.get('amount')?.value;
     this.pendingTransactionData = { type, amount, form: this.transactionsForm.value };
-    this.show2FAModal = true;
-    this.isLoading = false;
-  }
 
+    this.authService.ensureUserLoaded().pipe(take(1)).subscribe(user => {
+      this.isLoading = false;
+
+      if (user && user.two_factor_enabled) {
+        // Afficher le modal seulement si l'utilisateur a activé la 2FA
+        this.show2FAModal = true;
+      } else {
+        // Exécuter directement la transaction si pas de 2FA
+        this.executeTransaction(this.pendingTransactionData);
+      }
+    });
+  }
   submit2FAToken(token: string) {
     if (!this.pendingTransactionData) return;
     this.authService.ensureUserLoaded().pipe(take(1)).subscribe(user => {
