@@ -30,7 +30,7 @@
 
   <!-- Alerte de prêts en retard -->
   <div class="alert alert-danger" *ngIf="loanStats && loanStats.overdue_loans > 0">
-    ⚠️ Vous avez {{ loanStats?.overdue_loans }} prêt(s) en retard. Veuillez régulariser rapidement.
+    ⚠️ Vous avez {{ loanStats.overdue_loans }} prêt(s) en retard. Veuillez régulariser rapidement.
   </div>
 
   <!-- Accès rapide aux comptes -->
@@ -97,15 +97,15 @@
   <!-- Résumé du prêt actuel -->
   <div class="current-loan-summary" *ngIf="loanStats && loanStats.active_loans > 0">
     <h3>📋 Prêt en cours</h3>
-    <p><strong>Montant total emprunté:</strong> {{ loanStats?.total_borrowed | currencyXof }}</p>
-    <p><strong>Montant remboursé:</strong> {{ loanStats?.total_interest_paid | currencyXof }}</p>
+    <p><strong>Montant total emprunté:</strong> {{ loanStats.total_borrowed | currencyXof }}</p>
+    <p><strong>Montant remboursé:</strong> {{ loanStats.total_interest_paid | currencyXof }}</p>
     <p>
       <strong>Prochaine échéance:</strong>
-      {{ loanStats?.next_payment_date | date:'d MMM yyyy' }}
+      {{ loanStats.next_payment_date | date:'d MMM yyyy' }}
       <span *ngIf="loanStats?.next_payment_date && isSoon(loanStats.next_payment_date!)"
             class="badge bg-danger ms-2">⚠️ Bientôt</span>
     </p>
-    <p><strong>Montant à payer:</strong> {{ loanStats?.next_payment_amount | currencyXof }}</p>
+    <p><strong>Montant à payer:</strong> {{ loanStats.next_payment_amount | currencyXof }}</p>
     <!-- ✅ Bouton pour lancer le paiement -->
     <button class="btn btn-success mt-2"
             *ngIf="loanStats?.next_payment_amount && loanStats?.current_loan_id"
@@ -115,7 +115,7 @@
 
     <!-- ✅ Lien vers la page de détails du prêt -->
     <a *ngIf="loanStats?.current_loan_id"
-       [routerLink]="['/loans', loanStats?.current_loan_id]"
+       [routerLink]="['/loans', loanStats.current_loan_id]"
        class="btn btn-outline-primary mt-2">
       📄 Voir les détails du prêt
     </a>
