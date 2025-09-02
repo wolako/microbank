@@ -20,184 +20,312 @@
 
 @mixin text-color($light, $dark) {
   color: $dark;
-  body.light-mode & {
-    color: $light;
-  }
 }
 
 // ================================
-// Base styles
+// Dashboard container
 // ================================
-:host {
-  display: block;
+.dashboard-container {
   width: 100%;
-
-  .container {
-    padding: 1rem;
-
-    // Header Nav
-    .nav-pills {
-      margin-bottom: 2rem;
-
-      .nav-link {
-        border-radius: $border-radius;
-        margin-right: 0.5rem;
-        @include text-color($text-dark, $text-light);
-
-        &.active, &:hover {
-          background-color: $primary-color;
-          color: white !important;
-        }
-      }
-    }
-
-    // Stats Cards
-    .row {
-      margin-bottom: 2rem;
-
-      .col-md-4 {
-        .card {
-          @include card-style;
-          transition: box-shadow 0.3s;
-
-          &:hover {
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-          }
-
-          .card-body {
-            .card-title {
-              font-weight: 600;
-              font-size: 1.1rem;
-              @include text-color($text-dark, $text-light);
-            }
-
-            .card-text, ul {
-              @include text-color($text-dark, $text-light);
-              font-size: 1rem;
-            }
-
-            ul {
-              padding-left: 0;
-              list-style: none;
-
-              li {
-                margin-bottom: 0.25rem;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    // Chart wrapper
-    .chart-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top: 1rem;
-      width: 100%;
-      overflow-x: auto;
-
-      ngx-charts-pie-chart {
-        display: block;
-        width: 100%;
-        height: auto;
-
-        svg {
-          max-width: 100%;
-          height: auto;
-        }
-      }
-    }
-
-    // Responsive cards
-    @media (max-width: 768px) {
-      .col-md-4 {
-        margin-bottom: 1rem;
-      }
-
-      ngx-charts-pie-chart {
-        min-width: 280px;
-      }
-    }
-  }
-}
-
-// Modals
-:host ::ng-deep .modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  @include flex-center;
-  background-color: rgba(0, 0, 0, 0.6);
-  backdrop-filter: blur(6px);
-  z-index: 1050;
   padding: 1rem;
 
-  .modal-content {
-    background: $dark-card-bg;
-    @include text-color($text-light, $text-dark);
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
-    width: 100%;
-    max-width: 500px;
-    padding: 2rem;
+  // Appliquer les couleurs selon le mode
+  &.light-mode {
+    --card-bg: $light-card-bg;
+    --text-color: $text-dark;
+    --input-bg: $light-card-bg;
+    --input-border: rgba(0,0,0,0.1);
+  }
+
+  &.dark-mode {
+    --card-bg: $dark-card-bg;
+    --text-color: $text-light;
+    --input-bg: rgba(255,255,255,0.05);
+    --input-border: rgba(255,255,255,0.2);
+  }
+
+  // Header utilisateur
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+
+    h1 {
+      color: var(--text-color);
+      font-size: 2rem;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      color: var(--text-color);
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        background-color: $primary-color;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        color: white;
+      }
+    }
+  }
+
+  // Alertes
+  .alert {
+    margin-bottom: 2rem;
+  }
+
+  // Accès rapide
+  .bank-access {
     display: flex;
     flex-direction: column;
+    gap: 0.5rem;
+
+    a {
+      width: fit-content;
+    }
+  }
+
+  // Statistiques
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 1rem;
-    animation: fadeInScale 0.25s ease-in-out;
+    margin-bottom: 2rem;
 
-    h4, h5 {
-      @include text-color($text-dark, $text-light);
-      margin: 0;
+    .stat-card {
+      @include card-style(var(--card-bg));
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+
+      .stat-icon {
+        font-size: 2rem;
+        color: $primary-color;
+      }
+
+      .stat-content {
+        h3 {
+          color: var(--text-color);
+          margin: 0;
+        }
+        p {
+          color: var(--text-color);
+          margin: 0;
+        }
+
+        .progress {
+          height: 8px;
+        }
+      }
+    }
+  }
+
+  // Résumé prêt actuel
+  .current-loan-summary {
+    @include card-style(var(--card-bg));
+
+    h3 {
+      color: var(--text-color);
     }
 
-    input.form-control,
-    select.form-control {
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255,255,255,0.2);
-      @include text-color($text-dark, $text-light);
+    p, span, strong {
+      color: var(--text-color);
+    }
+
+    .badge {
+      font-size: 0.85rem;
+    }
+
+    button, a.btn {
+      margin-top: 0.5rem;
+    }
+  }
+
+  // Prochaines échéances
+  .payment-reminders {
+    margin-top: 2rem;
+
+    h3 {
+      color: var(--text-color);
+    }
+
+    .installment-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+
+      .installment-card {
+        @include card-style(var(--card-bg));
+        padding: 1rem;
+        .installment-header {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 0.5rem;
+
+          .installment-date,
+          .installment-status {
+            color: var(--text-color);
+          }
+        }
+
+        .installment-amount {
+          color: var(--text-color);
+          font-weight: bold;
+        }
+      }
+    }
+
+    .text-muted {
+      color: rgba(255,255,255,0.6);
+      &.light-mode {
+        color: rgba(0,0,0,0.6);
+      }
+    }
+  }
+
+  // Graphiques
+  .charts-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+
+    canvas {
+      width: 100% !important;
+      height: auto !important;
+    }
+  }
+
+  // Transactions
+  .recent-transactions {
+    margin-top: 2rem;
+
+    h3 {
+      color: var(--text-color);
+    }
+
+    .transaction-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+
+      .transaction-item {
+        @include card-style(var(--card-bg));
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.75rem 1rem;
+
+        .tx-icon {
+          font-size: 1.5rem;
+          color: $primary-color;
+        }
+
+        .tx-details {
+          flex: 1;
+          margin-left: 1rem;
+          strong, span, a {
+            color: var(--text-color);
+          }
+
+          .tx-link {
+            text-decoration: underline;
+          }
+        }
+
+        .tx-amount.credit {
+          color: $success-color;
+        }
+      }
+    }
+
+    .view-all {
+      display: inline-block;
+      margin-top: 1rem;
+      color: $primary-color;
+      text-decoration: none;
+    }
+  }
+
+  // Modals
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    @include flex-center;
+    background-color: rgba(0,0,0,0.6);
+    backdrop-filter: blur(6px);
+    z-index: 1050;
+    padding: 1rem;
+
+    .modal-content {
+      background: var(--card-bg);
+      color: var(--text-color);
       border-radius: $border-radius;
-      padding: 0.5rem 0.75rem;
-      font-size: 0.95rem;
-    }
+      box-shadow: $box-shadow;
+      width: 100%;
+      max-width: 500px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      animation: fadeInScale 0.25s ease-in-out;
 
-    body.light-mode & input.form-control,
-    body.light-mode & select.form-control {
-      background: $light-card-bg;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
+      h4, h5 {
+        margin: 0;
+      }
 
-    .btn-primary {
-      background-color: $primary-color;
-      border-color: $primary-color;
-      &:hover {
-        background-color: darken($primary-color, 10%);
-        border-color: darken($primary-color, 10%);
+      input.form-control,
+      select.form-control {
+        background: var(--input-bg);
+        border: 1px solid var(--input-border);
+        border-radius: $border-radius;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.95rem;
+        color: var(--text-color);
+      }
+
+      .btn-primary {
+        background-color: $primary-color;
+        border-color: $primary-color;
+
+        &:hover {
+          background-color: darken($primary-color, 10%);
+          border-color: darken($primary-color, 10%);
+        }
+      }
+
+      .btn-secondary {
+        background-color: rgba(255,255,255,0.1);
+        border: 1px solid rgba(255,255,255,0.2);
+        color: var(--text-color);
+
+        &:hover {
+          background-color: rgba(255,255,255,0.15);
+        }
       }
     }
+  }
 
-    .btn-secondary {
-      background-color: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      @include text-color($text-light, $text-dark);
-      &:hover {
-        background-color: rgba(255,255,255,0.15);
-      }
+  // Responsive
+  @media (max-width: 768px) {
+    .stats-grid, .charts-row, .installment-grid {
+      grid-template-columns: 1fr;
     }
   }
 }
 
 // Animations
 @keyframes fadeInScale {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
+  0% { opacity: 0; transform: scale(0.95); }
+  100% { opacity: 1; transform: scale(1); }
 }
