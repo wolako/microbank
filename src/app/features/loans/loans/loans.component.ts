@@ -58,11 +58,15 @@ export class LoansComponent implements OnInit {
   // Demande de prêt avec 2FA
   // -------------------------
   requestLoan(product: LoanProduct) {
-    if (this.authService.is2FAValid()) {
-      this.goToForm(product);
-    } else {
+    const currentUser = this.authService.currentUserValue;
+    if (!currentUser) return;
+
+    // Vérifie si 2FA est activée côté utilisateur et si le token n'est pas encore validé
+    if (currentUser.two_factor_enabled && !this.authService.is2FAValid()) {
       this.productToApply = product;
       this.show2FAModal = true;
+    } else {
+      this.goToForm(product);
     }
   }
 
