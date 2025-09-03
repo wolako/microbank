@@ -293,7 +293,11 @@ exports.approveUserAccount = async (req, res) => {
                Vous pouvez désormais accéder à tous nos services bancaires en ligne.
              </p>
              <div style="margin:30px 0;text-align:center;">
-               <a href="http://localhost:4200/login"
+              //  <a href="http://localhost:4200/login"
+              //    style="background:#007bff;color:#fff;text-decoration:none;padding:12px 25px;font-size:16px;border-radius:5px;display:inline-block;">
+              //    Se connecter à mon compte
+              //  </a>
+               <a href="https://microbank-0hs6.onrender.com/login"
                  style="background:#007bff;color:#fff;text-decoration:none;padding:12px 25px;font-size:16px;border-radius:5px;display:inline-block;">
                  Se connecter à mon compte
                </a>

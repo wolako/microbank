@@ -109,10 +109,12 @@ body.light-mode {
     }
   }
 
-  // Stats Grid
+  // ================================
+  // Stats Grid (Stat Cards)
+  // ================================
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 1.5rem;
     margin: 2rem 0;
 
@@ -151,9 +153,20 @@ body.light-mode {
         }
       }
     }
+
+    // Responsive
+    @include respond-md {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+    }
   }
 
+  // ================================
   // Current Loan Summary
+  // ================================
   .current-loan-summary {
     @include card-style;
 
@@ -177,7 +190,9 @@ body.light-mode {
     }
   }
 
-  // Payment Reminders
+  // ================================
+  // Payment Reminders (Installments)
+  // ================================
   .payment-reminders {
     @include card-style;
 
@@ -188,20 +203,21 @@ body.light-mode {
 
     .installment-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 1rem;
       margin-top: 1.5rem;
 
       .installment-card {
         @include card-style($dark-card-bg);
         background: rgba(255, 255, 255, 0.05);
-        border: 1px solid rgba(255,255,255,0.1);
+        border: 1px solid rgba(255, 255, 255, 0.1);
         border-radius: $border-radius;
         padding: 1rem;
         transition: all 0.3s ease;
+
         body.light-mode & {
           background: $light-card-bg;
-          border: 1px solid rgba(0,0,0,0.1);
+          border: 1px solid rgba(0, 0, 0, 0.1);
         }
 
         .installment-header {
@@ -240,6 +256,15 @@ body.light-mode {
           font-weight: 600;
         }
       }
+
+      // Responsive
+      @include respond-md {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+      }
     }
 
     .text-muted {
@@ -248,11 +273,14 @@ body.light-mode {
     }
   }
 
+  // ================================
   // New Loan CTA
+  // ================================
   .new-loan-cta {
     @include card-style;
     text-align: center;
     background: linear-gradient(135deg, rgba($primary-color, 0.2), rgba($secondary-color, 0.2));
+
     body.light-mode & {
       background: linear-gradient(135deg, $primary-light 0%, $secondary-light 100%);
     }
@@ -267,7 +295,9 @@ body.light-mode {
     }
   }
 
+  // ================================
   // Charts Row
+  // ================================
   .charts-row {
     display: flex;
     gap: 2rem;
@@ -281,9 +311,15 @@ body.light-mode {
         background: $light-card-bg;
       }
     }
+
+    @include respond-md {
+      flex-direction: column;
+    }
   }
 
+  // ================================
   // Recent Transactions
+  // ================================
   .recent-transactions {
     @include card-style;
 
@@ -299,7 +335,8 @@ body.light-mode {
         display: flex;
         align-items: center;
         padding: 1rem 0;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+
         body.light-mode & {
           border-color: rgba(0,0,0,0.1);
         }
@@ -368,7 +405,9 @@ body.light-mode {
   }
 }
 
+// ================================
 // Loading Template
+// ================================
 .loading-container {
   @include flex-center;
   flex-direction: column;
@@ -386,7 +425,9 @@ body.light-mode {
   }
 }
 
+// ================================
 // Modal Overlay
+// ================================
 .modal {
   position: fixed;
   top: 0;
@@ -400,7 +441,9 @@ body.light-mode {
   padding: 1rem;
 }
 
+// ================================
 // Modal Box
+// ================================
 .modal-content {
   background: $dark-card-bg;
   @include text-color($text-light, $text-dark);
@@ -430,6 +473,7 @@ body.light-mode {
     padding: 0.5rem 0.75rem;
     font-size: 0.95rem;
   }
+
   body.light-mode & input.form-control,
   body.light-mode & select.form-control {
     background: $light-card-bg;
@@ -439,6 +483,7 @@ body.light-mode {
   .btn-primary {
     background-color: $primary-color;
     border-color: $primary-color;
+
     &:hover {
       background-color: darken($primary-color, 10%);
       border-color: darken($primary-color, 10%);
@@ -449,13 +494,16 @@ body.light-mode {
     background-color: rgba(255,255,255,0.1);
     border: 1px solid rgba(255,255,255,0.2);
     @include text-color($text-light, $text-dark);
+
     &:hover {
       background-color: rgba(255,255,255,0.15);
     }
   }
 }
 
+// ================================
 // Animations
+// ================================
 @keyframes fadeInScale {
   0% {
     opacity: 0;
@@ -467,7 +515,9 @@ body.light-mode {
   }
 }
 
+// ================================
 // Responsive
+// ================================
 @include respond-md {
   .dashboard-container {
     padding: 1rem;
@@ -477,23 +527,11 @@ body.light-mode {
       align-items: flex-start;
       gap: 1rem;
     }
-
-    .stats-grid {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .charts-row {
-      flex-direction: column;
-    }
   }
 }
 
 @media (max-width: 576px) {
   .dashboard-container {
-    .stats-grid {
-      grid-template-columns: 1fr;
-    }
-
     .bank-access {
       flex-direction: column;
       align-items: flex-end;
