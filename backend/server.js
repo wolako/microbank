@@ -17,12 +17,6 @@ const documentsRoutes = require('./routes/documents');
 
 const app = express();
 
-// Forcer UTF-8 pour toutes les réponses JSON
-// app.use((req, res, next) => {
-//   res.setHeader('Content-Type', 'application/json; charset=utf-8');
-//   next();
-// });
-
 // =======================
 // Middleware
 // =======================
@@ -37,7 +31,7 @@ app.use(cors({
 }));
 
 // Parsing JSON et URL encoded
-app.use(express.json({ limit: '50kb' }));
+app.use(express.json({ limit: '5mb' }));
 app.use(express.urlencoded({ extended: true }));
 
 // Logger simple

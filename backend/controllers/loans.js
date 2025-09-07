@@ -10,210 +10,6 @@ const { calculateCreditScore } = require('../utils/creditScore');
 const { Console } = require('winston/lib/winston/transports');
 
 
-// exports.createLoan = async (req, res) => {
-//   const client = await db.connect();
-//   try {
-//     await client.query('BEGIN');
-
-//     const { amount, term } = req.body;
-//     const user = req.user;
-
-//     if (!user || !user.id || !user.main_account_id) {
-//       await client.query('ROLLBACK');
-//       return res.status(400).json({ error: "Utilisateur invalide ou compte bancaire principal manquant." });
-//     }
-
-//     // Vérifier le solde du compte principal (minimum 50 000 XOF par exemple)
-//     const { rows: accountRows } = await client.query(
-//       `SELECT balance FROM accounts WHERE id = $1`,
-//       [user.main_account_id]
-//     );
-
-//     if (accountRows.length === 0) {
-//       await client.query('ROLLBACK');
-//       return res.status(400).json({ error: "Compte principal introuvable." });
-//     }
-
-//     const balance = parseFloat(accountRows[0].balance);
-//     const minimumBalanceRequired = 50000; // Exemple, à adapter
-
-//     if (balance < minimumBalanceRequired) {
-//       await client.query('ROLLBACK');
-//       return res.status(400).json({ error: `Vous devez avoir au moins ${minimumBalanceRequired} XOF sur votre compte principal pour demander un prêt.` });
-//     }
-
-//     // Validation montant et durée
-//     const termMonths = parseInt(term, 10);
-//     if (!amount || isNaN(amount) || amount <= 0 || !termMonths || isNaN(termMonths) || termMonths <= 0) {
-//       await client.query('ROLLBACK');
-//       return res.status(400).json({ error: "Montant ou durée (termMonths) invalide." });
-//     }
-
-//     // Vérifie si l'utilisateur a un prêt en cours non remboursé
-//     const { rows: activeLoans } = await client.query(`
-//       SELECT l.id
-//       FROM loans l
-//       LEFT JOIN loan_installments i ON l.id = i.loan_id
-//       WHERE l.user_id = $1
-//       AND l.status != 'completed'
-//       GROUP BY l.id
-//       HAVING COUNT(*) FILTER (WHERE i.status != 'paid') > 0
-//     `, [user.id]);
-
-//     if (activeLoans.length > 0) {
-//       await client.query('ROLLBACK');
-//       return res.status(400).json({ error: "Vous avez déjà un prêt en cours non remboursé." });
-//     }
-
-//     // Récupération du produit de prêt adapté
-//     const { rows: productRows } = await client.query(
-//       `SELECT id, interest_rate FROM loan_products
-//        WHERE $1 BETWEEN min_amount AND max_amount
-//        AND $2 BETWEEN min_term_months AND max_term_months
-//        ORDER BY interest_rate ASC
-//        LIMIT 1`,
-//       [amount, termMonths]
-//     );
-
-//     if (productRows.length === 0) {
-//       await client.query('ROLLBACK');
-//       return res.status(400).json({ error: 'Aucun produit de prêt correspondant à ce montant et cette durée.' });
-//     }
-
-//     const product = productRows[0];
-//     const interestRate = parseFloat(product.interest_rate);
-
-//     // Calcul total à rembourser et mensualité
-//     const totalAmount = amount + (amount * (interestRate / 100));
-//     const monthlyPayment = parseFloat((totalAmount / termMonths).toFixed(2));
-
-//     const startDate = new Date();
-//     const endDate = new Date(startDate);
-//     endDate.setMonth(endDate.getMonth() + termMonths);
-
-//     const loanData = {
-//       userId: user.id,
-//       accountId: user.main_account_id,
-//       productId: product.id,
-//       amount,
-//       interestRate,
-//       termMonths,
-//       monthlyPayment,
-//       startDate,
-//       endDate
-//     };
-
-//     // Création du prêt en base (adapte Loan.create en conséquence)
-//     const loan = await Loan.create(client, loanData);
-
-//     await client.query('COMMIT');
-//     res.status(201).json({ message: 'Demande de prêt enregistrée', loan });
-
-//   } catch (err) {
-//     await client.query('ROLLBACK');
-//     console.error('❌ Erreur dans createLoan:', err);
-//     res.status(500).json({ error: 'Erreur lors de la création du prêt.' });
-//   } finally {
-//     client.release();
-//   }
-// };
-
-// exports.repayLoan = async (req, res, next) => {
-//   try {
-//     const loanId = req.params.loanId;
-//     const { amount, method, phone, reference, installmentId } = req.body;
-
-//     if (!amount || !method) {
-//       return res.status(400).json({ error: 'amount et method sont requis' });
-//     }
-
-//     // 1. Vérification du prêt
-//     const loan = await Loan.findById(loanId);
-//     if (!loan || loan.user_id !== req.user.id) {
-//       throw new ApiError(404, 'Prêt non trouvé ou accès refusé');
-//     }
-
-//     // 2. Préparation des données de paiement
-//     const paymentData = {
-//       loanId,
-//       installmentId: installmentId || null,
-//       amount: parseFloat(amount),
-//       method,
-//       reference: reference || `MAN-${Date.now()}`,
-//       userId: req.user.id,
-//       phone: phone || req.user.phone,
-//       isRecurring: false
-//     };
-
-//     // 3. Traitement du paiement
-//     const result = await PaymentService.processLoanPayment(paymentData);
-
-//     // ✅ Mise à jour automatique du statut si le prêt est totalement remboursé
-//     await Loan.checkAndMarkAsCompleted(loanId);
-
-//     // 4. Réponse
-//     res.json({
-//       success: true,
-//       message: 'Paiement effectué avec succès',
-//       result,
-//       newBalance: loan.amount - (loan.paid_amount + paymentData.amount),
-//       nextPaymentDate: loan.next_payment_date
-//     });
-//   } catch (err) {
-//     console.error(err);
-//     next(err);
-//   }
-// };
-
-// exports.getLoanDetails = async (req, res, next) => {
-//   try {
-//     // 1. Récupération du prêt
-//     const loan = await Loan.findById(req.params.id);
-//     if (!loan || loan.user_id !== req.user.id) {
-//       throw new ApiError(404, 'Prêt non trouvé');
-//     }
-
-//     // 2. Récupération des informations complémentaires
-//     const [installments, payments, latePayments] = await Promise.all([
-//       Loan.getInstallments(loan.id),
-//       Loan.getPayments(loan.id),
-//       Loan.getLatePayments(loan.id)
-//     ]);
-
-//     console.log('Payments:', payments);
-
-//     // 3. Calcul des statistiques
-//     const totalPaid = payments.reduce((sum, p) => sum + parseFloat(p.amount), 0);
-//     // const remainingAmount = loan.amount - totalPaid;
-//     const remainingAmount = parseFloat(loan.amount) - totalPaid;
-//     const nextPayment = installments.find(i => i.status === 'pending');
-
-//     // 4. Formatage de la réponse
-//     const response = {
-//       id: loan.id,
-//       amount: loan.amount,
-//       interestRate: loan.interest_rate,
-//       termMonths: loan.term_months,
-//       status: loan.status,
-//       createdAt: loan.created_at,
-//       totalPaid,
-//       remainingAmount,
-//       monthlyPayment: loan.monthly_payment,
-//       nextPaymentDate: nextPayment?.due_date,
-//       latePaymentsCount: latePayments.length,
-//       installments,
-//       payments
-//     };
-
-//     res.json(response);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
-
-
-// controllers/loans.js
-
 exports.createLoan = async (req, res) => {
   const client = await db.connect();
   try {
@@ -229,7 +25,7 @@ exports.createLoan = async (req, res) => {
 
     // 🔒 Vérification que les informations personnelles correspondent à l'utilisateur connecté
     if (
-      (fullName && fullName.trim() !== `${user.first_name} ${user.last_name}`) ||
+      (fullName && fullName.trim() !== `${user.firstname} ${user.lastname}`) ||
       (email && email.trim() !== user.email) ||
       (phone && phone.trim() !== user.phone)
     ) {
@@ -565,7 +361,6 @@ exports.cancelLoan = async (req, res, next) => {
     client.release();
   }
 };
-
 exports.getLoanSchedule = async (req, res, next) => {
   try {
     const loan = await Loan.findById(req.params.id);
@@ -931,3 +726,30 @@ exports.getUpcomingInstallments = async (req, res) => {
   }
 };
 
+// ✅ Simulation de prêt
+exports.simulateLoan = async (req, res) => {
+  try {
+    const { amount, term, rate } = req.body;
+
+    if (!amount || !term || !rate) {
+      return res.status(400).json({ error: 'Champs amount, term et rate requis' });
+    }
+
+    const monthlyRate = rate / 100 / 12;
+    const monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -term));
+    const totalPayment = monthlyPayment * term;
+    const totalInterest = totalPayment - amount;
+
+    res.json({
+      amount,
+      term,
+      rate,
+      monthlyPayment,
+      totalInterest,
+      totalPayment
+    });
+  } catch (err) {
+    console.error('❌ Erreur simulateLoan:', err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
+};

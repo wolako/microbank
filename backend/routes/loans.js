@@ -10,6 +10,9 @@ const loanController = require('../controllers/loans');
 // 🧾 Produits de prêt
 // =======================
 
+// Simulation
+router.post('/simulate', loanController.simulateLoan);
+
 // ✅ Récupérer tous les produits
 router.get('/products', loanController.getLoanProducts);
 
