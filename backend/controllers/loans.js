@@ -729,18 +729,38 @@ exports.getUpcomingInstallments = async (req, res) => {
 // ✅ Simulation de prêt
 exports.simulateLoan = async (req, res) => {
   try {
-    const { amount, term, rate } = req.body;
+    let { amount, term, rate } = req.body;
 
-    if (!amount || !term || !rate) {
-      return res.status(400).json({ error: 'Champs amount, term et rate requis' });
+    // parsing + validation basique
+    amount = parseFloat(amount);
+    term = parseInt(term, 10);
+    rate = parseFloat(rate);
+
+    if (isNaN(amount) || isNaN(term) || isNaN(rate)) {
+      return res.status(400).json({ error: 'amount, term et rate doivent être des valeurs numériques.' });
+    }
+    if (amount <= 0 || term <= 0 || rate < 0) {
+      return res.status(400).json({ error: 'amount et term doivent être > 0 ; rate doit être >= 0.' });
     }
 
     const monthlyRate = rate / 100 / 12;
-    const monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -term));
-    const totalPayment = monthlyPayment * term;
-    const totalInterest = totalPayment - amount;
+    let monthlyPayment;
+    if (monthlyRate === 0) {
+      // zero interest
+      monthlyPayment = parseFloat((amount / term).toFixed(2));
+    } else {
+      // formule annuité classique
+      const denominator = 1 - Math.pow(1 + monthlyRate, -term);
+      if (denominator === 0) {
+        return res.status(400).json({ error: 'Paramètres invalides provoquent une division par zéro.' });
+      }
+      monthlyPayment = parseFloat(((amount * monthlyRate) / denominator).toFixed(2));
+    }
 
-    res.json({
+    const totalPayment = parseFloat((monthlyPayment * term).toFixed(2));
+    const totalInterest = parseFloat((totalPayment - amount).toFixed(2));
+
+    return res.json({
       amount,
       term,
       rate,
@@ -750,6 +770,7 @@ exports.simulateLoan = async (req, res) => {
     });
   } catch (err) {
     console.error('❌ Erreur simulateLoan:', err);
-    res.status(500).json({ error: 'Erreur serveur' });
+    return res.status(500).json({ error: 'Erreur serveur' });
   }
 };
+

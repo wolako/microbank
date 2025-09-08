@@ -1,17 +1,18 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { LoanProduct } from '../../models/loan.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-loan-calculator',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './loan-calculator.component.html',
-  styleUrl: './loan-calculator.component.scss',
+  styleUrls: ['./loan-calculator.component.scss'],
   animations: [
     trigger('slideIn', [
       transition(':enter', [
@@ -21,33 +22,47 @@ import { environment } from '../../../../environments/environment';
     ])
   ]
 })
-export class LoanCalculatorComponent {
+export class LoanCalculatorComponent implements OnInit {
   @Input() loanProduct: LoanProduct | null = null;
   @Output() calculate = new EventEmitter<any>();
 
-  amount: number = 10000;
-  term: number = 12;
+  loanForm: FormGroup;
   monthlyPayment: number | null = null;
   totalInterest: number | null = null;
   totalPayment: number | null = null;
   showResults = false;
-  loanForm: FormGroup;
 
-   constructor(private fb: FormBuilder, private http: HttpClient) {
+  constructor(private fb: FormBuilder, private http: HttpClient) {
     this.loanForm = this.fb.group({
       amount: [10000, [Validators.required, Validators.min(1000)]],
-      term: [12, [Validators.required, Validators.min(3), Validators.max(60)]],
-      rate: [8.5, [Validators.required, Validators.min(1), Validators.max(30)]]
+      term: [12, [Validators.required, Validators.min(3), Validators.max(60)]]
+    });
+  }
+
+  ngOnInit(): void {
+    // si product fourni, ajuster min/max via template getters
+    // recalculer à chaque changement de valeur (debounce si besoin)
+    this.loanForm.valueChanges.subscribe(() => {
+      // ne recalculer que si déjà visible ou si tu veux auto-calc
+      // ici on ne calcule pas automatiquement pour éviter trop d'appels réseau
     });
   }
 
   calculateLoan() {
     if (!this.loanProduct) return;
+    if (this.loanForm.invalid) {
+      // optionnel : afficher erreurs
+      return;
+    }
+
+    const amount = this.loanForm.get('amount')!.value;
+    const term = this.loanForm.get('term')!.value;
+    const rate = this.loanProduct.interestRate;
 
     this.http.post<any>(`${environment.apiUrl}/loans/simulate`, {
-      amount: this.amount,
-      term: this.term,
-      rate: this.loanProduct.interestRate
+      amount,
+      term,
+      rate
     }).subscribe({
       next: (result) => {
         this.monthlyPayment = result.monthlyPayment;
@@ -59,6 +74,7 @@ export class LoanCalculatorComponent {
       },
       error: (err) => {
         console.error('❌ Erreur API simulate:', err);
+        // tu peux afficher un toast/message utilisateur ici
       }
     });
   }
@@ -78,17 +94,4 @@ export class LoanCalculatorComponent {
   get maxTerm(): number {
     return this.loanProduct?.maxTerm || 60;
   }
-
-  // calculateLoan() {
-  //   if (this.loanForm.valid) {
-  //     const { amount, term, rate } = this.loanForm.value;
-  //     const monthlyRate = rate / 100 / 12;
-  //     const payments = term;
-      
-  //     this.monthlyPayment = (amount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -payments));
-  //     this.totalPayment = this.monthlyPayment * payments;
-  //     this.totalInterest = this.totalPayment - amount;
-  //     this.showResults = true;
-  //   }
-  // }
 }
