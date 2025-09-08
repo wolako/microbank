@@ -397,7 +397,7 @@ exports.updateProfile = async (req, res) => {
     }
 
     // Récupération des données envoyées
-    const { firstName, lastName, email, phone } = req.body;
+    const { firstname, lastname, email, phone } = req.body;
 
     // Vérifier si l'utilisateur existe
     const { rows: existing } = await db.query(
@@ -421,7 +421,7 @@ exports.updateProfile = async (req, res) => {
       }
     }
 
-    // Mise à jour (ignorer l'adresse si ta table n’a pas ces colonnes)
+    // Mise à jour du profil
     const { rows } = await db.query(
       `UPDATE users SET
          firstname   = COALESCE($1, firstname),
@@ -436,7 +436,7 @@ exports.updateProfile = async (req, res) => {
                  email_notifications_enabled,
                  sms_notifications_enabled,
                  created_at, updated_at`,
-      [firstName, lastName, email, phone, userId]
+      [firstname, lastname, email, phone, userId]
     );
 
     if (rows.length === 0) {
@@ -450,8 +450,8 @@ exports.updateProfile = async (req, res) => {
       message: 'Profil mis à jour avec succès',
       user: {
         id: u.id,
-        firstName: u.firstname,
-        lastName: u.lastname,
+        firstname: u.firstname,
+        lastname: u.lastname,
         email: u.email,
         phone: u.phone,
         username: u.username,
@@ -469,3 +469,4 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
+
