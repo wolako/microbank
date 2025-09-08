@@ -389,49 +389,65 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+const db = require('../config/db');
+
 exports.updateProfile = async (req, res) => {
   try {
     const userId = req.user?.id;
     if (!userId) {
-      return res.status(401).json({ message: "Non authentifié" });
+      return res.status(401).json({ message: 'Non authentifié' });
     }
 
-    const { firstname, lastname, email, phone } = req.body;
+    // Récupération du body Angular (camelCase)
+    const { firstName, lastName, email, phone } = req.body;
 
-    // Vérifier si l'email est déjà pris par un autre utilisateur
-    const emailCheck = await pool.query(
-      "SELECT id FROM users WHERE email = $1 AND id != $2",
-      [email, userId]
-    );
-
-    if (emailCheck.rows.length > 0) {
-      return res.status(400).json({ message: "Cet email est déjà utilisé." });
+    // Vérifier si l'utilisateur existe
+    const { rows: existing } = await db.query('SELECT id, email FROM users WHERE id = $1', [userId]);
+    if (existing.length === 0) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
 
-    // Mise à jour
-    const result = await pool.query(
-      `UPDATE users 
-       SET firstname = $1,
-           lastname = $2,
-           email = $3,
-           phone = $4,
-           updated_at = NOW()
+    // Vérifier unicité de l'email
+    if (email && email !== existing[0].email) {
+      const { rows: dup } = await db.query('SELECT id FROM users WHERE email = $1 AND id != $2', [email, userId]);
+      if (dup.length > 0) {
+        return res.status(400).json({ message: 'Cet email est déjà utilisé par un autre compte.' });
+      }
+    }
+
+    // Mise à jour : note les colonnes en minuscules
+    const { rows } = await db.query(
+      `UPDATE users SET
+         firstname = COALESCE($1, firstname),
+         lastname  = COALESCE($2, lastname),
+         email     = COALESCE($3, email),
+         phone     = COALESCE($4, phone),
+         updated_at = NOW()
        WHERE id = $5
-       RETURNING id, firstname, lastname, email, phone, created_at, two_factor_enabled, email_notifications_enabled, sms_notifications_enabled`,
-      [firstname, lastname, email, phone, userId]
+       RETURNING id, firstname, lastname, email, phone, created_at, username, role, is_verified, two_factor_enabled, email_notifications_enabled, sms_notifications_enabled`,
+      [firstName, lastName, email, phone, userId]
     );
-
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Utilisateur non trouvé" });
-    }
 
     res.json({
-      message: "Profil mis à jour avec succès",
-      user: result.rows[0],
+      message: 'Profil mis à jour avec succès',
+      user: {
+        id: rows[0].id,
+        firstName: rows[0].firstname, // remappage pour Angular
+        lastName: rows[0].lastname,
+        email: rows[0].email,
+        phone: rows[0].phone,
+        username: rows[0].username,
+        role: rows[0].role,
+        is_verified: rows[0].is_verified,
+        two_factor_enabled: rows[0].two_factor_enabled,
+        email_notifications_enabled: rows[0].email_notifications_enabled,
+        sms_notifications_enabled: rows[0].sms_notifications_enabled
+      }
     });
   } catch (err) {
-    console.error("❌ Erreur updateProfile:", err);
-    res.status(500).json({ message: "Erreur serveur" });
+    console.error('❌ updateProfile error:', err);
+    res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
+
 
