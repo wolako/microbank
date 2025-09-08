@@ -396,19 +396,20 @@ exports.updateProfile = async (req, res) => {
       return res.status(401).json({ message: 'Non authentifié' });
     }
 
-    // Récupération des données envoyées
-    const { firstname, lastname, email, phone } = req.body;
+    // Récupération des données envoyées depuis le frontend
+    const { firstName, lastName, email, phone } = req.body;
 
     // Vérifier si l'utilisateur existe
     const { rows: existing } = await db.query(
       'SELECT id, email FROM users WHERE id = $1',
       [userId]
     );
+
     if (existing.length === 0) {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
 
-    // Vérifier unicité de l'email
+    // Vérifier l'unicité de l'email
     if (email && email !== existing[0].email) {
       const { rows: dup } = await db.query(
         'SELECT id FROM users WHERE email = $1 AND id != $2',
@@ -421,48 +422,32 @@ exports.updateProfile = async (req, res) => {
       }
     }
 
-    // Mise à jour du profil
+    // Mise à jour
     const { rows } = await db.query(
       `UPDATE users SET
-         firstname   = COALESCE($1, firstname),
-         lastname    = COALESCE($2, lastname),
-         email       = COALESCE($3, email),
-         phone       = COALESCE($4, phone),
-         updated_at  = NOW()
+         firstName = COALESCE($1, firstName),
+         lastName  = COALESCE($2, lastName),
+         email     = COALESCE($3, email),
+         phone     = COALESCE($4, phone),
+         updated_at = NOW()
        WHERE id = $5
-       RETURNING id, firstname, lastname, email, phone,
+       RETURNING id, firstName, lastName, email, phone,
                  username, role, is_verified,
                  two_factor_enabled,
                  email_notifications_enabled,
                  sms_notifications_enabled,
                  created_at, updated_at`,
-      [firstname, lastname, email, phone, userId]
+      [firstName, lastName, email, phone, userId]
     );
 
     if (rows.length === 0) {
-      return res
-        .status(500)
-        .json({ message: 'Échec de la mise à jour du profil' });
+      return res.status(500).json({ message: 'Échec de la mise à jour du profil' });
     }
 
     const u = rows[0];
     res.json({
       message: 'Profil mis à jour avec succès',
-      user: {
-        id: u.id,
-        firstname: u.firstname,
-        lastname: u.lastname,
-        email: u.email,
-        phone: u.phone,
-        username: u.username,
-        role: u.role,
-        is_verified: u.is_verified,
-        two_factor_enabled: u.two_factor_enabled,
-        email_notifications_enabled: u.email_notifications_enabled,
-        sms_notifications_enabled: u.sms_notifications_enabled,
-        created_at: u.created_at,
-        updated_at: u.updated_at
-      }
+      user: u
     });
   } catch (err) {
     console.error('❌ updateProfile error:', err);
