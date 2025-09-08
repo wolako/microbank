@@ -130,7 +130,13 @@ export class AccountsComponent implements OnInit {
     this.authService.ensureUserLoaded().subscribe(user => {
       if (user) {
         this.userData = user;
-        this.profileForm.patchValue(user);
+        this.profileForm.patchValue({
+          firstname: user.firstName,
+          lastname: user.lastName,
+          email: user.email,
+          phone: user.phone
+        });
+
 
         // Notifications
         this.notificationForm.patchValue({

@@ -19,17 +19,6 @@ export interface UserProfile {
   two_factor_validated_at?: string
 }
 
-// export interface LoanStats {
-//   activeLoans: number;
-//   totalBorrowed: number;
-//   pendingPayments: number;
-//   completedLoans: number;
-//   overdueLoans: number;
-//   totalInterestPaid: number;
-//   nextPaymentDate?: string; // Prochaine échéance
-//   nextPaymentAmount?: number;
-// }
-
 export interface Transaction {
   id: string;
   type: TransactionType;

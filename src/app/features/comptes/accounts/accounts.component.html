@@ -3,10 +3,10 @@
     <div class="container">
       <div class="user-profile">
         <div class="avatar">
-          {{ userData?.firstName?.charAt(0) }}{{ userData?.lastName?.charAt(0) }}
+          {{ userData?.firstname?.charAt(0) }}{{ userData?.lastname?.charAt(0) }}
         </div>
         <div class="user-info">
-          <h1>{{ userData?.firstName }} {{ userData?.lastName }}</h1>
+          <h1>{{ userData?.firstname }} {{ userData?.lastname }}</h1>
           <p>Membre depuis {{ userData?.joinDate | date }}</p>
         </div>
       </div>
