@@ -33,8 +33,8 @@ export class AccountsComponent implements OnInit {
   isLoading2FA = false;
 
   profileForm = this.fb.group({
-    firstName: ['', [Validators.required]],
-    lastName: ['', [Validators.required]],
+    firstname: ['', [Validators.required]],
+    lastname: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     phone: [''],
     address: this.fb.group({
