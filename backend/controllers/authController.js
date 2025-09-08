@@ -388,3 +388,48 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({ error: 'Erreur serveur' });
   }
 };
+
+exports.updateProfile = async (req, res) => {
+  try {
+    const userId = req.user?.id;
+    if (!userId) {
+      return res.status(401).json({ message: "Non authentifié" });
+    }
+
+    const { firstName, lastName, email, phone } = req.body;
+
+    // Vérifier si l'email est déjà utilisé par un autre utilisateur
+    const checkEmail = await pool.query(
+      "SELECT id FROM users WHERE email = $1 AND id != $2",
+      [email, userId]
+    );
+    if (checkEmail.rows.length > 0) {
+      return res.status(400).json({ message: "Cet email est déjà utilisé" });
+    }
+
+    // Mise à jour
+    const result = await pool.query(
+      `UPDATE users 
+       SET firstname = $1,
+           lastname = $2,
+           email = $3,
+           phone = $4,
+           updated_at = NOW()
+       WHERE id = $5
+       RETURNING id, firstname, lastname, email, phone, created_at, two_factor_enabled, email_notifications_enabled, sms_notifications_enabled`,
+      [firstName, lastName, email, phone, userId]
+    );
+
+    if (result.rows.length === 0) {
+      return res.status(404).json({ message: "Utilisateur non trouvé" });
+    }
+
+    res.json({
+      message: "Profil mis à jour avec succès",
+      user: result.rows[0]
+    });
+  } catch (err) {
+    console.error("❌ Erreur updateProfile:", err);
+    res.status(500).json({ message: "Erreur serveur" });
+  }
+};

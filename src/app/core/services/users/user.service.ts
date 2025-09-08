@@ -51,4 +51,5 @@ export class UserService {
   disableTwoFactor(): Observable<{ success: boolean }> {
     return this.http.put<{ success: boolean }>(`${this.apiUrl}/2fa/disable`, {});
   }
+
 }
