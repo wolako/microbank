@@ -37,11 +37,11 @@ export class AccountsComponent implements OnInit {
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     phone: [''],
-    address: this.fb.group({
-      street: [''],
-      city: [''],
-      postalCode: ['']
-    })
+    // address: this.fb.group({
+    //   street: [''],
+    //   city: [''],
+    //   postalCode: ['']
+    // })
   });
 
   showPasswordForm = false;
@@ -148,7 +148,9 @@ export class AccountsComponent implements OnInit {
     if (this.profileForm.invalid) return;
 
     this.isLoading = true;
-    this.userService.updateProfile(this.profileForm.value).subscribe({
+    const { firstName, lastName, email, phone } = this.profileForm.value;
+
+    this.userService.updateProfile({ firstName, lastName, email, phone }).subscribe({
       next: () => {
         this.isEditing = false;
         this.isLoading = false;
@@ -159,6 +161,7 @@ export class AccountsComponent implements OnInit {
       }
     });
   }
+
 
   updateNotificationPreferences() {
     const prefs = this.notificationForm.value as {

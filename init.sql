@@ -5,7 +5,7 @@
 -- Se connecter à la base :
 -- \c microbank_7m3i;
 
--- Extension pour UUID
+-- Extensions pour UUID et cryptographie
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
@@ -21,7 +21,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- =====================================================================
--- 1️⃣ Table des utilisateurs (sans main_account_id pour l'instant)
+-- 1️⃣ Table des utilisateurs
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS users (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
@@ -46,7 +46,8 @@ CREATE TABLE IF NOT EXISTS users (
   two_factor_secret TEXT,
   two_factor_temp_secret TEXT,
   two_factor_validated_at TIMESTAMP WITH TIME ZONE,
-  password_updated_at TIMESTAMP WITH TIME ZONE
+  password_updated_at TIMESTAMP WITH TIME ZONE,
+  main_account_id UUID REFERENCES accounts(id)
 );
 
 -- =====================================================================
@@ -56,7 +57,7 @@ CREATE TABLE IF NOT EXISTS accounts (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   accountNumber VARCHAR(50) UNIQUE NOT NULL,
-  balance DECIMAL(15,2) DEFAULT 0.00,
+  balance DECIMAL(15,2) DEFAULT 0.00 CHECK (balance >= 0),
   currency VARCHAR(3) DEFAULT 'XOF',
   status VARCHAR(20) DEFAULT 'active',
   iban VARCHAR(34),
@@ -64,16 +65,12 @@ CREATE TABLE IF NOT EXISTS accounts (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
--- Maintenant on peut ajouter main_account_id dans users
-ALTER TABLE users
-ADD COLUMN main_account_id UUID REFERENCES accounts(id);
-
 -- =====================================================================
 -- 3️⃣ Tables Prêts
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS loan_products (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  name VARCHAR(100) NOT NULL,
+  name VARCHAR(100) UNIQUE NOT NULL,
   description TEXT,
   interest_rate DECIMAL(5,2) NOT NULL,
   min_amount DECIMAL(15,2) NOT NULL,
@@ -91,7 +88,7 @@ CREATE TABLE IF NOT EXISTS loans (
   amount DECIMAL(15,2) NOT NULL,
   interest_rate DECIMAL(5,2) NOT NULL,
   term_months INTEGER NOT NULL,
-  paid_amount DECIMAL(15,2) DEFAULT 0.00,
+  paid_amount DECIMAL(15,2) DEFAULT 0.00 CHECK (paid_amount <= amount),
   status VARCHAR(20) DEFAULT 'pending',
   disbursement_date TIMESTAMP WITH TIME ZONE,
   next_payment_date TIMESTAMP WITH TIME ZONE,
@@ -100,8 +97,7 @@ CREATE TABLE IF NOT EXISTS loans (
   monthly_payment DECIMAL(15,2),
   activated_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  CHECK (paid_amount <= amount)
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS loan_installments (
@@ -141,7 +137,7 @@ CREATE TABLE IF NOT EXISTS transactions (
   description TEXT,
   reference VARCHAR(100),
   metadata JSONB,
-  balance_after DECIMAL(15,2),
+  balance_after DECIMAL(15,2) CHECK (balance_after >= 0),
   channel VARCHAR(50),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
@@ -300,26 +296,60 @@ CREATE TABLE IF NOT EXISTS scheduler_jobs (
 -- =====================================================================
 -- 10️⃣ Triggers pour updated_at
 -- =====================================================================
-CREATE TRIGGER update_users_timestamp BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-CREATE TRIGGER update_accounts_timestamp BEFORE UPDATE ON accounts FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-CREATE TRIGGER update_loans_timestamp BEFORE UPDATE ON loans FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-CREATE TRIGGER update_bills_timestamp BEFORE UPDATE ON bills FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-CREATE TRIGGER update_products_timestamp BEFORE UPDATE ON products FOR EACH ROW EXECUTE FUNCTION update_timestamp();
-CREATE TRIGGER update_orders_timestamp BEFORE UPDATE ON orders FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+DO $$
+BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_users_timestamp') THEN
+    CREATE TRIGGER update_users_timestamp BEFORE UPDATE ON users
+    FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_accounts_timestamp') THEN
+    CREATE TRIGGER update_accounts_timestamp BEFORE UPDATE ON accounts
+    FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_loans_timestamp') THEN
+    CREATE TRIGGER update_loans_timestamp BEFORE UPDATE ON loans
+    FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_bills_timestamp') THEN
+    CREATE TRIGGER update_bills_timestamp BEFORE UPDATE ON bills
+    FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_products_timestamp') THEN
+    CREATE TRIGGER update_products_timestamp BEFORE UPDATE ON products
+    FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+  END IF;
+
+  IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'update_orders_timestamp') THEN
+    CREATE TRIGGER update_orders_timestamp BEFORE UPDATE ON orders
+    FOR EACH ROW EXECUTE FUNCTION update_timestamp();
+  END IF;
+END $$;
 
 -- =====================================================================
--- 11️⃣ Données de base pour les produits de prêt
+-- 11️⃣ Données de base pour les produits de prêt (idempotent)
 -- =====================================================================
-INSERT INTO loan_products (
-  id, name, description, interest_rate, min_amount, max_amount, min_term_months, max_term_months
-) VALUES 
-  (uuid_generate_v4(), 'Prêt Personnel', 'Prêt à consommation standard', 12.5, 50000, 500000, 3, 24),
-  (uuid_generate_v4(), 'Prêt Immobilier', 'Financement de vos projets immobiliers', 8.0, 100000, 2000000, 6, 36),
-  (uuid_generate_v4(), 'Prêt PME', 'Financement des petites entreprises', 10.0, 200000, 5000000, 12, 60)
-ON CONFLICT DO NOTHING;
+INSERT INTO loan_products (name, description, interest_rate, min_amount, max_amount, min_term_months, max_term_months)
+VALUES
+  ('Prêt Personnel', 'Prêt à consommation standard', 12.5, 50000, 500000, 3, 24),
+  ('Prêt Immobilier', 'Financement de vos projets immobiliers', 8.0, 100000, 2000000, 6, 36),
+  ('Prêt PME', 'Financement des petites entreprises', 10.0, 200000, 5000000, 12, 60)
+ON CONFLICT (name) DO NOTHING;
 
 -- =====================================================================
--- 12️⃣ Vues pour le reporting
+-- 12️⃣ Index pour performance et sécurité
+-- =====================================================================
+CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
+CREATE INDEX IF NOT EXISTS idx_accounts_accountNumber ON accounts(accountNumber);
+CREATE INDEX IF NOT EXISTS idx_loans_user_id ON loans(user_id);
+CREATE INDEX IF NOT EXISTS idx_transactions_account_id ON transactions(account_id);
+CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id);
+
+-- =====================================================================
+-- 13️⃣ Vues pour reporting
 -- =====================================================================
 CREATE OR REPLACE VIEW financial_report AS
 SELECT 
@@ -338,18 +368,11 @@ GROUP BY u.id;
 
 CREATE OR REPLACE VIEW loan_statistics AS
 SELECT 
+  COUNT(*) FILTER (WHERE status = 'approved' AND end_date > CURRENT_DATE) AS active_loans,
+  COALESCE(SUM(amount) FILTER (WHERE status = 'approved'), 0) AS total_approved_amount,
   COUNT(*) FILTER (
-    WHERE status = 'approved' AND end_date > CURRENT_DATE
-  ) AS active_loans,
-  COALESCE(SUM(amount) FILTER (
-    WHERE status = 'approved'
-  ), 0) AS total_approved_amount,
-  COUNT(*) FILTER (
-    WHERE status = 'approved'
-    AND start_date < CURRENT_DATE
-    AND (
-      EXTRACT(MONTH FROM AGE(CURRENT_DATE, start_date)) * monthly_payment > paid_amount
-    )
+    WHERE status = 'approved' AND start_date < CURRENT_DATE
+      AND (EXTRACT(MONTH FROM AGE(CURRENT_DATE, start_date)) * monthly_payment > paid_amount)
   ) AS estimated_unpaid_installments
 FROM loans;
 
@@ -365,8 +388,7 @@ SELECT
   (
     SELECT l5.id
     FROM loans l5
-    WHERE l5.user_id = u.id
-      AND l5.status = 'active'
+    WHERE l5.user_id = u.id AND l5.status = 'active'
     ORDER BY l5.created_at DESC
     LIMIT 1
   ) AS current_loan_id
