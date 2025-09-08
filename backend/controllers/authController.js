@@ -396,7 +396,7 @@ exports.updateProfile = async (req, res) => {
       return res.status(401).json({ message: "Non authentifié" });
     }
 
-    const { firstName, lastName, email, phone } = req.body;
+    const { firstname, lastname, email, phone } = req.body;
 
     // Vérifier si l'email est déjà pris par un autre utilisateur
     const emailCheck = await pool.query(
@@ -418,7 +418,7 @@ exports.updateProfile = async (req, res) => {
            updated_at = NOW()
        WHERE id = $5
        RETURNING id, firstname, lastname, email, phone, created_at, two_factor_enabled, email_notifications_enabled, sms_notifications_enabled`,
-      [firstName, lastName, email, phone, userId]
+      [firstname, lastname, email, phone, userId]
     );
 
     if (result.rows.length === 0) {
