@@ -398,13 +398,14 @@ exports.updateProfile = async (req, res) => {
 
     const { firstName, lastName, email, phone } = req.body;
 
-    // Vérifier si l'email est déjà utilisé par un autre utilisateur
-    const checkEmail = await pool.query(
+    // Vérifier si l'email est déjà pris par un autre utilisateur
+    const emailCheck = await pool.query(
       "SELECT id FROM users WHERE email = $1 AND id != $2",
       [email, userId]
     );
-    if (checkEmail.rows.length > 0) {
-      return res.status(400).json({ message: "Cet email est déjà utilisé" });
+
+    if (emailCheck.rows.length > 0) {
+      return res.status(400).json({ message: "Cet email est déjà utilisé." });
     }
 
     // Mise à jour
@@ -426,10 +427,11 @@ exports.updateProfile = async (req, res) => {
 
     res.json({
       message: "Profil mis à jour avec succès",
-      user: result.rows[0]
+      user: result.rows[0],
     });
   } catch (err) {
     console.error("❌ Erreur updateProfile:", err);
     res.status(500).json({ message: "Erreur serveur" });
   }
 };
+
