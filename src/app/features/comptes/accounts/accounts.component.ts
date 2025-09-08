@@ -33,8 +33,8 @@ export class AccountsComponent implements OnInit {
   isLoading2FA = false;
 
   profileForm = this.fb.group({
-    firstname: ['', [Validators.required]],
-    lastname: ['', [Validators.required]],
+    firstName: ['', [Validators.required]],
+    lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
     phone: [''],
     // address: this.fb.group({
@@ -131,8 +131,8 @@ export class AccountsComponent implements OnInit {
       if (user) {
         this.userData = user;
         this.profileForm.patchValue({
-          firstname: user.firstName,
-          lastname: user.lastName,
+          firstName: user.firstName,
+          lastName: user.lastName,
           email: user.email,
           phone: user.phone
         });
@@ -154,9 +154,9 @@ export class AccountsComponent implements OnInit {
     if (this.profileForm.invalid) return;
 
     this.isLoading = true;
-    const { firstname, lastname, email, phone } = this.profileForm.value;
+    const { firstName, lastName, email, phone } = this.profileForm.value;
 
-    this.userService.updateProfile({ firstname, lastname, email, phone }).subscribe({
+    this.userService.updateProfile({ firstName, lastName, email, phone }).subscribe({
       next: () => {
         this.isEditing = false;
         this.isLoading = false;
