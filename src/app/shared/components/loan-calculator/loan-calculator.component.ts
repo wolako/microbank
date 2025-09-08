@@ -1,28 +1,18 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { LoanProduct } from '../../models/loan.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-loan-calculator',
   standalone: true,
   imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './loan-calculator.component.html',
-  styleUrls: ['./loan-calculator.component.scss'],
-  animations: [
-    trigger('slideIn', [
-      transition(':enter', [
-        style({ transform: 'translateX(100%)', opacity: 0 }),
-        animate('500ms ease-out', style({ transform: 'translateX(0)', opacity: 1 }))
-      ])
-    ])
-  ]
+  styleUrls: ['./loan-calculator.component.scss']
 })
-export class LoanCalculatorComponent implements OnInit {
+export class LoanCalculatorComponent implements OnInit, OnChanges {
   @Input() loanProduct: LoanProduct | null = null;
   @Output() calculate = new EventEmitter<any>();
 
@@ -35,29 +25,29 @@ export class LoanCalculatorComponent implements OnInit {
   constructor(private fb: FormBuilder, private http: HttpClient) {
     this.loanForm = this.fb.group({
       amount: [10000, [Validators.required, Validators.min(1000)]],
-      term: [12, [Validators.required, Validators.min(3), Validators.max(60)]]
+      term: [12, [Validators.required, Validators.min(1), Validators.max(600)]],
+      rate: [0, [Validators.required, Validators.min(0)]]
     });
   }
 
-  ngOnInit(): void {
-    // si product fourni, ajuster min/max via template getters
-    // recalculer à chaque changement de valeur (debounce si besoin)
-    this.loanForm.valueChanges.subscribe(() => {
-      // ne recalculer que si déjà visible ou si tu veux auto-calc
-      // ici on ne calcule pas automatiquement pour éviter trop d'appels réseau
-    });
+  ngOnInit(): void {}
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['loanProduct'] && this.loanProduct) {
+      const r = this.loanProduct.interestRate ?? 0;
+      this.loanForm.patchValue({ rate: r }, { emitEvent: false });
+    }
   }
 
   calculateLoan() {
-    if (!this.loanProduct) return;
     if (this.loanForm.invalid) {
-      // optionnel : afficher erreurs
+      this.loanForm.markAllAsTouched();
       return;
     }
 
-    const amount = this.loanForm.get('amount')!.value;
-    const term = this.loanForm.get('term')!.value;
-    const rate = this.loanProduct.interestRate;
+    const amount = Number(this.loanForm.value.amount);
+    const term = Number(this.loanForm.value.term);
+    const rate = Number(this.loanForm.value.rate ?? this.loanProduct?.interestRate ?? 0);
 
     this.http.post<any>(`${environment.apiUrl}/loans/simulate`, {
       amount,
@@ -68,30 +58,18 @@ export class LoanCalculatorComponent implements OnInit {
         this.monthlyPayment = result.monthlyPayment;
         this.totalPayment = result.totalPayment;
         this.totalInterest = result.totalInterest;
-
-        this.calculate.emit(result);
         this.showResults = true;
+        this.calculate.emit(result);
       },
       error: (err) => {
         console.error('❌ Erreur API simulate:', err);
-        // tu peux afficher un toast/message utilisateur ici
       }
     });
   }
 
-  get minAmount(): number {
-    return this.loanProduct?.minAmount || 1000;
-  }
-
-  get maxAmount(): number {
-    return this.loanProduct?.maxAmount || 50000;
-  }
-
-  get minTerm(): number {
-    return this.loanProduct?.minTerm || 6;
-  }
-
-  get maxTerm(): number {
-    return this.loanProduct?.maxTerm || 60;
-  }
+  // Getters min/max
+  get minAmount(): number { return this.loanProduct?.minAmount ?? 1000; }
+  get maxAmount(): number { return this.loanProduct?.maxAmount ?? 500000; }
+  get minTerm(): number { return this.loanProduct?.minTerm ?? 1; }
+  get maxTerm(): number { return this.loanProduct?.maxTerm ?? 360; }
 }

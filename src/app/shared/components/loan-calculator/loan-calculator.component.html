@@ -1,49 +1,67 @@
-<div class="loan-calculator" [@slideIn]>
+<div class="loan-calculator">
   <form [formGroup]="loanForm" (ngSubmit)="calculateLoan()" class="calculator-form">
+
+    <!-- Montant -->
     <div class="form-group">
       <label for="amount">Montant du prêt</label>
       <div class="input-group">
         <span class="input-group-text">XOF</span>
 
         <input type="range"
-               id="amount"
-               formControlName="amount"
+               id="amountRange"
                [min]="minAmount"
                [max]="maxAmount"
-               (input)="$event.stopPropagation()">
+               [value]="loanForm.get('amount')!.value"
+               (input)="loanForm.get('amount')!.setValue($any($event.target).valueAsNumber)">
 
         <input type="number"
+               id="amount"
                class="form-control"
                formControlName="amount"
                [min]="minAmount"
                [max]="maxAmount">
       </div>
-
       <div class="range-labels">
-        <span>{{ minAmount | number }}</span>
-        <span>{{ maxAmount | number }}</span>
+        <small>{{ minAmount | number }}</small>
+        <small>{{ maxAmount | number }}</small>
       </div>
     </div>
 
+    <!-- Durée -->
     <div class="form-group">
       <label for="term">Durée (mois)</label>
       <div class="input-group">
         <input type="range"
-               id="term"
-               formControlName="term"
+               id="termRange"
                [min]="minTerm"
                [max]="maxTerm"
-               (input)="$event.stopPropagation()">
+               [value]="loanForm.get('term')!.value"
+               (input)="loanForm.get('term')!.setValue($any($event.target).valueAsNumber)">
 
         <input type="number"
+               id="term"
                class="form-control"
                formControlName="term"
                [min]="minTerm"
                [max]="maxTerm">
       </div>
       <div class="range-labels">
-        <span>{{ minTerm }} mois</span>
-        <span>{{ maxTerm }} mois</span>
+        <small>{{ minTerm }} mois</small>
+        <small>{{ maxTerm }} mois</small>
+      </div>
+    </div>
+
+    <!-- Taux -->
+    <div class="form-group">
+      <label for="rate">Taux annuel (%)</label>
+      <div class="input-group">
+        <input type="number"
+               id="rate"
+               class="form-control"
+               formControlName="rate"
+               step="0.01"
+               min="0">
+        <span class="input-group-text">%</span>
       </div>
     </div>
 
@@ -55,15 +73,15 @@
   <div class="calculator-results" *ngIf="showResults && monthlyPayment !== null">
     <div class="result-item">
       <span>Paiement mensuel:</span>
-      <strong>{{ monthlyPayment | currency:'XOF':'symbol':'1.0-0' }}</strong>
+      <strong>{{ monthlyPayment | number:'1.0-0' }} XOF</strong>
     </div>
     <div class="result-item">
       <span>Total des intérêts:</span>
-      <strong>{{ totalInterest | currency:'XOF':'symbol':'1.0-0' }}</strong>
+      <strong>{{ totalInterest | number:'1.0-0' }} XOF</strong>
     </div>
     <div class="result-item">
       <span>Total à rembourser:</span>
-      <strong>{{ totalPayment | currency:'XOF':'symbol':'1.0-0' }}</strong>
+      <strong>{{ totalPayment | number:'1.0-0' }} XOF</strong>
     </div>
   </div>
 </div>
