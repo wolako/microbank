@@ -6,11 +6,11 @@ import { environment } from '../../../../environments/environment';
   providedIn: 'root'
 })
 export class ContactService {
-  private apiUrl = `${environment.apiUrl}/contact`;
+  private apiUrl = `${environment.apiUrl}/contacts`;
 
   constructor(private http: HttpClient) { }
 
   sendContactForm(formData: any) {
-    return this.http.post(`${this.apiUrl}/contact`, formData);
+    return this.http.post(`${this.apiUrl}`, formData);
   }
 }
