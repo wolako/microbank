@@ -8,6 +8,7 @@ const { calculateInstallment } = require('../utils/finance');
 const loanService = require('../services/loans-service');
 const { calculateCreditScore } = require('../utils/creditScore');
 const { Console } = require('winston/lib/winston/transports');
+const NotificationService = require('../services/notification');
 
 
 exports.createLoan = async (req, res) => {
@@ -130,7 +131,7 @@ exports.createLoan = async (req, res) => {
     } catch (notifyErr) {
       console.error('❌ Erreur notification demande de prêt:', notifyErr.message);
     }
-    
+
     res.status(201).json({ message: 'Demande de prêt enregistrée', loan });
 
   } catch (err) {

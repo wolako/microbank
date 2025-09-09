@@ -6,6 +6,8 @@ const jwt = require('jsonwebtoken');
 const mailer = require('../utils/mailer');
 const crypto = require('crypto');
 const { generateRIB, generateIBAN } = require('../utils/accounts');
+const NotificationService = require('../services/notification');
+
 
 // ✅ Inscription
 exports.register = async (req, res) => {
