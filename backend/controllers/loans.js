@@ -10,6 +10,7 @@ const { calculateCreditScore } = require('../utils/creditScore');
 const { Console } = require('winston/lib/winston/transports');
 const NotificationService = require('../services/notification');
 
+
 exports.createLoan = async (req, res) => {
   const client = await db.connect();
 
@@ -38,14 +39,20 @@ exports.createLoan = async (req, res) => {
 
     const user = userRows[0];
 
-    // 🔹 Normalisation du téléphone
+    // 🔹 Normalisation
     const normalizePhone = (p) => p.replace(/\D/g, '');
+    const normalizeName = (n) => n.trim().toLowerCase().replace(/\s+/g, ' ');
 
-    // Vérification stricte
+    const inputFullName = normalizeName(fullName);
+    const dbFullName = normalizeName(`${user.firstname} ${user.lastname}`);
+    const inputEmail = email.trim().toLowerCase();
+    const dbEmail = user.email.trim().toLowerCase();
+
+    // ❌ Vérification stricte (insensible casse, indicatif ignoré)
     if (
-      fullName.trim() !== `${user.firstname} ${user.lastname}` ||
-      email.trim() !== user.email ||
-      normalizePhone(phone) !== normalizePhone(user.phone)
+      inputFullName !== dbFullName ||
+      inputEmail !== dbEmail ||
+      !normalizePhone(user.phone).endsWith(normalizePhone(phone))
     ) {
       await client.query('ROLLBACK');
       return res.status(403).json({
@@ -85,7 +92,7 @@ exports.createLoan = async (req, res) => {
       return res.status(400).json({ error: "Montant ou durée invalide." });
     }
 
-    // Vérifie les prêts en cours
+    // Vérifie prêts en cours
     const { rows: activeLoans } = await client.query(`
       SELECT l.id
       FROM loans l
@@ -119,7 +126,7 @@ exports.createLoan = async (req, res) => {
     const product = productRows[0];
     const interestRate = parseFloat(product.interest_rate);
 
-    // Calculs
+    // Calcul
     const totalAmount = amount + (amount * (interestRate / 100));
     const monthlyPayment = parseFloat((totalAmount / termMonths).toFixed(2));
 
@@ -151,7 +158,7 @@ exports.createLoan = async (req, res) => {
       { loanId: loan.id }
     );
 
-    // 🔔 Notification admins par rôle
+    // 🔔 Notification admins (par rôle uniquement)
     const { rows: adminRows } = await client.query(`
       SELECT id FROM users
       WHERE role IN ('super-admin', 'loan_manager')
