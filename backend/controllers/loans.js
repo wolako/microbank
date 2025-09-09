@@ -16,25 +16,43 @@ exports.createLoan = async (req, res) => {
   try {
     await client.query('BEGIN');
 
-    const { amount, term, fullName, email, phone } = req.body;
-    const user = req.user;
+    const { amount, term, fullName, email, phone, reason } = req.body;
+    const userId = req.user.id;
 
-    if (!user || !user.id || !user.main_account_id) {
+    if (!userId) {
       await client.query('ROLLBACK');
-      return res.status(400).json({ error: "Utilisateur invalide ou compte bancaire principal manquant." });
+      return res.status(400).json({ error: "Utilisateur invalide." });
     }
 
-    // 🔒 Vérification que les informations personnelles correspondent à l'utilisateur connecté
+    // 🔄 Recharger l'utilisateur depuis la base pour prendre en compte les mises à jour récentes
+    const { rows: userRows } = await client.query(
+      `SELECT id, firstname, lastname, email, phone, main_account_id FROM users WHERE id = $1`,
+      [userId]
+    );
+
+    if (userRows.length === 0) {
+      await client.query('ROLLBACK');
+      return res.status(404).json({ error: "Utilisateur introuvable." });
+    }
+
+    const user = userRows[0];
+
+    // Vérification stricte des infos personnelles
     if (
-      (fullName && fullName.trim() !== `${user.firstname} ${user.lastname}`) ||
-      (email && email.trim() !== user.email) ||
-      (phone && phone.trim() !== user.phone)
+      fullName.trim() !== `${user.firstname} ${user.lastname}` ||
+      email.trim() !== user.email ||
+      phone.trim() !== user.phone
     ) {
       await client.query('ROLLBACK');
       return res.status(403).json({ error: "Les informations personnelles saisies ne correspondent pas à votre profil." });
     }
 
-    // Vérifier le solde du compte principal (minimum 50 000 XOF par exemple)
+    if (!user.main_account_id) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({ error: "Compte principal manquant." });
+    }
+
+    // Vérifier le solde du compte principal
     const { rows: accountRows } = await client.query(
       `SELECT balance FROM accounts WHERE id = $1`,
       [user.main_account_id]
@@ -111,27 +129,31 @@ exports.createLoan = async (req, res) => {
       termMonths,
       monthlyPayment,
       startDate,
-      endDate
+      endDate,
+      reason: reason || ''
     };
 
     // Création du prêt en base
     const loan = await Loan.create(client, loanData);
 
+    // 🔔 Notifications
+    const NotificationService = require('../services/notification');
+    await NotificationService.create(
+      user.id,
+      'loan_requested',
+      'Votre demande de prêt a été enregistrée',
+      { loanId: loan.id }
+    );
+
+    // Notification admin
+    await NotificationService.create(
+      null,
+      'new_loan_request',
+      `Nouvelle demande de prêt de ${user.firstname} ${user.lastname}`,
+      { loanId: loan.id, userId: user.id }
+    );
+
     await client.query('COMMIT');
-
-    // 🔔 Notification pour l’admin qu’un utilisateur a demandé un prêt
-    try {
-      await NotificationService.create(
-        user.id, // ou null si tu veux que ce soit seulement pour les admins
-        'loan_requested',
-        `Nouvelle demande de prêt de ${amount} XOF pour ${fullName}`,
-        { loanId: loan.id, amount, termMonths },
-        { notifyAdmins: true } // ça va envoyer aux admins
-      );
-    } catch (notifyErr) {
-      console.error('❌ Erreur notification demande de prêt:', notifyErr.message);
-    }
-
     res.status(201).json({ message: 'Demande de prêt enregistrée', loan });
 
   } catch (err) {
