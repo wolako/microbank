@@ -10,7 +10,6 @@ const { calculateCreditScore } = require('../utils/creditScore');
 const { Console } = require('winston/lib/winston/transports');
 const NotificationService = require('../services/notification');
 
-
 exports.createLoan = async (req, res) => {
   const client = await db.connect();
 
@@ -39,20 +38,14 @@ exports.createLoan = async (req, res) => {
 
     const user = userRows[0];
 
-    // 🔹 Normalisation
+    // 🔹 Normalisation du téléphone
     const normalizePhone = (p) => p.replace(/\D/g, '');
-    const normalizeName = (n) => n.trim().toLowerCase().replace(/\s+/g, ' ');
 
-    const inputFullName = normalizeName(fullName);
-    const dbFullName = normalizeName(`${user.firstname} ${user.lastname}`);
-    const inputEmail = email.trim().toLowerCase();
-    const dbEmail = user.email.trim().toLowerCase();
-
-    // ❌ Vérification stricte mais insensible à la casse et indicatif ignoré
+    // Vérification stricte
     if (
-      inputFullName !== dbFullName ||
-      inputEmail !== dbEmail ||
-      !normalizePhone(user.phone).endsWith(normalizePhone(phone))
+      fullName.trim() !== `${user.firstname} ${user.lastname}` ||
+      email.trim() !== user.email ||
+      normalizePhone(phone) !== normalizePhone(user.phone)
     ) {
       await client.query('ROLLBACK');
       return res.status(403).json({
@@ -65,7 +58,7 @@ exports.createLoan = async (req, res) => {
       return res.status(400).json({ error: "Compte principal manquant." });
     }
 
-    // Vérification du solde minimum
+    // Vérification solde
     const { rows: accountRows } = await client.query(
       `SELECT balance FROM accounts WHERE id = $1`,
       [user.main_account_id]
@@ -126,7 +119,7 @@ exports.createLoan = async (req, res) => {
     const product = productRows[0];
     const interestRate = parseFloat(product.interest_rate);
 
-    // Calcul
+    // Calculs
     const totalAmount = amount + (amount * (interestRate / 100));
     const monthlyPayment = parseFloat((totalAmount / termMonths).toFixed(2));
 
@@ -158,11 +151,10 @@ exports.createLoan = async (req, res) => {
       { loanId: loan.id }
     );
 
-    // 🔔 Notification admins (super-admin + loan_manager)
+    // 🔔 Notification admins par rôle
     const { rows: adminRows } = await client.query(`
       SELECT id FROM users
-      WHERE is_active = TRUE
-      AND role IN ('super-admin', 'loan_manager')
+      WHERE role IN ('super-admin', 'loan_manager')
     `);
 
     for (const admin of adminRows) {
@@ -185,6 +177,7 @@ exports.createLoan = async (req, res) => {
     client.release();
   }
 };
+
 
 
 exports.repayLoan = async (req, res, next) => {
