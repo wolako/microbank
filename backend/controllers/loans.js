@@ -13,6 +13,7 @@ const NotificationService = require('../services/notification');
 
 exports.createLoan = async (req, res) => {
   const client = await db.connect();
+
   try {
     await client.query('BEGIN');
 
@@ -24,7 +25,7 @@ exports.createLoan = async (req, res) => {
       return res.status(400).json({ error: "Utilisateur invalide." });
     }
 
-    // 🔄 Recharger l'utilisateur depuis la base pour prendre en compte les mises à jour récentes
+    // 🔄 Recharger l'utilisateur pour prendre en compte les mises à jour récentes
     const { rows: userRows } = await client.query(
       `SELECT id, firstname, lastname, email, phone, main_account_id 
        FROM users WHERE id = $1`,
@@ -38,14 +39,19 @@ exports.createLoan = async (req, res) => {
 
     const user = userRows[0];
 
-    // Vérification stricte des infos personnelles
+    // 🔹 Normalisation du téléphone pour ignorer +, espaces, tirets et identifiants inutiles
+    const normalizePhone = (p) => p.replace(/\D/g, '');
+
+    // Vérification stricte fullName, email, et téléphone
     if (
       fullName.trim() !== `${user.firstname} ${user.lastname}` ||
       email.trim() !== user.email ||
-      phone.trim() !== user.phone
+      normalizePhone(phone) !== normalizePhone(user.phone)
     ) {
       await client.query('ROLLBACK');
-      return res.status(403).json({ error: "Les informations personnelles saisies ne correspondent pas à votre profil." });
+      return res.status(403).json({
+        error: "Les informations personnelles saisies ne correspondent pas à votre profil."
+      });
     }
 
     if (!user.main_account_id) {
@@ -53,7 +59,7 @@ exports.createLoan = async (req, res) => {
       return res.status(400).json({ error: "Compte principal manquant." });
     }
 
-    // Vérifier le solde du compte principal
+    // Vérification du solde minimum
     const { rows: accountRows } = await client.query(
       `SELECT balance FROM accounts WHERE id = $1`,
       [user.main_account_id]
@@ -66,7 +72,6 @@ exports.createLoan = async (req, res) => {
 
     const balance = parseFloat(accountRows[0].balance);
     const minimumBalanceRequired = 50000;
-
     if (balance < minimumBalanceRequired) {
       await client.query('ROLLBACK');
       return res.status(400).json({ error: `Vous devez avoir au moins ${minimumBalanceRequired} XOF sur votre compte principal pour demander un prêt.` });
@@ -79,7 +84,7 @@ exports.createLoan = async (req, res) => {
       return res.status(400).json({ error: "Montant ou durée invalide." });
     }
 
-    // Vérifie si l'utilisateur a un prêt en cours non remboursé
+    // Vérifie les prêts en cours non remboursés
     const { rows: activeLoans } = await client.query(`
       SELECT l.id
       FROM loans l
@@ -134,10 +139,10 @@ exports.createLoan = async (req, res) => {
       reason: reason || ''
     };
 
-    // Création du prêt en base
+    // Création du prêt
     const loan = await Loan.create(client, loanData);
 
-    // 🔔 Notification à l'utilisateur
+    // 🔔 Notification client
     await NotificationService.create(
       user.id,
       'loan_requested',
@@ -145,24 +150,21 @@ exports.createLoan = async (req, res) => {
       { loanId: loan.id }
     );
 
-    // 🔔 Notification aux admins actifs avec rôle spécifique
-    const { rows: admins } = await client.query(`
-      SELECT id, firstname, lastname 
-      FROM users 
-      WHERE is_active = true 
-        AND role IN ('super-admin', 'loan_manager')
+    // 🔔 Notification admins actifs selon rôle
+    const { rows: adminRows } = await client.query(`
+      SELECT id FROM users
+      WHERE is_active = TRUE
+      AND role IN ('super-admin', 'loan_manager')
     `);
 
-    const notifications = admins.map(admin =>
-      NotificationService.create(
+    for (const admin of adminRows) {
+      await NotificationService.create(
         admin.id,
         'new_loan_request',
         `Nouvelle demande de prêt de ${user.firstname} ${user.lastname}`,
         { loanId: loan.id, userId: user.id }
-      )
-    );
-
-    await Promise.all(notifications);
+      );
+    }
 
     await client.query('COMMIT');
     res.status(201).json({ message: 'Demande de prêt enregistrée', loan });
