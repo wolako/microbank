@@ -3,14 +3,17 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators, FormControl, FormsModule } from '@angular/forms';
 import { AuthService } from '../../../core/services/auth/auth.service';
 import { UserService } from '../../../core/services/users/user.service';
-import { TransactionsComponent } from '../transactions/transactions.component';
 import { DocumentsService } from '../../../core/services/documents/documents.service';
 import { UserDocument } from '../../../shared/models/document.model';
+import { TransactionsComponent } from '../transactions/transactions.component';
+import { ToastService } from '../../../core/services/toast/toast.service';
+import { ToastComponent } from '../../../shared/components/toast/toast.component';
+
 
 @Component({
   selector: 'app-accounts',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, TransactionsComponent],
+  imports: [CommonModule, ReactiveFormsModule, FormsModule, TransactionsComponent, ToastComponent],
   templateUrl: './accounts.component.html',
   styleUrls: ['./accounts.component.scss']
 })
@@ -24,7 +27,7 @@ export class AccountsComponent implements OnInit {
   uploading = false;
   selectedFile: File | null = null;
 
-  // 2FA UI state
+  // 2FA
   twoFactorEnabled = false;
   show2FAModal = false;
   qrCodeUrl = '';
@@ -32,18 +35,30 @@ export class AccountsComponent implements OnInit {
   twoFactorError = '';
   isLoading2FA = false;
 
+  // Formulaires
   profileForm = this.fb.group({
     firstName: ['', [Validators.required]],
     lastName: ['', [Validators.required]],
     email: ['', [Validators.required, Validators.email]],
-    phone: [''],
-    // address: this.fb.group({
-    //   street: [''],
-    //   city: [''],
-    //   postalCode: ['']
-    // })
+    phone: ['']
   });
 
+  passwordForm = this.fb.group({
+    oldPassword: ['', [Validators.required]],
+    newPassword: ['', [
+      Validators.required,
+      Validators.minLength(8),
+      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
+    ]],
+    confirmPassword: ['', [Validators.required]]
+  }, { validator: this.passwordMatchValidator });
+
+  notificationForm = this.fb.group({
+    email_notifications_enabled: [false],
+    sms_notifications_enabled: [false]
+  });
+
+  // Password state
   showPasswordForm = false;
   passwordError = '';
   passwordSuccess = false;
@@ -52,7 +67,8 @@ export class AccountsComponent implements OnInit {
     public authService: AuthService,
     private userService: UserService,
     private fb: FormBuilder,
-    private documentsService: DocumentsService
+    private documentsService: DocumentsService,
+    private toastService: ToastService
   ) {}
 
   ngOnInit() {
@@ -60,18 +76,19 @@ export class AccountsComponent implements OnInit {
     this.loadDocuments();
   }
 
+  // ================== Documents ==================
   loadDocuments() {
     this.documentsService.getDocuments().subscribe({
       next: docs => this.documents = docs,
-      error: err => console.error('Erreur chargement documents:', err)
+      error: () => this.toastService.show('error', 'Impossible de charger vos documents ❌')
     });
   }
 
   onFileSelected(event: Event) {
     const input = event.target as HTMLInputElement;
     if (!input.files?.length) return;
-    this.selectedFile = input.files[0];
 
+    this.selectedFile = input.files[0];
     const formData = new FormData();
     formData.append('document', this.selectedFile);
 
@@ -80,18 +97,22 @@ export class AccountsComponent implements OnInit {
       next: doc => {
         this.documents.unshift(doc);
         this.uploading = false;
+        this.toastService.show('success', 'Document ajouté ✅');
       },
-      error: err => {
-        console.error(err);
+      error: () => {
         this.uploading = false;
+        this.toastService.show('error', 'Échec de l’upload ❌');
       }
     });
   }
 
   deleteDocument(docId: number) {
     this.documentsService.deleteDocument(docId).subscribe({
-      next: () => this.documents = this.documents.filter(d => d.id !== docId),
-      error: err => console.error(err)
+      next: () => {
+        this.documents = this.documents.filter(d => d.id !== docId);
+        this.toastService.show('success', 'Document supprimé ✅');
+      },
+      error: () => this.toastService.show('error', 'Impossible de supprimer le document ❌')
     });
   }
 
@@ -105,27 +126,7 @@ export class AccountsComponent implements OnInit {
     });
   }
 
-  passwordForm = this.fb.group({
-    oldPassword: ['', [Validators.required]],
-    newPassword: ['', [
-      Validators.required,
-      Validators.minLength(8),
-      Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/)
-    ]],
-    confirmPassword: ['', [Validators.required]]
-  }, { validator: this.passwordMatchValidator });
-
-  passwordMatchValidator(group: FormGroup) {
-    const newPassword = group.get('newPassword')?.value;
-    const confirmPassword = group.get('confirmPassword')?.value;
-    return newPassword === confirmPassword ? null : { mismatch: true };
-  }
-
-  notificationForm = this.fb.group({
-    email_notifications_enabled: [false],
-    sms_notifications_enabled: [false]
-  });
-
+  // ================== Profil ==================
   loadUserData() {
     this.authService.ensureUserLoaded().subscribe(user => {
       if (user) {
@@ -137,21 +138,21 @@ export class AccountsComponent implements OnInit {
           phone: user.phone
         });
 
-
-        // Notifications
         this.notificationForm.patchValue({
           email_notifications_enabled: user.email_notifications_enabled ?? false,
           sms_notifications_enabled: user.sms_notifications_enabled ?? false
         });
 
-        // 2FA
         this.twoFactorEnabled = user.two_factor_enabled ?? false;
       }
     });
   }
 
   updateProfile() {
-    if (this.profileForm.invalid) return;
+    if (this.profileForm.invalid) {
+      this.toastService.show('error', 'Veuillez corriger les erreurs du formulaire ⚠️');
+      return;
+    }
 
     this.isLoading = true;
     const { firstName, lastName, email, phone } = this.profileForm.value;
@@ -161,27 +162,45 @@ export class AccountsComponent implements OnInit {
         this.isEditing = false;
         this.isLoading = false;
         this.loadUserData();
+        this.toastService.show('success', 'Profil mis à jour ✅');
       },
       error: () => {
         this.isLoading = false;
+        this.toastService.show('error', 'Erreur lors de la mise à jour ❌');
       }
     });
   }
 
+  cancelEdit() {
+    this.isEditing = false;
+    this.loadUserData();
+  }
 
+  // ================== Notifications ==================
   updateNotificationPreferences() {
     const prefs = this.notificationForm.value as {
       email_notifications_enabled: boolean;
       sms_notifications_enabled: boolean;
     };
 
-    this.userService.updateNotificationPreferences({
-      email_notifications_enabled: prefs.email_notifications_enabled,
-      sms_notifications_enabled: prefs.sms_notifications_enabled
-    }).subscribe({
-      next: () => {},
-      error: (err) => console.error('Erreur mise à jour notifications :', err)
+    this.userService.updateNotificationPreferences(prefs).subscribe({
+      next: () => this.toastService.show('success', 'Préférences mises à jour ✅'),
+      error: () => this.toastService.show('error', 'Erreur mise à jour notifications ❌')
     });
+  }
+
+  get emailNotificationsControl(): FormControl {
+    return this.notificationForm.get('email_notifications_enabled') as FormControl;
+  }
+  get smsNotificationsControl(): FormControl {
+    return this.notificationForm.get('sms_notifications_enabled') as FormControl;
+  }
+
+  // ================== Mot de passe ==================
+  passwordMatchValidator(group: FormGroup) {
+    const newPassword = group.get('newPassword')?.value;
+    const confirmPassword = group.get('confirmPassword')?.value;
+    return newPassword === confirmPassword ? null : { mismatch: true };
   }
 
   changePassword() {
@@ -189,9 +208,8 @@ export class AccountsComponent implements OnInit {
       this.passwordError = 'Veuillez remplir correctement tous les champs';
       return;
     }
-
     if (this.passwordForm.hasError('mismatch')) {
-      this.passwordError = 'Les nouveaux mots de passe ne correspondent pas';
+      this.passwordError = 'Les mots de passe ne correspondent pas';
       return;
     }
 
@@ -207,10 +225,11 @@ export class AccountsComponent implements OnInit {
         this.passwordSuccess = true;
         this.passwordForm.reset();
 
-        // Mettre à jour la date dans userData
         if (res.passwordUpdatedAt) {
           this.userData.passwordUpdatedAt = res.passwordUpdatedAt;
         }
+
+        this.toastService.show('success', 'Mot de passe changé ✅');
 
         setTimeout(() => {
           this.showPasswordForm = false;
@@ -220,29 +239,27 @@ export class AccountsComponent implements OnInit {
       error: (err) => {
         this.isLoading = false;
         this.passwordError = err.error?.message || 'Erreur lors du changement de mot de passe';
+        this.toastService.show('error', this.passwordError);
       }
     });
   }
 
-  get emailNotificationsControl(): FormControl {
-    return this.notificationForm.get('email_notifications_enabled') as FormControl;
-  }
+  // Helpers affichage règles password
+  hasMinLength(): boolean { return (this.passwordForm.get('newPassword')?.value || '').length >= 8; }
+  hasUpperCase(): boolean { return /[A-Z]/.test(this.passwordForm.get('newPassword')?.value || ''); }
+  hasLowerCase(): boolean { return /[a-z]/.test(this.passwordForm.get('newPassword')?.value || ''); }
+  hasNumber(): boolean { return /\d/.test(this.passwordForm.get('newPassword')?.value || ''); }
+  hasSpecialChar(): boolean { return /[@$!%*?&]/.test(this.passwordForm.get('newPassword')?.value || ''); }
 
-  get smsNotificationsControl(): FormControl {
-    return this.notificationForm.get('sms_notifications_enabled') as FormControl;
-  }
-
-  // ---------------- 2FA ----------------
+  // ================== 2FA ==================
   toggleTwoFactor(event: Event) {
     const checked = (event.target as HTMLInputElement).checked;
     this.isLoading2FA = true;
     this.twoFactorError = '';
 
     if (checked) {
-      // Setup 2FA: récupérer QR code et afficher modal
       this.userService.setupTwoFactor().subscribe({
         next: res => {
-          // le backend renvoie { qrDataUrl, secret }
           this.qrCodeUrl = res?.qrDataUrl || '';
           if (!this.qrCodeUrl) {
             this.twoFactorError = 'Impossible de générer le QR code';
@@ -251,26 +268,20 @@ export class AccountsComponent implements OnInit {
           }
           this.isLoading2FA = false;
         },
-        error: err => {
-          console.error('Erreur setup 2FA:', err);
-          this.twoFactorError = err.error?.error || 'Erreur serveur';
+        error: () => {
+          this.twoFactorError = 'Erreur lors de l’activation 2FA';
           this.isLoading2FA = false;
         }
       });
     } else {
-      // Désactivation 2FA
       this.userService.disableTwoFactor().subscribe({
         next: () => {
-          // Recharger le profil pour refléter l’état
           this.authService.refreshUser();
-          this.authService.getCurrentUser().subscribe(user => {
-            this.twoFactorEnabled = user?.two_factor_enabled ?? false;
-          });
+          this.toastService.show('success', '2FA désactivée ✅');
           this.isLoading2FA = false;
         },
-        error: err => {
-          console.error('Erreur désactivation 2FA:', err);
-          this.twoFactorError = err.error?.error || 'Erreur serveur';
+        error: () => {
+          this.twoFactorError = 'Erreur lors de la désactivation';
           this.isLoading2FA = false;
         }
       });
@@ -278,12 +289,8 @@ export class AccountsComponent implements OnInit {
   }
 
   confirmTwoFactor() {
-    if (!this.twoFactorToken) {
-      this.twoFactorError = 'Entrez le code à 6 chiffres';
-      return;
-    }
     if (!/^\d{6}$/.test(this.twoFactorToken)) {
-      this.twoFactorError = 'Le code doit contenir 6 chiffres';
+      this.twoFactorError = 'Code invalide';
       return;
     }
 
@@ -295,28 +302,17 @@ export class AccountsComponent implements OnInit {
         if (res.success) {
           this.show2FAModal = false;
           this.twoFactorToken = '';
-          // Recharger le profil pour mettre à jour two_factor_enabled
           this.authService.refreshUser();
-          this.authService.getCurrentUser().subscribe(user => {
-            this.twoFactorEnabled = user?.two_factor_enabled ?? false;
-          });
+          this.toastService.show('success', '2FA activée ✅');
         } else {
-          this.twoFactorError = 'Code invalide';
+          this.twoFactorError = 'Code incorrect';
         }
         this.isLoading2FA = false;
       },
-      error: err => {
-        console.error('Erreur confirmation 2FA:', err);
-        this.twoFactorError = err.error?.error || 'Code invalide ou expiré';
+      error: () => {
+        this.twoFactorError = 'Code invalide ou expiré';
         this.isLoading2FA = false;
       }
     });
   }
-
-  // ---------------- Password helpers ----------------
-  hasMinLength(): boolean { return (this.passwordForm.get('newPassword')?.value || '').length >= 8; }
-  hasUpperCase(): boolean { return /[A-Z]/.test(this.passwordForm.get('newPassword')?.value || ''); }
-  hasLowerCase(): boolean { return /[a-z]/.test(this.passwordForm.get('newPassword')?.value || ''); }
-  hasNumber(): boolean { return /\d/.test(this.passwordForm.get('newPassword')?.value || ''); }
-  hasSpecialChar(): boolean { return /[@$!%*?&]/.test(this.passwordForm.get('newPassword')?.value || ''); }
 }

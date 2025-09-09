@@ -4,11 +4,12 @@ import { Subscription } from 'rxjs';
 import { AuthService } from './core/services/auth/auth.service';
 import { ThemeService } from './core/services/themes/theme.service';
 import { NgClass } from '@angular/common';
+import { ToastComponent } from './shared/components/toast/toast.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, NgClass],
+  imports: [RouterOutlet, NgClass, ToastComponent],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
