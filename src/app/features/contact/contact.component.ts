@@ -3,13 +3,25 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ContactService } from '../../core/services/contact/contact.service';
 import { NgIf } from '@angular/common';
+import { trigger, transition, style, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, NgIf],
   templateUrl: './contact.component.html',
-  styleUrls: ['./contact.component.scss']
+  styleUrls: ['./contact.component.scss'],
+  animations: [
+    trigger('fade', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(-10px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ]),
+      transition(':leave', [
+        animate('300ms ease-in', style({ opacity: 0, transform: 'translateY(-10px)' }))
+      ])
+    ])
+  ]
 })
 export class ContactComponent {
   contactForm = this.fb.group({
@@ -43,7 +55,7 @@ export class ContactComponent {
         this.contactForm.reset();
         this.isLoading = false;
 
-        // Effacer le message de succès automatiquement après 5 secondes
+        // Disparition automatique du message de succès
         setTimeout(() => {
           this.isSubmitted = false;
         }, 5000);
@@ -52,7 +64,7 @@ export class ContactComponent {
         this.errorMessage = err?.error?.error || 'Erreur serveur';
         this.isLoading = false;
 
-        // Effacer le message d'erreur automatiquement après 5 secondes
+        // Disparition automatique du message d'erreur
         setTimeout(() => {
           this.errorMessage = '';
         }, 5000);
