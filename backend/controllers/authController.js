@@ -83,6 +83,19 @@ exports.register = async (req, res) => {
       }
     });
 
+    // 🔔 Création notification pour l'admin (inscription utilisateur)
+    try {
+      await NotificationService.create(
+        user.id,
+        'user_registered',
+        `Nouvelle inscription : ${user.firstname} ${user.lastname} (${user.email})`,
+        { userId: user.id, email: user.email },
+        { notifyAdmins: true } // envoi aux admins
+      );
+    } catch (notifyErr) {
+      console.error('❌ Erreur notification inscription:', notifyErr.message);
+    }
+
   } catch (err) {
     await client.query('ROLLBACK');
     console.error('❌ Erreur inscription:', err);

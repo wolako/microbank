@@ -117,6 +117,20 @@ exports.createLoan = async (req, res) => {
     const loan = await Loan.create(client, loanData);
 
     await client.query('COMMIT');
+
+    // 🔔 Notification pour l’admin qu’un utilisateur a demandé un prêt
+    try {
+      await NotificationService.create(
+        user.id, // ou null si tu veux que ce soit seulement pour les admins
+        'loan_requested',
+        `Nouvelle demande de prêt de ${amount} XOF pour ${fullName}`,
+        { loanId: loan.id, amount, termMonths },
+        { notifyAdmins: true } // ça va envoyer aux admins
+      );
+    } catch (notifyErr) {
+      console.error('❌ Erreur notification demande de prêt:', notifyErr.message);
+    }
+    
     res.status(201).json({ message: 'Demande de prêt enregistrée', loan });
 
   } catch (err) {
