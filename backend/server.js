@@ -54,6 +54,7 @@ app.use('/api/webhooks', webhookRoutes);
 app.use('/api', purchaseRoutes);
 app.use('/api/2fa', twoFARoutes);
 app.use('/api/documents', documentsRoutes);
+app.use('/api/contacts', require('./routes/contact'));
 
 // =======================
 // Angular / Frontend

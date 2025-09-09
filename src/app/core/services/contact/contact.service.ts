@@ -11,6 +11,6 @@ export class ContactService {
   constructor(private http: HttpClient) { }
 
   sendContactForm(formData: any) {
-    return this.http.post(`${this.apiUrl}/submit`, formData);
+    return this.http.post(`${this.apiUrl}`, formData);
   }
 }

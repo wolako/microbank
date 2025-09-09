@@ -5,8 +5,7 @@
 -- Se connecter à la base :
 -- \c microbank_7m3i;
 
--- Extensions pour UUID et cryptographie
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Extension pour UUID
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- =====================================================================
@@ -24,7 +23,7 @@ $$ LANGUAGE plpgsql;
 -- 1️⃣ Table des utilisateurs
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS users (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   email VARCHAR(255) UNIQUE NOT NULL,
   password_hash VARCHAR(255) NOT NULL,
   firstname VARCHAR(100) NOT NULL,
@@ -54,7 +53,7 @@ CREATE TABLE IF NOT EXISTS users (
 -- 2️⃣ Table des comptes bancaires
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS accounts (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   accountNumber VARCHAR(50) UNIQUE NOT NULL,
   balance DECIMAL(15,2) DEFAULT 0.00 CHECK (balance >= 0),
@@ -69,7 +68,7 @@ CREATE TABLE IF NOT EXISTS accounts (
 -- 3️⃣ Tables Prêts
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS loan_products (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(100) UNIQUE NOT NULL,
   description TEXT,
   interest_rate DECIMAL(5,2) NOT NULL,
@@ -81,7 +80,7 @@ CREATE TABLE IF NOT EXISTS loan_products (
 );
 
 CREATE TABLE IF NOT EXISTS loans (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   account_id UUID NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
   product_id UUID NOT NULL REFERENCES loan_products(id) ON DELETE CASCADE,
@@ -101,7 +100,7 @@ CREATE TABLE IF NOT EXISTS loans (
 );
 
 CREATE TABLE IF NOT EXISTS loan_installments (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   loan_id UUID NOT NULL REFERENCES loans(id) ON DELETE CASCADE,
   due_date TIMESTAMP WITH TIME ZONE NOT NULL,
   amount DECIMAL(15,2) NOT NULL,
@@ -113,7 +112,7 @@ CREATE TABLE IF NOT EXISTS loan_installments (
 );
 
 CREATE TABLE IF NOT EXISTS loan_payments (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   loan_id UUID NOT NULL REFERENCES loans(id) ON DELETE CASCADE,
   installment_id UUID REFERENCES loan_installments(id) ON DELETE SET NULL,
   transaction_id UUID NOT NULL,
@@ -128,7 +127,7 @@ CREATE TABLE IF NOT EXISTS loan_payments (
 -- 4️⃣ Transactions et Bills
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS transactions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   account_id UUID NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
   amount DECIMAL(15,2) NOT NULL,
@@ -143,7 +142,7 @@ CREATE TABLE IF NOT EXISTS transactions (
 );
 
 CREATE TABLE IF NOT EXISTS bills (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   account_id UUID REFERENCES accounts(id) ON DELETE SET NULL,
   type VARCHAR(50) NOT NULL,
@@ -157,7 +156,7 @@ CREATE TABLE IF NOT EXISTS bills (
 );
 
 CREATE TABLE IF NOT EXISTS bill_payments (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   bill_id UUID NOT NULL REFERENCES bills(id) ON DELETE CASCADE,
   transaction_id UUID NOT NULL REFERENCES transactions(id) ON DELETE CASCADE,
   amount DECIMAL(15,2) NOT NULL,
@@ -170,7 +169,7 @@ CREATE TABLE IF NOT EXISTS bill_payments (
 -- 5️⃣ Achats / Produits / Commandes
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS products (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(255) NOT NULL,
   description TEXT,
   price DECIMAL(15,2) NOT NULL CHECK (price >= 0),
@@ -182,7 +181,7 @@ CREATE TABLE IF NOT EXISTS products (
 );
 
 CREATE TABLE IF NOT EXISTS purchases (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID REFERENCES users(id) ON DELETE CASCADE,
   account_id UUID REFERENCES accounts(id) ON DELETE CASCADE,
   amount NUMERIC(12,2) NOT NULL,
@@ -195,7 +194,7 @@ CREATE TABLE IF NOT EXISTS purchases (
 );
 
 CREATE TABLE IF NOT EXISTS orders (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   account_id UUID NOT NULL REFERENCES accounts(id) ON DELETE CASCADE,
   total_amount DECIMAL(15,2) NOT NULL CHECK (total_amount >= 0),
@@ -205,7 +204,7 @@ CREATE TABLE IF NOT EXISTS orders (
 );
 
 CREATE TABLE IF NOT EXISTS order_items (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
   product_id UUID NOT NULL REFERENCES products(id),
   quantity INTEGER NOT NULL CHECK (quantity > 0),
@@ -213,7 +212,7 @@ CREATE TABLE IF NOT EXISTS order_items (
 );
 
 CREATE TABLE IF NOT EXISTS order_payments (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
   transaction_id UUID NOT NULL REFERENCES transactions(id) ON DELETE CASCADE,
   amount DECIMAL(15,2) NOT NULL CHECK (amount >= 0),
@@ -238,7 +237,7 @@ CREATE TABLE IF NOT EXISTS documents (
 -- 7️⃣ ATM Withdrawals
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS atm_withdrawals (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   transaction_id UUID NOT NULL REFERENCES transactions(id),
   user_id UUID NOT NULL REFERENCES users(id),
   account_id UUID NOT NULL REFERENCES accounts(id),
@@ -253,7 +252,7 @@ CREATE TABLE IF NOT EXISTS atm_withdrawals (
 );
 
 CREATE TABLE IF NOT EXISTS atm_withdrawal_attempts (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   atm_withdrawal_id UUID NOT NULL REFERENCES atm_withdrawals(id) ON DELETE CASCADE,
   attempted_code TEXT NOT NULL,
   is_valid BOOLEAN NOT NULL,
@@ -264,7 +263,7 @@ CREATE TABLE IF NOT EXISTS atm_withdrawal_attempts (
 -- 8️⃣ User Sessions
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS user_sessions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   expires_at TIMESTAMP WITH TIME ZONE,
@@ -277,7 +276,7 @@ CREATE TABLE IF NOT EXISTS user_sessions (
 -- 9️⃣ Notifications & Scheduler
 -- =====================================================================
 CREATE TABLE IF NOT EXISTS notifications (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   type VARCHAR(50) NOT NULL,
   title VARCHAR(255) NOT NULL,
@@ -294,7 +293,19 @@ CREATE TABLE IF NOT EXISTS scheduler_jobs (
 );
 
 -- =====================================================================
--- 10️⃣ Triggers pour updated_at
+-- 10️⃣ Table contacts (Formulaire contact)
+-- =====================================================================
+CREATE TABLE IF NOT EXISTS contacts (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  name VARCHAR(150) NOT NULL,
+  email VARCHAR(150) NOT NULL,
+  subject VARCHAR(255) NOT NULL,
+  message TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- =====================================================================
+-- 11️⃣ Triggers pour updated_at
 -- =====================================================================
 DO $$
 BEGIN
@@ -330,7 +341,7 @@ BEGIN
 END $$;
 
 -- =====================================================================
--- 11️⃣ Données de base pour les produits de prêt (idempotent)
+-- 12️⃣ Données de base pour les produits de prêt (idempotent)
 -- =====================================================================
 INSERT INTO loan_products (name, description, interest_rate, min_amount, max_amount, min_term_months, max_term_months)
 VALUES
@@ -340,7 +351,7 @@ VALUES
 ON CONFLICT (name) DO NOTHING;
 
 -- =====================================================================
--- 12️⃣ Index pour performance et sécurité
+-- 13️⃣ Index pour performance et sécurité
 -- =====================================================================
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_accounts_accountNumber ON accounts(accountNumber);
@@ -349,7 +360,7 @@ CREATE INDEX IF NOT EXISTS idx_transactions_account_id ON transactions(account_i
 CREATE INDEX IF NOT EXISTS idx_orders_user_id ON orders(user_id);
 
 -- =====================================================================
--- 13️⃣ Vues pour reporting
+-- 14️⃣ Vues pour reporting
 -- =====================================================================
 CREATE OR REPLACE VIEW financial_report AS
 SELECT 
