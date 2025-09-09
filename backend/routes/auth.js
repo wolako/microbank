@@ -49,9 +49,6 @@ router.post('/resend-confirmation', authController.resendConfirmation);
 
 router.get('/profile', requireAuth, authController.getProfile);
 
-// Mise à jour du profil utilisateur
-router.put('/profile', requireAuth, authController.updateProfile);
-
 router.get('/check-session', requireAuth, (req, res) => {
   res.json(req.user);
 });
