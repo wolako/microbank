@@ -389,6 +389,8 @@ exports.resetPassword = async (req, res) => {
   }
 };
 
+// backend/controllers/user.controller.js
+
 exports.updateProfile = async (req, res) => {
   try {
     const userId = req.user?.id;
@@ -396,12 +398,10 @@ exports.updateProfile = async (req, res) => {
       return res.status(401).json({ message: 'Non authentifié' });
     }
 
-    // Données du frontend
+    // Récupération des données envoyées depuis le frontend
     const { firstName, lastName, email, phone } = req.body;
 
-    console.log('💡 updateProfile payload:', { firstName, lastName, email, phone });
-
-    // Vérifier utilisateur existant
+    // Vérifier si l'utilisateur existe
     const { rows: existing } = await db.query(
       'SELECT id, email FROM users WHERE id = $1',
       [userId]
@@ -410,34 +410,40 @@ exports.updateProfile = async (req, res) => {
       return res.status(404).json({ message: 'Utilisateur non trouvé' });
     }
 
-    // Vérifier unicité email
+    // Vérifier unicité de l'email
     if (email && email !== existing[0].email) {
       const { rows: dup } = await db.query(
         'SELECT id FROM users WHERE email = $1 AND id != $2',
         [email, userId]
       );
       if (dup.length > 0) {
-        return res.status(400).json({ message: 'Cet email est déjà utilisé par un autre compte.' });
+        return res
+          .status(400)
+          .json({ message: 'Cet email est déjà utilisé par un autre compte.' });
       }
     }
 
-    // Mise à jour avec colonnes exactes
+    // Mise à jour uniquement des colonnes existantes
     const { rows } = await db.query(
       `UPDATE users SET
-         firstname  = COALESCE($1, firstname),
-         lastname   = COALESCE($2, lastname),
-         email      = COALESCE($3, email),
-         phone      = COALESCE($4, phone),
-         updated_at = NOW()
+         firstname   = COALESCE($1, firstname),
+         lastname    = COALESCE($2, lastname),
+         email       = COALESCE($3, email),
+         phone       = COALESCE($4, phone),
+         updated_at  = NOW()
        WHERE id = $5
-       RETURNING *`,
-      [firstName ?? existing[0].firstname, lastName ?? existing[0].lastname, email ?? existing[0].email, phone ?? existing[0].phone, userId]
+       RETURNING id, firstname, lastname, email, phone,
+                 username, role, is_verified,
+                 two_factor_enabled,
+                 email_notifications_enabled,
+                 sms_notifications_enabled,
+                 created_at, updated_at, password_updated_at`
+      ,
+      [firstName, lastName, email, phone, userId]
     );
 
-    console.log('💡 updateProfile result:', rows);
-
     if (rows.length === 0) {
-      return res.status(500).json({ message: 'Échec mise à jour profil' });
+      return res.status(500).json({ message: 'Échec de la mise à jour du profil' });
     }
 
     const u = rows[0];
@@ -456,7 +462,8 @@ exports.updateProfile = async (req, res) => {
         email_notifications_enabled: u.email_notifications_enabled,
         sms_notifications_enabled: u.sms_notifications_enabled,
         created_at: u.created_at,
-        updated_at: u.updated_at
+        updated_at: u.updated_at,
+        password_updated_at: u.password_updated_at
       }
     });
   } catch (err) {
@@ -464,3 +471,4 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur', error: err.message });
   }
 };
+
