@@ -26,7 +26,8 @@ exports.createLoan = async (req, res) => {
 
     // 🔄 Recharger l'utilisateur depuis la base pour prendre en compte les mises à jour récentes
     const { rows: userRows } = await client.query(
-      `SELECT id, firstname, lastname, email, phone, main_account_id FROM users WHERE id = $1`,
+      `SELECT id, firstname, lastname, email, phone, main_account_id 
+       FROM users WHERE id = $1`,
       [userId]
     );
 
@@ -136,8 +137,7 @@ exports.createLoan = async (req, res) => {
     // Création du prêt en base
     const loan = await Loan.create(client, loanData);
 
-    // 🔔 Notifications
-    const NotificationService = require('../services/notification');
+    // 🔔 Notification à l'utilisateur
     await NotificationService.create(
       user.id,
       'loan_requested',
@@ -145,13 +145,24 @@ exports.createLoan = async (req, res) => {
       { loanId: loan.id }
     );
 
-    // Notification admin
-    await NotificationService.create(
-      null,
-      'new_loan_request',
-      `Nouvelle demande de prêt de ${user.firstname} ${user.lastname}`,
-      { loanId: loan.id, userId: user.id }
+    // 🔔 Notification aux admins actifs avec rôle spécifique
+    const { rows: admins } = await client.query(`
+      SELECT id, firstname, lastname 
+      FROM users 
+      WHERE is_active = true 
+        AND role IN ('super-admin', 'loan_manager')
+    `);
+
+    const notifications = admins.map(admin =>
+      NotificationService.create(
+        admin.id,
+        'new_loan_request',
+        `Nouvelle demande de prêt de ${user.firstname} ${user.lastname}`,
+        { loanId: loan.id, userId: user.id }
+      )
     );
+
+    await Promise.all(notifications);
 
     await client.query('COMMIT');
     res.status(201).json({ message: 'Demande de prêt enregistrée', loan });
