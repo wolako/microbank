@@ -42,10 +42,20 @@ export class ContactComponent {
         this.isSubmitted = true;
         this.contactForm.reset();
         this.isLoading = false;
+
+        // Effacer le message de succès automatiquement après 5 secondes
+        setTimeout(() => {
+          this.isSubmitted = false;
+        }, 5000);
       },
       error: (err) => {
         this.errorMessage = err?.error?.error || 'Erreur serveur';
         this.isLoading = false;
+
+        // Effacer le message d'erreur automatiquement après 5 secondes
+        setTimeout(() => {
+          this.errorMessage = '';
+        }, 5000);
       }
     });
   }

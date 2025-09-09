@@ -1,4 +1,5 @@
 <div class="contact-page">
+  <!-- Hero -->
   <section class="contact-hero">
     <div class="container">
       <h1>Contactez-nous</h1>
@@ -6,7 +7,9 @@
     </div>
   </section>
 
+  <!-- Contact Container -->
   <div class="contact-container">
+    <!-- Infos -->
     <div class="contact-info">
       <div class="info-card">
         <i class="bi bi-geo-alt"></i>
@@ -27,66 +30,69 @@
       </div>
     </div>
 
+    <!-- Formulaire -->
     <div class="contact-form">
       <h2>Envoyez-nous un message</h2>
-      
-      @if (isSubmitted) {
-        <div class="alert alert-success">
-          Merci ! Votre message a été envoyé avec succès.
-        </div>
-      }
 
+      <!-- Messages -->
+      <div class="alert alert-success" *ngIf="isSubmitted">
+        Merci ! Votre message a été envoyé avec succès.
+      </div>
+
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Formulaire Angular -->
       <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
           <label for="name">Nom complet</label>
-          <input type="text" id="name" formControlName="name">
-          @if (contactForm.get('name')?.invalid && contactForm.get('name')?.touched) {
-            <div class="error-message">Veuillez entrer un nom valide</div>
-          }
+          <input type="text" id="name" formControlName="name" class="form-control">
+          <div class="error-message" *ngIf="contactForm.get('name')?.invalid && contactForm.get('name')?.touched">
+            Veuillez entrer un nom valide (min 3 caractères)
+          </div>
         </div>
 
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" formControlName="email">
-          @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
-            <div class="error-message">Veuillez entrer un email valide</div>
-          }
+          <input type="email" id="email" formControlName="email" class="form-control">
+          <div class="error-message" *ngIf="contactForm.get('email')?.invalid && contactForm.get('email')?.touched">
+            Veuillez entrer un email valide
+          </div>
         </div>
 
         <div class="form-group">
           <label for="subject">Sujet</label>
-          <input type="text" id="subject" formControlName="subject">
-          @if (contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched) {
-            <div class="error-message">Veuillez entrer un sujet</div>
-          }
+          <input type="text" id="subject" formControlName="subject" class="form-control">
+          <div class="error-message" *ngIf="contactForm.get('subject')?.invalid && contactForm.get('subject')?.touched">
+            Veuillez entrer un sujet
+          </div>
         </div>
 
         <div class="form-group">
           <label for="message">Message</label>
-          <textarea id="message" rows="5" formControlName="message"></textarea>
-          @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
-            <div class="error-message">Le message doit contenir au moins 20 caractères</div>
-          }
+          <textarea id="message" rows="5" formControlName="message" class="form-control"></textarea>
+          <div class="error-message" *ngIf="contactForm.get('message')?.invalid && contactForm.get('message')?.touched">
+            Le message doit contenir au moins 20 caractères
+          </div>
         </div>
 
         <button type="submit" class="btn btn-primary" [disabled]="isLoading">
-          @if (isLoading) {
-            <span class="spinner-border spinner-border-sm"></span>
-          } @else {
-            Envoyer
-          }
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm"></span>
+          <span *ngIf="!isLoading">Envoyer</span>
         </button>
       </form>
     </div>
   </div>
 
+  <!-- Google Map -->
   <div class="map-container">
-    <iframe 
-      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.99144060821!2d2.292292615509614!3d48.85837007928746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sTour%20Eiffel!5e0!3m2!1sfr!2sfr!4v1620000000000!5m2!1sfr!2sfr" 
-      width="100%" 
-      height="450" 
-      style="border:0;" 
-      allowfullscreen="" 
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.99144060821!2d2.292292615509614!3d48.85837007928746!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sTour%20Eiffel!5e0!3m2!1sfr!2sfr!4v1620000000000!5m2!1sfr!2sfr"
+      width="100%"
+      height="450"
+      style="border:0;"
+      allowfullscreen=""
       loading="lazy">
     </iframe>
   </div>
