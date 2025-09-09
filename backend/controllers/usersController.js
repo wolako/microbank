@@ -6,7 +6,7 @@ exports.updateProfile = async (req, res) => {
   const userId = req.user?.id;
   if (!userId) return res.status(401).json({ message: 'Non authentifié' });
 
-  const { firstName, lastName, email, phone, address } = req.body;
+  const { firstName, lastName, email, phone } = req.body;
 
   if (!firstName || !lastName || !email) {
     return res.status(400).json({ message: 'Prénom, nom et email requis' });
@@ -18,20 +18,14 @@ exports.updateProfile = async (req, res) => {
         firstname = $1, 
         lastname = $2, 
         email = $3, 
-        phone = $4, 
-        address_street = $5,
-        address_city = $6,
-        address_postalcode = $7
-      WHERE id = $8
+        phone = $4
+      WHERE id = $5
       RETURNING id, firstname, lastname, email, phone`,
       [
         firstName,
         lastName,
         email,
         phone || null,
-        address?.street || null,
-        address?.city || null,
-        address?.postalCode || null,
         userId
       ]
     );
@@ -42,6 +36,7 @@ exports.updateProfile = async (req, res) => {
     res.status(500).json({ message: 'Erreur serveur' });
   }
 };
+
 
 // ----------------- Changer mot de passe -----------------
 function isStrongPassword(pwd) {
