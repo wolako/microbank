@@ -62,3 +62,14 @@ $h2-font-size: 2.2rem;
 $h2-font-size-md: 1.8rem;
 $p-font-size: 1.1rem;
 $p-line-height: 1.7;
+
+// ================================
+// Variables manquantes ajoutées
+// ================================
+$z-header: 1000;                   // header toujours au-dessus
+$section-bg: $light-card-bg;       // fond par défaut des sections
+$text-dark: #212529;               // texte sombre standard Bootstrap
+$color-dark-section-text: #f5f5f5; // texte dans les sections sombres
+$border-color: #dee2e6;            // gris clair pour bordures
+$spacing-unit: 1rem;               // unité de spacing globale
+$font-primary: 'Segoe UI', sans-serif; // police par défaut
