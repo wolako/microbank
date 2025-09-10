@@ -92,3 +92,28 @@ $font-primary: 'Segoe UI', sans-serif;
     }
   }
 }
+
+@mixin respond-sm {
+  @media (max-width: 576px) {
+    @content;
+  }
+}
+
+@mixin respond-md {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin respond-lg {
+  @media (max-width: 992px) {
+    @content;
+  }
+}
+
+@mixin respond-xl {
+  @media (max-width: 1200px) {
+    @content;
+  }
+}
+

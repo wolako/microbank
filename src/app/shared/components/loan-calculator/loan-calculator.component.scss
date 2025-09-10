@@ -5,76 +5,71 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
-  gap: $spacing-unit * 4;
+  gap: $spacing-unit * 3;
   padding: $spacing-unit * 4;
-  min-height: 100vh;
   background-color: $light-bg;
   color: $text-primary;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  transition: $transition;
 
   // ------------------------------
   // Formulaire
   // ------------------------------
   .calculator-form {
-    flex: 1 1 350px;
+    flex: 1 1 360px;
     background-color: $light-card-bg;
     padding: $spacing-unit * 3;
     border-radius: $border-radius;
     box-shadow: $box-shadow;
-    transition: background-color 0.3s ease, color 0.3s ease, box-shadow 0.3s ease;
     animation: fadeInUp 0.6s ease forwards;
+    transition: $transition;
 
     .form-group {
-      margin-bottom: $spacing-unit * 3;
+      margin-bottom: $spacing-unit * 2;
 
       label {
         display: block;
         font-weight: 600;
-        margin-bottom: $spacing-half;
+        margin-bottom: $spacing-unit * 0.5;
         color: $text-primary;
-        transition: color 0.3s ease;
       }
 
       .input-group {
         display: flex;
         align-items: center;
-        gap: $spacing-half;
+        gap: $spacing-unit;
 
         .input-group-text {
           background-color: $light-bg;
           border: 1px solid $border-color;
-          padding: $spacing-half $spacing-unit;
+          padding: $spacing-unit * 0.5 $spacing-unit;
           border-radius: $border-radius;
           font-weight: 600;
           color: inherit;
-          transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
         }
 
         input[type="range"] {
           flex: 1;
-          height: 4px;
-          accent-color: $color-light-primary;
-          background: lighten($color-light-primary, 40%);
+          height: 6px;
+          accent-color: $primary-color;
+          background: lighten($primary-color, 45%);
           border-radius: $border-radius;
           cursor: pointer;
-          outline: none;
-          transition: background-color 0.3s ease;
         }
 
         input[type="number"] {
-          width: 100px;
-          padding: $spacing-half;
+          width: 110px;
+          padding: $spacing-unit * 0.5;
           border: 1px solid $border-color;
           border-radius: $border-radius;
           background-color: transparent;
           color: inherit;
           font-size: 1rem;
-          transition: border-color 0.3s ease, box-shadow 0.3s ease;
+          transition: $transition;
 
           &:focus {
             outline: none;
-            border-color: $color-light-primary;
-            box-shadow: 0 0 0 3px rgba($color-light-primary, 0.15);
+            border-color: $primary-color;
+            box-shadow: 0 0 0 3px rgba($primary-color, 0.15);
           }
         }
       }
@@ -84,31 +79,29 @@
         justify-content: space-between;
         font-size: 0.85rem;
         color: $text-secondary;
-        margin-top: $spacing-quarter;
-        transition: color 0.3s ease;
+        margin-top: $spacing-unit * 0.5;
       }
     }
 
     .btn.btn-primary {
       width: 100%;
-      padding: $spacing-half $spacing-unit;
-      background-color: $color-light-primary;
-      color: $color-light-btn-text;
+      padding: $spacing-unit;
+      background: $gradient-light;
+      color: $text-light;
       font-weight: 700;
       border: none;
       border-radius: $border-radius;
       cursor: pointer;
-      transition: transform 0.15s ease, background-color 0.3s ease;
+      transition: $transition;
 
       &:hover:not(:disabled) {
         transform: translateY(-3px);
-        background-color: $primary-light;
+        background: linear-gradient(135deg, darken($primary-color, 5%), $primary-light);
       }
 
       &:disabled {
         opacity: 0.6;
         cursor: not-allowed;
-        transform: none;
       }
     }
   }
@@ -117,13 +110,13 @@
   // Résultats
   // ------------------------------
   .calculator-results {
-    flex: 1 1 250px;
+    flex: 1 1 280px;
     background-color: $light-card-bg;
     padding: $spacing-unit * 3;
     border-radius: $border-radius;
     box-shadow: $box-shadow;
-    transition: background-color 0.3s ease, color 0.3s ease;
     animation: fadeInUp 0.6s ease forwards;
+    transition: $transition;
 
     .result-item {
       display: flex;
@@ -132,13 +125,11 @@
       font-size: 1rem;
       font-weight: 500;
       color: $text-primary;
-      transition: color 0.3s ease;
 
       strong {
-        font-size: 1.1rem;
+        font-size: 1.2rem;
         font-weight: 700;
-        color: $color-light-primary;
-        transition: color 0.3s ease;
+        color: $primary-color;
       }
     }
   }
@@ -154,10 +145,11 @@
     .calculator-results {
       background-color: $dark-card-bg;
       color: $color-dark-section-text;
-      box-shadow: $box-shadow;
 
-      label { color: $color-dark-section-text; }
-      .range-labels { color: lighten($color-dark-section-text, 15%); }
+      label,
+      .range-labels {
+        color: lighten($color-dark-section-text, 15%);
+      }
 
       .input-group-text {
         background-color: $dark-bg;
@@ -165,8 +157,8 @@
       }
 
       input[type="range"] {
-        accent-color: $color-dark-primary;
-        background: lighten($color-dark-primary, 20%);
+        accent-color: $primary-light;
+        background: lighten($primary-light, 15%);
       }
 
       input[type="number"] {
@@ -174,22 +166,22 @@
         color: $color-dark-section-text;
 
         &:focus {
-          border-color: $color-dark-primary;
-          box-shadow: 0 0 0 3px rgba($color-dark-primary, 0.2);
+          border-color: $primary-light;
+          box-shadow: 0 0 0 3px rgba($primary-light, 0.25);
         }
       }
 
       .btn.btn-primary {
-        background-color: $color-dark-primary;
-        color: $color-dark-btn-text;
+        background: $gradient-dark;
+        color: $text-light;
 
         &:hover:not(:disabled) {
-          background-color: lighten($color-dark-primary, 6%);
+          background: linear-gradient(135deg, lighten($primary-dark, 8%), $secondary-dark);
         }
       }
 
       .result-item strong {
-        color: $color-dark-primary;
+        color: $primary-light;
       }
     }
   }
@@ -205,7 +197,7 @@
   // ------------------------------
   // Responsive
   // ------------------------------
-  @media (max-width: $breakpoint-lg) {
+  @media (max-width: 992px) {
     flex-direction: column;
     align-items: stretch;
     padding: $spacing-unit * 2;

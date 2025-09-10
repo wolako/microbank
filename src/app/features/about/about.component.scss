@@ -1,64 +1,79 @@
 @import '../../../assets/variables';
 
 .about-page {
-  font-family: $font-base;
+  font-family: $font-primary;
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.4s ease, color 0.4s ease;
 
+  // ================= Hero Section =================
   .hero-section {
-    padding: 4rem 1.5rem;
+    padding: 6rem 1.5rem;
     text-align: center;
-    background-color: $section-bg;
-    transition: background-color 0.4s ease;
+    background: $gradient-light;
+    border-radius: $border-radius;
+    color: $text-light;
+    box-shadow: $box-shadow;
+    margin-bottom: 3rem;
 
     h1 {
-      font-size: 2.8rem;
+      font-size: 3rem;
       font-weight: 700;
-      color: $primary-color;
-      margin-bottom: 0.75rem;
-      transition: color 0.4s ease;
+      margin-bottom: 1rem;
     }
 
     .lead {
-      font-size: 1.2rem;
-      color: $text-secondary;
-      transition: color 0.4s ease;
+      font-size: 1.25rem;
+      font-weight: 500;
+      line-height: 1.6;
     }
   }
 
+  // ================= Story Section =================
   .story-section {
-    padding: 3rem 1.5rem;
-    background-color: $section-bg;
+    padding: 4rem 1.5rem;
     text-align: center;
-    transition: background-color 0.4s ease;
 
     .section-header {
-      h2 { color: $primary-color; transition: color 0.4s ease; }
-      .divider { 
-        width: 60px; height: 3px; 
-        background-color: $primary-color; 
-        margin: 0.5rem auto 1.5rem auto; 
-        border-radius: 2px; 
-        transition: background-color 0.4s ease;
+      margin-bottom: 2rem;
+
+      h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: $primary-color;
+        margin-bottom: 0.5rem;
       }
-      .section-subtitle { color: $text-secondary; transition: color 0.4s ease; }
+
+      .divider {
+        width: 60px;
+        height: 4px;
+        background-color: $primary-color;
+        margin: 0 auto;
+        border-radius: 2px;
+      }
+
+      .section-subtitle {
+        font-size: 1rem;
+        color: $text-secondary;
+        margin-top: 0.5rem;
+      }
     }
 
     .story-content {
       max-width: 800px;
       margin: 0 auto;
+
       p {
         color: $text-secondary;
-        line-height: 1.6;
+        line-height: 1.8;
         margin-bottom: 1.5rem;
-        transition: color 0.4s ease;
       }
     }
   }
 
+  // ================= Stats Section =================
   .stats-section {
-    padding: 3rem 1.5rem;
+    padding: 4rem 1.5rem;
 
     .stats-grid {
       display: grid;
@@ -71,69 +86,176 @@
     }
 
     .stat-item {
-      background-color: $card-bg;
-      padding: 1.5rem;
+      background-color: $light-card-bg;
+      padding: 2rem;
       border-radius: $border-radius;
       box-shadow: $box-shadow;
-      transition: all 0.4s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-      .stat-number { color: $primary-color; font-weight: 700; font-size: 2rem; }
-      .stat-label { color: $text-secondary; font-size: 0.95rem; }
+      &:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+
+      .stat-number {
+        color: $primary-color;
+        font-weight: 700;
+        font-size: 2.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .stat-label {
+        color: $text-secondary;
+        font-size: 1rem;
+      }
     }
   }
 
+  // ================= Team Section =================
   .team-section {
-    padding: 3rem 1.5rem;
+    padding: 4rem 1.5rem;
 
     .team-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 1.5rem;
+      gap: 2rem;
+
       @media (max-width: 992px) { grid-template-columns: repeat(2, 1fr); }
       @media (max-width: 768px) { grid-template-columns: 1fr; }
     }
 
     .team-card {
-      background-color: $card-bg;
-      padding: 1.5rem;
+      background-color: $light-card-bg;
+      padding: 2rem;
       border-radius: $border-radius;
       text-align: center;
       box-shadow: $box-shadow;
-      transition: all 0.4s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
 
-      h3 { color: $primary-color; margin-bottom: 0.75rem; }
-      .team-role, p { color: $text-secondary; }
-      .social-links a { color: $primary-color; transition: color 0.3s ease; &:hover { color: $accent-color; } }
+      &:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.15); }
+
+      h3 {
+        color: $primary-color;
+        margin-bottom: 0.5rem;
+        font-size: 1.25rem;
+        font-weight: 700;
+      }
+
+      .team-role {
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: $text-secondary;
+        margin-bottom: 0.75rem;
+      }
+
+      p {
+        font-size: 0.9rem;
+        color: $text-secondary;
+        line-height: 1.6;
+      }
+
+      .social-links {
+        margin-top: 1rem;
+
+        a {
+          color: $primary-color;
+          font-size: 1.2rem;
+          margin: 0 0.5rem;
+          transition: color 0.3s ease;
+
+          &:hover {
+            color: $primary-light;
+          }
+        }
+      }
     }
   }
 
+  // ================= Timeline Section =================
   .timeline-section {
-    padding: 3rem 1.5rem;
+    padding: 4rem 1.5rem;
 
     .timeline-item {
       display: flex;
-      gap: 1.5rem;
+      gap: 2rem;
       flex-wrap: wrap;
+      align-items: flex-start;
+      margin-bottom: 2rem;
 
-      .timeline-year { color: $primary-color; font-weight: 700; font-size: 1.5rem; }
-      .timeline-content h3 { color: $primary-color; margin-bottom: 0.75rem; }
-      .timeline-content p { color: $text-secondary; }
+      .timeline-year {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: $primary-color;
+      }
+
+      .timeline-content {
+        max-width: 600px;
+
+        h3 {
+          color: $primary-color;
+          font-size: 1.25rem;
+          margin-bottom: 0.5rem;
+        }
+
+        p { color: $text-secondary; line-height: 1.6; }
+      }
     }
   }
 
+  // ================= CTA Section =================
   .cta-section {
-    padding: 4rem 1.5rem;
+    padding: 5rem 1.5rem;
     text-align: center;
-    background-color: $section-bg;
+    background: $gradient-light;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    margin-top: 3rem;
 
-    h2 { color: $primary-color; margin-bottom: 0.75rem; }
-    p { color: $text-secondary; margin-bottom: 1.5rem; }
+    h2 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: $text-light;
+      margin-bottom: 1rem;
+    }
 
-    .cta-buttons .btn-primary { background-color: $primary-color; color: $text-light; }
-    .cta-buttons .btn-outline { border-color: $primary-color; color: $primary-color; }
+    p {
+      font-size: 1.1rem;
+      color: $text-light;
+      margin-bottom: 2rem;
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+
+      .btn-primary {
+        background-color: $primary-color;
+        color: $text-light;
+        padding: 0.75rem 2rem;
+        border-radius: $border-radius;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+
+        &:hover { background-color: $primary-light; transform: translateY(-2px); }
+      }
+
+      .btn-outline {
+        border: 2px solid $primary-color;
+        color: $primary-color;
+        padding: 0.75rem 2rem;
+        border-radius: $border-radius;
+        font-weight: 600;
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+
+        &:hover {
+          background-color: $primary-color;
+          color: $text-light;
+          transform: translateY(-2px);
+        }
+      }
+    }
   }
 
-  // Dark Mode
+  // ================= Dark Mode =================
   :host-context(.dark-mode) {
     background-color: $dark-bg;
     color: $text-light;
@@ -144,17 +266,25 @@
     .team-section,
     .timeline-section,
     .cta-section {
-      background-color: $section-bg-dark;
+      background-color: $dark-card-bg;
 
-      h1, h2, h3 { color: $primary-dark; }
-      p, .lead, .section-subtitle { color: $text-light; }
+      h1, h2, h3 { color: $primary-light; }
+      p, .lead, .section-subtitle, .stat-label, .team-role { color: $text-light; }
+      .divider { background-color: $primary-light; }
+      .stat-number, .team-card h3 { color: $primary-light; }
 
-      .divider { background-color: $primary-dark; }
-      .stat-number, .team-card h3 { color: $primary-dark; }
-      .team-card, .stat-item { background-color: $card-bg-dark; }
-      .social-links a { color: $primary-dark; &:hover { color: $accent-dark; } }
+      .social-links a { color: $primary-light; &:hover { color: $primary-color; } }
       .cta-buttons .btn-primary { background-color: $primary-dark; color: $text-light; }
-      .cta-buttons .btn-outline { border-color: $primary-dark; color: $primary-dark; }
+      .cta-buttons .btn-outline { border-color: $primary-light; color: $primary-light; }
     }
+  }
+
+  // ================= Responsive =================
+  @media (max-width: 768px) {
+    .stats-grid, .team-grid { gap: 1rem; }
+    .timeline-item { flex-direction: column; }
+    .hero-section { padding: 4rem 1rem; }
+    .story-section { padding: 3rem 1rem; }
+    .cta-section { padding: 4rem 1rem; }
   }
 }

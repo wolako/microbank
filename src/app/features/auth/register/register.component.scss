@@ -1,7 +1,7 @@
 @import '../../../../assets/variables';
 
 // ================================
-// Container Principal
+// Container principal
 // ================================
 .registration-container {
   min-height: 100vh;
@@ -21,7 +21,7 @@
   .card {
     width: 100%;
     max-width: 450px;
-    padding: $spacing-unit * 2;
+    padding: $spacing-2;
     border-radius: $border-radius;
     background-color: $light-card-bg;
     box-shadow: $box-shadow;
@@ -35,11 +35,11 @@
     h2 {
       font-size: 1.8rem;
       font-weight: 700;
-      margin-bottom: $spacing-unit * 2;
-      color: $text-primary;
+      margin-bottom: $spacing-2;
+      color: $primary-color;
 
       :host-context(.dark-mode) & {
-        color: $color-dark-section-text;
+        color: $primary-dark;
       }
     }
 
@@ -56,7 +56,6 @@
           font-weight: 600;
           margin-bottom: $spacing-quarter;
           color: $text-primary;
-          transition: color 0.3s ease;
 
           :host-context(.dark-mode) & {
             color: $color-dark-section-text;
@@ -74,8 +73,8 @@
 
           &:focus {
             outline: none;
-            border-color: $color-light-primary;
-            box-shadow: 0 0 0 4px rgba($color-light-primary, 0.08);
+            border-color: $primary-color;
+            box-shadow: 0 0 0 4px rgba($primary-color, 0.08);
           }
 
           :host-context(.dark-mode) & {
@@ -83,8 +82,8 @@
             color: $color-dark-section-text;
 
             &:focus {
-              border-color: $color-dark-primary;
-              box-shadow: 0 0 0 4px rgba($color-dark-primary, 0.08);
+              border-color: $primary-dark;
+              box-shadow: 0 0 0 4px rgba($primary-dark, 0.08);
             }
           }
         }
@@ -101,8 +100,8 @@
         padding: $spacing-half $spacing-unit;
         border-radius: $border-radius;
         font-weight: 700;
-        background-color: $color-light-primary;
-        color: $color-light-btn-text;
+        background-color: $primary-color;
+        color: $text-light;
         border: none;
         cursor: pointer;
         transition: background-color 0.2s ease, transform 0.15s ease;
@@ -119,11 +118,11 @@
         }
 
         :host-context(.dark-mode) & {
-          background-color: $color-dark-primary;
-          color: $color-dark-btn-text;
+          background-color: $primary-dark;
+          color: $text-light;
 
           &:hover:not(:disabled) {
-            background-color: lighten($color-dark-primary, 6%);
+            background-color: lighten($primary-dark, 6%);
           }
         }
       }

@@ -19,13 +19,13 @@
   h2 {
     font-size: 1.8rem;
     margin-bottom: 1rem;
-    @include text-color($text-primary, $text-light);
+    color: $text-primary; // Remplacement de text-color
   }
 
   p {
     font-size: 1rem;
     margin-bottom: 1.5rem;
-    @include text-color($text-secondary, $text-light);
+    color: $text-secondary; // Remplacement de text-color
   }
 
   .btn {
@@ -38,7 +38,7 @@
     &.btn-secondary {
       background-color: rgba(255, 255, 255, 0.1);
       border: 1px solid rgba(255, 255, 255, 0.2);
-      @include text-color($text-light, $text-dark);
+      color: $text-light;
 
       &:hover {
         background-color: rgba(255, 255, 255, 0.15);
@@ -57,28 +57,27 @@
     }
   }
 
-  // Icônes ou emoji
   .status-icon {
     font-size: 3rem;
     margin-bottom: 1rem;
   }
 
-  // Loader
   .loading-text {
     font-size: 1.2rem;
-    @include text-color($text-secondary, $text-light);
+    color: $text-secondary; // Remplacement de text-color
   }
 }
 
-// Responsive
-@include respond-md {
+// Responsive medium
+@media (max-width: 768px) {
   .confirm-email-container {
     margin: 3rem auto;
     padding: 1.5rem;
   }
 }
 
-@include respond-sm {
+// Responsive small
+@media (max-width: 576px) {
   .confirm-email-container {
     margin: 2rem auto;
     padding: 1rem;

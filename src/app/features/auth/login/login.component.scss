@@ -1,7 +1,7 @@
 @import '../../../../assets/variables';
 
 // ================================
-// Conteneur général de l'auth
+// Conteneur général
 // ================================
 .auth-container {
   min-height: 100vh;
@@ -25,7 +25,7 @@
 .auth-card {
   width: 100%;
   max-width: 400px;
-  padding: $spacing-unit * 2;
+  padding: $spacing-2;
   border-radius: $border-radius;
   background-color: $light-card-bg;
   box-shadow: $box-shadow;
@@ -41,7 +41,7 @@
   // ================================
   .auth-header {
     text-align: center;
-    margin-bottom: $spacing-unit * 2;
+    margin-bottom: $spacing-2;
 
     .logo {
       max-width: 90px;
@@ -49,14 +49,14 @@
     }
 
     h2 {
-      margin: 0.5rem 0;
-      font-size: 1.6rem;
+      font-size: 1.8rem;
       font-weight: 700;
-      color: $text-primary;
+      color: $primary-color;
+      margin-bottom: 0.5rem;
       transition: color 0.3s ease;
 
       :host-context(.dark-mode) & {
-        color: $color-dark-section-text;
+        color: $primary-dark;
       }
     }
 
@@ -105,8 +105,8 @@
 
         &:focus {
           outline: none;
-          border-color: $color-light-primary;
-          box-shadow: 0 0 0 4px rgba($color-light-primary, 0.08);
+          border-color: $primary-color;
+          box-shadow: 0 0 0 4px rgba($primary-color, 0.15);
         }
 
         :host-context(.dark-mode) & {
@@ -114,8 +114,8 @@
           color: $color-dark-section-text;
 
           &:focus {
-            border-color: $color-dark-primary;
-            box-shadow: 0 0 0 4px rgba($color-dark-primary, 0.08);
+            border-color: $primary-dark;
+            box-shadow: 0 0 0 4px rgba($primary-dark, 0.15);
           }
         }
       }
@@ -128,25 +128,25 @@
 
     .forgot-password {
       font-size: 0.9rem;
-      color: $text-primary;
+      color: $primary-color;
       text-decoration: none;
-      transition: color 0.2s ease;
       margin-top: $spacing-half;
+      transition: color 0.2s ease;
 
       &:hover {
         text-decoration: underline;
       }
 
       :host-context(.dark-mode) & {
-        color: $color-dark-section-text;
+        color: $primary-dark;
       }
     }
 
     button.btn-primary {
       margin-top: $spacing-unit;
       padding: $spacing-half $spacing-unit;
-      background-color: $color-light-primary;
-      color: $color-light-btn-text;
+      background-color: $primary-color;
+      color: $text-light;
       border: none;
       border-radius: $border-radius;
       font-weight: 700;
@@ -154,7 +154,7 @@
       transition: transform 0.15s ease, background-color 0.2s ease;
 
       &:hover:not(:disabled) {
-        transform: translateY(-3px);
+        transform: translateY(-2px);
         background-color: $primary-light;
       }
 
@@ -165,11 +165,11 @@
       }
 
       :host-context(.dark-mode) & {
-        background-color: $color-dark-primary;
-        color: $color-dark-btn-text;
+        background-color: $primary-dark;
+        color: $text-light;
 
         &:hover:not(:disabled) {
-          background-color: lighten($color-dark-primary, 6%);
+          background-color: lighten($primary-dark, 6%);
         }
       }
     }
@@ -192,7 +192,7 @@
       }
 
       a {
-        color: $text-primary;
+        color: $primary-color;
         font-weight: 600;
         text-decoration: none;
         transition: color 0.2s ease;
@@ -202,7 +202,7 @@
         }
 
         :host-context(.dark-mode) & {
-          color: $color-dark-section-text;
+          color: $primary-dark;
         }
       }
     }
@@ -219,13 +219,8 @@
     .auth-card {
       padding: 1.5rem;
 
-      .auth-header h2 {
-        font-size: 1.5rem;
-      }
-
-      .auth-header p {
-        font-size: 0.95rem;
-      }
+      .auth-header h2 { font-size: 1.5rem; }
+      .auth-header p { font-size: 0.95rem; }
     }
   }
 }
@@ -237,13 +232,8 @@
     .auth-card {
       padding: 1rem;
 
-      .auth-header h2 {
-        font-size: 1.3rem;
-      }
-
-      .auth-header p {
-        font-size: 0.9rem;
-      }
+      .auth-header h2 { font-size: 1.3rem; }
+      .auth-header p { font-size: 0.9rem; }
     }
   }
 }

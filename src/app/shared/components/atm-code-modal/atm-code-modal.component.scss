@@ -32,7 +32,9 @@
         padding: $spacing-unit;
         border-bottom: 1px solid rgba(0,0,0,0.1);
 
-        .modal-title { font-weight: 700; }
+        .modal-title {
+          font-weight: 700;
+        }
 
         .btn-close {
           background: none;
@@ -40,12 +42,16 @@
           font-size: 1.2rem;
           cursor: pointer;
 
-          &::after { content: '✕'; color: currentColor; }
+          &::after {
+            content: '✕';
+            color: currentColor;
+          }
         }
       }
 
       .modal-body {
         padding: $spacing-unit;
+
         input {
           width: 100%;
           text-align: center;
@@ -60,8 +66,8 @@
 
           &:focus {
             outline: none;
-            border-color: $color-light-primary;
-            box-shadow: 0 0 0 3px rgba($color-light-primary, 0.15);
+            border-color: $primary-color;
+            box-shadow: 0 0 0 3px rgba($primary-color, 0.15);
           }
         }
       }
@@ -74,13 +80,15 @@
         border-top: 1px solid rgba(0,0,0,0.1);
 
         .btn-primary {
-          background-color: $color-light-primary;
-          color: $color-light-btn-text;
+          background-color: $primary-color;
+          color: $text-light;
           border-radius: $border-radius;
           font-weight: 500;
           padding: $spacing-half $spacing-unit;
 
-          &:hover { background-color: $primary-light; }
+          &:hover {
+            background-color: $primary-light;
+          }
         }
 
         .btn-secondary {
@@ -90,7 +98,9 @@
           font-weight: 500;
           padding: $spacing-half $spacing-unit;
 
-          &:hover { background-color: rgba(0,0,0,0.1); }
+          &:hover {
+            background-color: rgba(0,0,0,0.1);
+          }
         }
       }
     }
@@ -111,33 +121,38 @@
       background-color: rgba(255,255,255,0.1);
 
       &:focus {
-        border-color: $color-dark-primary;
-        box-shadow: 0 0 0 3px rgba($color-dark-primary, 0.2);
+        border-color: $primary-dark;
+        box-shadow: 0 0 0 3px rgba($primary-dark, 0.2);
       }
     }
 
     .btn-primary {
-      background-color: $color-dark-primary;
-      color: $color-dark-btn-text;
+      background-color: $primary-dark;
+      color: $text-light;
 
-      &:hover { background-color: lighten($color-dark-primary, 6%); }
+      &:hover {
+        background-color: lighten($primary-dark, 6%);
+      }
     }
 
     .btn-secondary {
       background-color: rgba(255,255,255,0.15);
       color: $color-dark-section-text;
 
-      &:hover { background-color: rgba(255,255,255,0.25); }
+      &:hover {
+        background-color: rgba(255,255,255,0.25);
+      }
     }
   }
 }
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; } to { opacity: 1; }
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes slideDown {
-  from { transform: translateY(-20px); opacity: 0; } 
+  from { transform: translateY(-20px); opacity: 0; }
   to { transform: translateY(0); opacity: 1; }
 }
