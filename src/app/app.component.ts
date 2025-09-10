@@ -23,14 +23,10 @@ export class AppComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    // 🔁 Recharge la session si un token est présent au démarrage
+    // 🔁 Recharge la session utilisateur si un token est présent
     const authSub = this.authService.ensureUserLoaded().subscribe({
       next: user => {
-        if (user) {
-          console.log('✅ Session utilisateur rechargée :', user);
-        } else {
-          console.log('ℹ️ Aucune session utilisateur active');
-        }
+        console.log(user ? '✅ Session utilisateur rechargée' : 'ℹ️ Aucune session active', user);
       },
       error: err => {
         console.error('❌ Erreur lors du chargement de la session :', err);
@@ -38,9 +34,10 @@ export class AppComponent implements OnInit, OnDestroy {
     });
     this.subscriptions.add(authSub);
 
-    // 🎨 Abonnement au mode sombre/clair
+    // 🎨 Abonnement au thème global
     const themeSub = this.themeService.darkMode$.subscribe(mode => {
       this.isDarkMode = mode;
+      this.applyThemeClass(mode);
     });
     this.subscriptions.add(themeSub);
   }
@@ -49,8 +46,17 @@ export class AppComponent implements OnInit, OnDestroy {
     this.themeService.toggleTheme();
   }
 
+  /**
+   * Applique le thème sur le body pour que toutes les règles CSS globales fonctionnent
+   */
+  private applyThemeClass(isDark: boolean) {
+    const body = document.body;
+    body.classList.toggle('dark-mode', isDark);
+    body.classList.toggle('light-mode', !isDark);
+  }
+
   ngOnDestroy(): void {
-    // Nettoie toutes les souscriptions pour éviter les fuites mémoire
+    // Nettoie toutes les souscriptions
     this.subscriptions.unsubscribe();
   }
 }

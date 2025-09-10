@@ -1,25 +1,21 @@
 <div class="home-page">
+
   <!-- Hero Section -->
   <section class="hero-section">
     <div class="hero-content">
       <h1 class="hero-title">Votre partenaire financier de confiance</h1>
       <p class="hero-subtitle">Des solutions bancaires adaptées à vos besoins</p>
+
       <div class="hero-actions">
         <a routerLink="/register" class="btn btn-primary">Ouvrir un compte</a>
-        <!-- <a routerLink="/services" class="btn btn-outline">Découvrir nos services</a> -->
-        <!-- ✅ Bouton admin visible seulement pour les admins connectés -->
-        <a 
-          *ngIf="authService.currentUserValue?.role === 'admin'" 
-          routerLink="/admin"
-          class="btn btn-outline-warning"
-          style="margin-left: 10px;">
+
+        <a *ngIf="authService.currentUserValue?.role === 'admin'"
+           routerLink="/admin"
+           class="btn btn-outline-warning">
           👑 Espace Admin
         </a>
       </div>
     </div>
-    <!-- <div class="hero-image">
-      <img src="assets/images/hero-banking.png" alt="Services bancaires" loading="lazy">
-    </div> -->
   </section>
 
   <!-- Services Section -->
@@ -36,13 +32,12 @@
         </div>
         <h3>{{ service.title }}</h3>
         <p>{{ service.description }}</p>
-        <button class="service-link btn btn-outline" (click)="goToService(service.id)">
+        <button class="btn btn-outline service-link" (click)="goToService(service.id)">
           En savoir plus →
         </button>
       </div>
     </div>
   </section>
-
 
   <!-- Calculator Section -->
   <section class="calculator-section" id="loans">
@@ -72,4 +67,5 @@
       </div>
     </div>
   </section>
+
 </div>

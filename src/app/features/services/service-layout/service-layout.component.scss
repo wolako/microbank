@@ -1,29 +1,90 @@
+@import '../../../assets/variables';
+
 .service-layout {
-    max-width: 1000px;
-    margin: auto;
-    padding: 2rem 1rem;
-    
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-unit * 3;
+  font-family: 'Inter', sans-serif;
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  padding: $spacing-unit * 4;
+
+  .content {
+    width: 100%;
+  }
+
+  .cta-box {
+    background-color: $color-light-section-bg;
+    padding: $spacing-unit * 3;
+    border-radius: $border-radius;
+    text-align: center;
+    box-shadow: $box-shadow;
+    transition: background-color 0.4s ease, color 0.4s ease;
+
+    h4 {
+      font-size: 1.5rem;
+      margin-bottom: $spacing-half;
+      color: $color-light-primary;
+      transition: color 0.4s ease;
+    }
+
+    p {
+      font-size: 1rem;
+      margin-bottom: $spacing-unit * 2;
+      color: $text-secondary;
+      transition: color 0.4s ease;
+    }
+
+    a {
+      display: inline-block;
+      padding: $spacing-half $spacing-unit * 2;
+      font-weight: 600;
+      border-radius: $border-radius;
+      background-color: $color-light-primary;
+      color: $color-light-btn-text;
+      text-decoration: none;
+      transition: all 0.3s ease;
+
+      &:hover {
+        transform: translateY(-2px);
+        background-color: darken($color-light-primary, 5%);
+      }
+    }
+  }
+
+  // ========================
+  // Dark Mode
+  // ========================
+  :host-context(.dark-mode) {
+    background-color: $color-dark-bg;
+    color: $color-dark-section-text;
 
     .cta-box {
-      margin-top: 3rem;
-      padding: 2rem;
-      background: linear-gradient(135deg, #007bff, #0056b3);
-      border-radius: 10px;
-      color: white;
-      text-align: center;
-    }
+      background-color: $color-dark-card-bg;
 
-    .cta-box a {
-      background: white;
-      color: #007bff;
-      padding: 0.7rem 1.5rem;
-      border-radius: 5px;
-      text-decoration: none;
-      font-weight: bold;
-      transition: 0.3s;
-    }
+      h4 { color: $color-dark-primary; }
+      p { color: $color-dark-section-text; }
 
-    .cta-box a:hover {
-      background: #e0ecff;
+      a {
+        background-color: $color-dark-primary;
+        color: $color-dark-btn-text;
+
+        &:hover {
+          background-color: lighten($color-dark-primary, 10%);
+        }
+      }
     }
+  }
+
+  @media (max-width: $breakpoint-md) {
+    padding: $spacing-unit * 2;
+
+    .cta-box {
+      padding: $spacing-unit * 2;
+
+      h4 { font-size: 1.3rem; }
+      p { font-size: 0.95rem; }
+    }
+  }
 }

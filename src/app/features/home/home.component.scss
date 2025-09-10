@@ -2,193 +2,113 @@
 
 :host {
   display: block;
-  font-family: 'Inter', sans-serif;
+  font-family: $font-primary;
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.4s ease, color 0.4s ease;
 
-  // ========================
   // Hero Section
-  // ========================
   .hero-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $spacing-unit * 4 $spacing-unit * 2;
-    background-color: $color-light-section-bg;
+    padding: $spacing-4 $spacing-2;
+    background-color: $section-bg-light;
     border-bottom: 1px solid $border-color;
     transition: background-color 0.4s ease, color 0.4s ease;
 
-    @include respond-md {
-      flex-direction: column;
-      text-align: center;
-    }
+    @media (max-width: $breakpoint-md) { flex-direction: column; text-align: center; }
 
     .hero-content {
       max-width: 600px;
       flex: 1;
 
-      .hero-title {
-        font-size: 2.5rem;
-        font-weight: 700;
-        margin-bottom: $spacing-half;
-        color: $color-light-primary;
-        transition: color 0.4s ease;
-
+      .hero-title { 
+        font-size: 2.5rem; font-weight: 700; margin-bottom: $spacing-1; 
+        color: $primary-color-light; transition: color 0.4s ease;
         @media (max-width: $breakpoint-md) { font-size: 2rem; }
         @media (max-width: $breakpoint-sm) { font-size: 1.6rem; }
       }
 
-      .hero-subtitle {
-        font-size: 1.2rem;
-        margin-bottom: $spacing-unit * 2;
-        color: $text-secondary;
-        transition: color 0.4s ease;
-
+      .hero-subtitle { 
+        font-size: 1.2rem; margin-bottom: $spacing-2; 
+        color: $text-secondary; transition: color 0.4s ease;
         @media (max-width: $breakpoint-md) { font-size: 1rem; }
       }
 
       .hero-actions {
-        display: flex;
-        gap: $spacing-half;
-        flex-wrap: wrap;
-        justify-content: flex-start;
+        display: flex; gap: $spacing-half; flex-wrap: wrap; justify-content: flex-start;
 
         @media (max-width: $breakpoint-md) { justify-content: center; }
 
-        .btn {
-          padding: $spacing-half $spacing-unit;
-          font-weight: 600;
-          border-radius: $border-radius;
-          transition: all 0.3s ease;
-        }
-
-        .btn-primary { background-color: $color-light-primary; color: $color-light-btn-text; }
-        .btn-outline { border: 1px solid $color-light-primary; color: $color-light-primary; background: transparent; }
-        .btn-outline-warning { border: 1px solid $secondary-color; color: $secondary-color; background: transparent; }
+        .btn { padding: $spacing-half $spacing-2; font-weight: 600; border-radius: $border-radius; transition: all 0.3s ease; }
+        .btn-primary { background-color: $primary-color-light; color: $btn-text-light; }
+        .btn-outline { border: 1px solid $primary-color-light; color: $primary-color-light; background: transparent; }
+        .btn-outline-warning { border: 1px solid $accent-color; color: $accent-color; background: transparent; }
 
         .btn:hover { transform: translateY(-2px); }
       }
     }
-
-    .hero-image {
-      flex: 1;
-
-      img {
-        max-width: 500px;
-        width: 100%;
-        height: auto;
-        transition: transform 0.5s ease;
-      }
-
-      @include respond-md { margin-top: $spacing-unit * 2; max-width: 80%; }
-      @media (max-width: $breakpoint-sm) { max-width: 100%; }
-    }
   }
 
-  // ========================
   // Services Section
-  // ========================
   .services-section {
-    padding: $spacing-unit * 4 $spacing-unit * 2;
-    background-color: $color-light-section-bg;
+    padding: $spacing-4 $spacing-2;
+    background-color: $section-bg-light;
     transition: background-color 0.4s ease;
 
-    .section-header {
-      text-align: center;
-      margin-bottom: $spacing-unit * 3;
-
-      h2 { color: $color-light-primary; transition: color 0.4s ease; }
+    .section-header { text-align: center; margin-bottom: $spacing-3;
+      h2 { color: $primary-color-light; transition: color 0.4s ease; }
       p { color: $text-secondary; transition: color 0.4s ease; }
     }
 
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: $spacing-unit * 2;
-
+      gap: $spacing-2;
       @media (max-width: $breakpoint-lg) { grid-template-columns: repeat(2, 1fr); }
       @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; }
     }
 
     .service-card {
-      text-align: center;
-      padding: $spacing-unit * 2;
-      border-radius: $border-radius;
-      background-color: $light-card-bg;
-      box-shadow: $box-shadow;
-      transition: all 0.4s ease;
+      text-align: center; padding: $spacing-2; border-radius: $border-radius;
+      background-color: $card-bg-light; box-shadow: $box-shadow; transition: all 0.4s ease;
 
-      &:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      }
+      &:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
 
-      .service-icon { 
-        font-size: 2.5rem;
-        margin-bottom: $spacing-half;
-        color: $color-light-primary;
-        transition: color 0.4s ease;
-      }
-
+      .service-icon { font-size: 2.5rem; margin-bottom: $spacing-half; color: $primary-color-light; transition: color 0.4s ease; }
       h3 { margin-bottom: $spacing-half; color: $text-primary; transition: color 0.4s ease; }
       p { font-size: 0.95rem; margin-bottom: $spacing-half; color: $text-secondary; transition: color 0.4s ease; }
       .service-link { @extend .btn-outline; }
     }
   }
 
-  // ========================
   // Calculator Section
-  // ========================
-  .calculator-section { 
-    text-align: center;
-    margin-bottom: $spacing-unit * 3;
-    padding: $spacing-unit * 4 $spacing-unit * 2;
-
-    h2 { color: $color-light-primary; transition: color 0.4s ease; }
+  .calculator-section {
+    text-align: center; margin-bottom: $spacing-3; padding: $spacing-4 $spacing-2;
+    h2 { color: $primary-color-light; transition: color 0.4s ease; }
   }
 
-  // ========================
   // Testimonials Section
-  // ========================
   .testimonials-section {
-    padding: $spacing-unit * 4 $spacing-unit * 2;
+    padding: $spacing-4 $spacing-2;
 
-    .section-header {
-      text-align: center;
-      margin-bottom: $spacing-unit * 3;
-
-      h2 { color: $color-light-primary; transition: color 0.4s ease; }
+    .section-header { text-align: center; margin-bottom: $spacing-3;
+      h2 { color: $primary-color-light; transition: color 0.4s ease; }
       p { color: $text-secondary; transition: color 0.4s ease; }
     }
 
     .testimonials-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: $spacing-unit * 2;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: $spacing-2;
     }
 
     .testimonial-card {
-      text-align: center;
-      padding: $spacing-unit * 2;
-      border-radius: $border-radius;
-      background-color: $light-card-bg;
-      box-shadow: $box-shadow;
-      transition: all 0.4s ease;
+      text-align: center; padding: $spacing-2; border-radius: $border-radius; background-color: $card-bg-light; box-shadow: $box-shadow; transition: all 0.4s ease;
 
-      &:hover {
-        transform: translateY(-5px) scale(1.02);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-      }
+      &:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
 
       .testimonial-content p { font-size: 0.95rem; margin-bottom: $spacing-half; color: $text-secondary; transition: color 0.4s ease; }
-      .testimonial-author {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: $spacing-half;
-        flex-wrap: wrap;
-
+      .testimonial-author { display: flex; align-items: center; justify-content: center; gap: $spacing-half; flex-wrap: wrap;
         img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
         strong { color: $text-primary; transition: color 0.4s ease; }
         span { color: $text-secondary; transition: color 0.4s ease; }
@@ -196,37 +116,29 @@
     }
   }
 
-  // ========================
   // Dark Mode
-  // ========================
   :host-context(.dark-mode) {
-    background-color: $color-dark-bg;
-    color: $color-dark-section-text;
+    background-color: $bg-dark;
+    color: $text-dark;
 
     .hero-section,
     .services-section,
     .calculator-section,
     .testimonials-section {
-      background-color: $color-dark-section-bg;
+      background-color: $section-bg-dark;
 
-      .hero-title { color: $color-dark-primary; }
-      .hero-subtitle { color: $color-dark-section-text; }
+      .hero-title { color: $primary-color-dark; }
+      .hero-subtitle { color: $text-dark; }
+      h2, h3 { color: $primary-color-dark; }
+      p { color: $text-dark; }
 
-      h2 { color: $color-dark-primary; }
-      h3 { color: $color-dark-primary; }
-      p { color: $color-dark-section-text; }
+      .service-card, .testimonial-card { background-color: $card-bg-dark; }
+      .service-icon, .testimonial-author strong { color: $primary-color-dark; }
+      .testimonial-author span { color: $text-dark; }
 
-      .service-card,
-      .testimonial-card { background-color: $color-dark-card-bg; }
-
-      .service-icon,
-      .testimonial-author strong { color: $color-dark-primary; }
-
-      .testimonial-author span { color: $color-dark-section-text; }
-
-      .hero-actions .btn-primary { background-color: $color-dark-primary; color: $color-dark-btn-text; }
-      .hero-actions .btn-outline { border-color: $color-dark-primary; color: $color-dark-primary; }
-      .hero-actions .btn-outline-warning { border-color: $color-dark-accent; color: $color-dark-accent; }
+      .hero-actions .btn-primary { background-color: $primary-color-dark; color: $btn-text-dark; }
+      .hero-actions .btn-outline { border-color: $primary-color-dark; color: $primary-color-dark; }
+      .hero-actions .btn-outline-warning { border-color: $accent-color-dark; color: $accent-color-dark; }
     }
   }
 }

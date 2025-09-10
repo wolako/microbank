@@ -2,6 +2,7 @@
 
 .loan-calculator {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   align-items: flex-start;
   gap: $spacing-unit * 4;
@@ -10,9 +11,10 @@
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.4s ease, color 0.4s ease;
-  flex-wrap: wrap;
 
+  // ------------------------------
   // Formulaire
+  // ------------------------------
   .calculator-form {
     flex: 1 1 350px;
     background-color: $light-card-bg;
@@ -50,11 +52,11 @@
 
         input[type="range"] {
           flex: 1;
-          accent-color: $color-light-primary;
-          cursor: pointer;
           height: 4px;
+          accent-color: $color-light-primary;
           background: lighten($color-light-primary, 40%);
           border-radius: $border-radius;
+          cursor: pointer;
           outline: none;
           transition: background-color 0.3s ease;
         }
@@ -111,7 +113,9 @@
     }
   }
 
+  // ------------------------------
   // Résultats
+  // ------------------------------
   .calculator-results {
     flex: 1 1 250px;
     background-color: $light-card-bg;
@@ -139,7 +143,9 @@
     }
   }
 
+  // ------------------------------
   // Mode sombre
+  // ------------------------------
   :host-context(.dark-mode) & {
     background-color: $dark-bg;
     color: $color-dark-section-text;
@@ -188,13 +194,17 @@
     }
   }
 
+  // ------------------------------
   // Animations
+  // ------------------------------
   @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
+  // ------------------------------
   // Responsive
+  // ------------------------------
   @media (max-width: $breakpoint-lg) {
     flex-direction: column;
     align-items: stretch;

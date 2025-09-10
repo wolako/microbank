@@ -1,108 +1,64 @@
 // ================================
-// Couleurs principales
+// Couleurs mode clair
 // ================================
-$primary-color: #3498db;           // bleu principal
-$primary-dark: #0d1b3d;            // bleu nuit foncé
-$primary-light: #559cff;           // bleu clair
-
-$secondary-color: #6a1b9a;         // violet léger pour accent
-$secondary-dark: #230c30;          // violet plus foncé
-$secondary-light: #9c47cc;
-
-$success-color: #2ecc71;
-$error-color: #e74c3c;
-$warning-color: #f39c12;
-$info-color: #3498db;
+$light-bg: #ffffff;           // Fond global clair
+$light-card-bg: #fefefe;      // Fond des cards, sections
+$text-primary: #0b1a3f;       // Titres (bleu nuit)
+$text-secondary: #000000;     // Paragraphes et texte secondaire
+$text-light: #ffffff;          // Texte sur boutons / CTA clair
 
 // ================================
-// Couleurs mode clair / sombre
+// Couleurs mode sombre
 // ================================
-// Mode Jour
-$color-light-bg: #f9f7fcfb;          // blanc cassé
-$color-light-card-bg: #ffffff;
-$color-light-section-bg: #ffffff;
-$color-light-section-text: #333;
-$color-light-btn-text: #2c3e50;    // gris foncé
-$color-light-primary: $primary-color;
-$color-light-accent: $secondary-color;
-
-// Mode Nuit
-$dark-card-bg: #1a1a2a;            // gris sombre
-$color-dark-bg: linear-gradient(
-  165deg,
-  $primary-dark 0%,       
-  $secondary-dark 20%    
-  $dark-card-bg 80%,      
-);
-$color-dark-card-bg: $dark-card-bg;
-$color-dark-section-bg: $dark-card-bg;
-$color-dark-section-text: #ccc;    // gris clair
-$color-dark-btn-text: #ffffff;
-$color-dark-primary: $primary-dark;
-$color-dark-accent: $secondary-dark;
+$dark-bg: #0b1a3f;             // Fond global sombre
+$dark-card-bg: #1f2b44;        // Fond des cards, sections sombres
+$primary-dark: #0b1a3f;        // Couleur principale sombre
+$secondary-dark: #1f2b44;      // Couleur secondaire sombre
+$primary-light: #3c5a9a;       // Nuance plus claire pour hover / dégradé
 
 // ================================
-// Textes
-$text-primary: #2c3e50;            // gris foncé
-$text-secondary: #7f8c8d;          // gris moyen
-$text-light: #ffffff;               // blanc
-$text-dark: #2c3e50;                // gris foncé
+// Couleurs boutons et erreurs
+// ================================
+$primary-color: #0b1a3f;       // Couleur principale (clair)
+$secondary-color: #1f2b44;     // Couleur secondaire (clair)
+$error-color: #dc3545;         // Rouge danger
 
 // ================================
-// Bordures
-$border-color: #ddd;
-$border-radius: 4px;
-
+// Bordures et arrondis
 // ================================
-// Ombres
-$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-
-// ================================
-// Espacements
-$spacing-unit: 1rem;
-$spacing-half: 0.5rem;
-$spacing-quarter: 0.25rem;
-
-// ================================
-// Breakpoints
-$breakpoint-sm: 576px;
-$breakpoint-md: 768px;
-$breakpoint-lg: 992px;
-$breakpoint-xl: 1200px;
+$border-radius: 0.5rem;        // Arrondi général des cards, boutons, highlight-box
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Ombre légère pour les illustrations et cartes
 
 // ================================
 // Transitions
-$transition: all 0.3s ease;
+// ================================
+$transition: all 0.3s ease;    // Transition globale pour background, color, border
+$transition-speed: 0.3s;       // Vitesse standard pour animations CSS
 
 // ================================
-// Z-index
-$z-header: 1000;
-$z-modal: 1050;
-$z-tooltip: 1100;
+// Gradients (CTA / background hover)
+// ================================
+$gradient-light: linear-gradient(135deg, $primary-color, $primary-light);
+$gradient-dark: linear-gradient(135deg, $primary-dark, $secondary-dark);
 
 // ================================
-// Mixins utiles
+// Icones et texte auxiliaire
 // ================================
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin respond-md {
-  @media (max-width: $breakpoint-md) {
-    @content;
-  }
-}
+$text-hover-light: $primary-light;   // Couleur hover pour liens clair
+$text-hover-dark: $primary-light;    // Couleur hover pour liens sombre
 
 // ================================
-// Aliases pour compatibilité avec styles.scss et app.component.scss
+// Spacing et paddings globaux
 // ================================
-$light-bg: $color-light-bg;
-$dark-bg: $color-dark-bg;
+$padding-section: 3rem 1.5rem;      // Padding sections / service-detail
+$padding-section-md: 2rem 1rem;     // Padding pour écrans <768px
 
-$light-card-bg: $color-light-card-bg;
-$dark-card-bg: $color-dark-card-bg;
-
-$color-light-btn-text: $color-light-btn-text;
-$color-dark-btn-text: $color-dark-btn-text;
+// ================================
+// Typography
+// ================================
+$font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+$line-height-base: 1.6;
+$h2-font-size: 2.2rem;
+$h2-font-size-md: 1.8rem;
+$p-font-size: 1.1rem;
+$p-line-height: 1.7;

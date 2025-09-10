@@ -1,109 +1,143 @@
+@import '../../../../assets/variables';
+
 .modal-backdrop {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* Fond sombre semi-transparent */
+  top: 0; left: 0; right: 0; bottom: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1050;
+  background-color: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(5px);
   animation: fadeIn 0.3s ease-in-out;
-}
 
-.modal-dialog {
-  max-width: 400px;
-  width: 90%;
-  transform: translateY(0);
-  animation: slideDown 0.3s ease-out;
-}
+  .modal-dialog {
+    max-width: 400px;
+    width: 90%;
+    animation: slideDown 0.3s ease-out;
 
-.modal-content {
-  background-color: #0b1e3d; /* Fond bleu nuit */
-  color: white; /* Texte blanc */
-  border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.35);
-  overflow: hidden;
-  border: none;
-}
+    .modal-content {
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      overflow: hidden;
+      border: none;
+      background-color: $light-card-bg;
+      color: $text-primary;
+      transition: background-color 0.3s ease, color 0.3s ease;
 
-.modal-header {
-  background: transparent; /* On garde le fond uniforme bleu nuit */
-  color: white;
-  padding: 1rem;
-  border-bottom: 1px solid rgba(255,255,255,0.2);
-}
+      .modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: $spacing-unit;
+        border-bottom: 1px solid rgba(0,0,0,0.1);
 
-.modal-title {
-  font-weight: bold;
-  font-size: 1.2rem;
-}
+        .modal-title { font-weight: 700; }
 
-.btn-close {
-  filter: brightness(0) invert(1); /* Bouton de fermeture blanc */
-}
+        .btn-close {
+          background: none;
+          border: none;
+          font-size: 1.2rem;
+          cursor: pointer;
 
-.modal-body {
-  padding: 1.5rem;
-  font-size: 0.95rem;
-}
+          &::after { content: '✕'; color: currentColor; }
+        }
+      }
 
-.modal-body input {
-  background-color: rgba(255,255,255,0.1);
-  border: 1px solid rgba(255,255,255,0.3);
-  color: white;
-  font-size: 1.2rem;
-  letter-spacing: 4px;
-  text-align: center;
-  padding: 0.5rem;
-  border-radius: 8px;
-}
+      .modal-body {
+        padding: $spacing-unit;
+        input {
+          width: 100%;
+          text-align: center;
+          letter-spacing: 4px;
+          padding: $spacing-half;
+          border-radius: $border-radius;
+          font-size: 1.2rem;
+          border: 1px solid $border-color;
+          background-color: rgba(0,0,0,0.05);
+          color: $text-primary;
+          transition: border-color 0.3s ease, box-shadow 0.3s ease;
 
-.modal-body input::placeholder {
-  color: rgba(255,255,255,0.5);
-}
+          &:focus {
+            outline: none;
+            border-color: $color-light-primary;
+            box-shadow: 0 0 0 3px rgba($color-light-primary, 0.15);
+          }
+        }
+      }
 
-.modal-footer {
-  padding: 1rem;
-  border-top: 1px solid rgba(255,255,255,0.2);
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
-}
+      .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: $spacing-half;
+        padding: $spacing-half;
+        border-top: 1px solid rgba(0,0,0,0.1);
 
-.btn-primary {
-  background-color: #1a73e8;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1.2rem;
-  color: white;
-  font-weight: 500;
-  transition: background-color 0.2s ease;
-  &:hover {
-    background-color: #1359b8;
+        .btn-primary {
+          background-color: $color-light-primary;
+          color: $color-light-btn-text;
+          border-radius: $border-radius;
+          font-weight: 500;
+          padding: $spacing-half $spacing-unit;
+
+          &:hover { background-color: $primary-light; }
+        }
+
+        .btn-secondary {
+          background-color: rgba(0,0,0,0.05);
+          color: $text-primary;
+          border-radius: $border-radius;
+          font-weight: 500;
+          padding: $spacing-half $spacing-unit;
+
+          &:hover { background-color: rgba(0,0,0,0.1); }
+        }
+      }
+    }
   }
 }
 
-.btn-secondary {
-  background-color: rgba(255,255,255,0.15);
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem 1.2rem;
-  transition: background-color 0.2s ease;
-  &:hover {
-    background-color: rgba(255,255,255,0.25);
+/* Dark Mode */
+:host-context(.dark-mode) .modal-backdrop {
+  background-color: rgba(0, 0, 0, 0.6);
+
+  .modal-content {
+    background-color: $dark-card-bg;
+    color: $color-dark-section-text;
+
+    input {
+      border-color: rgba(255,255,255,0.3);
+      color: $color-dark-section-text;
+      background-color: rgba(255,255,255,0.1);
+
+      &:focus {
+        border-color: $color-dark-primary;
+        box-shadow: 0 0 0 3px rgba($color-dark-primary, 0.2);
+      }
+    }
+
+    .btn-primary {
+      background-color: $color-dark-primary;
+      color: $color-dark-btn-text;
+
+      &:hover { background-color: lighten($color-dark-primary, 6%); }
+    }
+
+    .btn-secondary {
+      background-color: rgba(255,255,255,0.15);
+      color: $color-dark-section-text;
+
+      &:hover { background-color: rgba(255,255,255,0.25); }
+    }
   }
 }
 
 /* Animations */
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  from { opacity: 0; } to { opacity: 1; }
 }
 
 @keyframes slideDown {
-  from { transform: translateY(-20px); opacity: 0; }
+  from { transform: translateY(-20px); opacity: 0; } 
   to { transform: translateY(0); opacity: 1; }
 }

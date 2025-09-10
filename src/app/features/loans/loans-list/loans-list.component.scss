@@ -1,263 +1,122 @@
-// .loan-list-container {
-//   padding: 1rem;
+@import '../../../../assets/variables';
 
-//   h2 {
-//     margin-bottom: 1.5rem;
-//   }
-
-//   table {
-//     width: 100%;
-//   }
-
-//   td, th {
-//     vertical-align: middle;
-//   }
-
-//   .text-success {
-//     font-weight: bold;
-//     color: #198754;
-//   }
-
-//   .text-warning {
-//     font-weight: bold;
-//     color: #ffc107;
-//   }
-
-//   .text-danger {
-//     font-weight: bold;
-//     color: #dc3545;
-//   }
-
-//   .text-muted {
-//     color: #6c757d;
-//   }
-
-//   .text-secondary {
-//     color: #adb5bd;
-//   }
-// }
-
-
-// Variables (cohérentes avec les précédents)
-$primary-color: #1976d2;
-$primary-dark: #0d47a1;
-$primary-light: #63a4ff;
-$secondary-color: #03a9f4;
-$dark-bg: #121f2f;
-$darker-bg: #0c1622;
-$card-bg: #1a2a3a;
-$text-primary: #e0e0e0;
-$text-secondary: #b0bec5;
-$success-color: #4caf50;
-$error-color: #f44336;
-$warning-color: #ff9800;
-$info-color: #2196f3;
-$border-radius: 8px;
-$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-$transition: all 0.3s ease;
-
-// Conteneur principal
 .loan-list-container {
-  max-width: 1000px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: $card-bg;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  border: 1px solid rgba($primary-color, 0.1);
+  font-family: 'Inter', sans-serif;
+  padding: $spacing-unit * 4;
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.4s ease, color 0.4s ease;
 
   h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1.5rem;
-    color: white;
-    font-weight: 600;
-    background: linear-gradient(90deg, $primary-color, $secondary-color);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgba($primary-color, 0.2);
+    margin-bottom: $spacing-unit * 3;
+    font-size: 2rem;
+    color: $color-light-primary;
+    transition: color 0.4s ease;
   }
-}
 
-// Tableau
-.table {
-  width: 100%;
-  margin: 1.5rem 0;
-  border-collapse: separate;
-  border-spacing: 0;
-  color: $text-primary;
-  background: $darker-bg;
-  border-radius: $border-radius;
-  overflow: hidden;
+  .alert {
+    font-size: 0.95rem;
+    padding: $spacing-half $spacing-unit;
+    margin-bottom: $spacing-unit * 2;
+  }
 
-  &.table-striped {
-    tbody tr:nth-of-type(odd) {
-      background-color: rgba(white, 0.03);
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.95rem;
+    text-align: left;
+    background-color: $light-card-bg;
+    border-radius: $border-radius;
+    overflow: hidden;
+    box-shadow: $box-shadow;
+    transition: all 0.3s ease;
+
+    thead {
+      background-color: $color-light-primary;
+      color: $color-light-btn-text;
+
+      th {
+        padding: $spacing-half $spacing-unit;
+        font-weight: 600;
+      }
     }
-  }
 
-  &.table-bordered {
-    border: 1px solid rgba($primary-color, 0.1);
+    tbody {
+      tr {
+        transition: background-color 0.3s ease;
 
-    th, td {
-      border: 1px solid rgba($primary-color, 0.1);
-    }
-  }
+        &:hover { background-color: rgba(0,0,0,0.03); }
 
-  thead {
-    background: linear-gradient(90deg, $primary-dark, $primary-color);
-    
-    th {
-      padding: 1rem;
-      text-align: left;
-      font-weight: 500;
-      color: white;
-      position: relative;
+        td {
+          padding: $spacing-half $spacing-unit;
+          vertical-align: middle;
 
-      &:not(:last-child)::after {
-        content: '';
-        position: absolute;
-        right: 0;
-        top: 25%;
-        height: 50%;
-        width: 1px;
-        background: rgba(white, 0.2);
+          span {
+            &.status-paid { color: green; font-weight: 600; }
+            &.status-active { color: orange; font-weight: 600; }
+            &.status-pending { color: blue; font-weight: 600; }
+            &.status-late { color: red; font-weight: 600; }
+          }
+
+          a.btn {
+            font-size: 0.85rem;
+            padding: $spacing-quarter $spacing-half;
+            border-radius: $border-radius;
+            transition: all 0.3s ease;
+
+            &:hover {
+              transform: translateY(-2px);
+              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            }
+          }
+        }
       }
     }
   }
 
-  tbody {
-    tr {
-      transition: $transition;
-      
-      &:hover {
-        background: rgba($primary-color, 0.08) !important;
+  // ========================
+  // Dark Mode
+  // ========================
+  :host-context(.dark-mode) {
+    background-color: $color-dark-bg;
+    color: $color-dark-section-text;
+
+    h2 { color: $color-dark-primary; }
+
+    .alert {
+      background-color: $color-dark-card-bg;
+      color: $color-dark-section-text;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    table {
+      background-color: $color-dark-card-bg;
+      color: $color-dark-section-text;
+
+      thead {
+        background-color: $color-dark-primary;
+        color: $color-dark-btn-text;
       }
 
-      td {
-        padding: 0.8rem 1rem;
+      tbody {
+        tr:hover { background-color: rgba(255,255,255,0.05); }
+
+        td span.status-paid { color: lightgreen; }
+        td span.status-active { color: orange; }
+        td span.status-pending { color: lightblue; }
+        td span.status-late { color: red; }
+
+        td a.btn-outline-primary {
+          border-color: $color-dark-primary;
+          color: $color-dark-primary;
+
+          &:hover {
+            background-color: $color-dark-primary;
+            color: $color-dark-btn-text;
+          }
+        }
       }
     }
-  }
-}
-
-// Badges de statut
-.status {
-  &-pending {
-    color: $warning-color;
-    background: rgba($warning-color, 0.1);
-    padding: 0.25rem 0.5rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    display: inline-block;
-  }
-
-  &-approved {
-    color: $success-color;
-    background: rgba($success-color, 0.1);
-    padding: 0.25rem 0.5rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    display: inline-block;
-  }
-
-  &-rejected {
-    color: $error-color;
-    background: rgba($error-color, 0.1);
-    padding: 0.25rem 0.5rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    display: inline-block;
-  }
-
-  &-paid {
-    color: $primary-light;
-    background: rgba($primary-light, 0.1);
-    padding: 0.25rem 0.5rem;
-    border-radius: 50px;
-    font-size: 0.8rem;
-    display: inline-block;
-  }
-}
-
-// Boutons
-.btn {
-  &-sm {
-    padding: 0.25rem 0.75rem;
-    font-size: 0.85rem;
-  }
-
-  &-outline-primary {
-    background: transparent;
-    color: $primary-color;
-    border: 1px solid $primary-color;
-    transition: $transition;
-
-    &:hover {
-      background: rgba($primary-color, 0.1);
-      color: lighten($primary-color, 10%);
-      border-color: lighten($primary-color, 10%);
-      transform: translateY(-1px);
-    }
-  }
-}
-
-// Alertes
-.alert {
-  padding: 1rem;
-  border-radius: $border-radius;
-  font-size: 0.95rem;
-  margin: 1rem 0;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-
-  &-info {
-    background-color: rgba($info-color, 0.1);
-    border-left: 4px solid $info-color;
-    color: lighten($info-color, 20%);
-  }
-
-  &-danger {
-    background-color: rgba($error-color, 0.1);
-    border-left: 4px solid $error-color;
-    color: lighten($error-color, 20%);
-  }
-
-  &-secondary {
-    background-color: rgba($text-secondary, 0.1);
-    border-left: 4px solid $text-secondary;
-    color: $text-secondary;
-  }
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .loan-list-container {
-    padding: 1.5rem;
-    margin: 1rem;
-
-    h2 {
-      font-size: 1.5rem;
-    }
-  }
-
-  .table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-
-    thead th {
-      padding: 0.75rem 0.5rem;
-    }
-
-    tbody td {
-      padding: 0.5rem;
-    }
-  }
-
-  .btn-sm {
-    padding: 0.2rem 0.5rem;
-    font-size: 0.8rem;
   }
 }

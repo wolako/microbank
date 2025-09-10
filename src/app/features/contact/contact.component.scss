@@ -1,103 +1,68 @@
 @import '../../../assets/variables';
 
 .contact-page {
-  font-family: 'Inter', sans-serif;
+  font-family: $font-primary;
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.35s ease, color 0.35s ease;
 
   // Hero
   .contact-hero {
-    padding: $spacing-unit * 5 $spacing-unit * 2;
+    padding: $spacing-5 $spacing-2;
     text-align: center;
-    background: none;
-    color: var(--text-color);
 
-    h1 {
-      margin: 0 0 $spacing-half 0;
-      font-size: 2.4rem;
-      font-weight: 700;
-    }
-    p { margin: 0; opacity: 0.95; }
+    h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: $spacing-1; color: $primary-color-light; }
+    p { opacity: 0.95; color: $text-secondary; }
   }
 
-  // Container: 2 colonnes (formulaire | infos)
+  // Container
   .contact-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: $spacing-unit * 4 $spacing-unit * 2;
+    padding: $spacing-4 $spacing-2;
     display: grid;
-    grid-template-columns: 1fr 360px; // formulaire large, infos en colonne fixe (verticale)
-    gap: $spacing-unit * 2;
+    grid-template-columns: 1fr 360px;
+    gap: $spacing-2;
 
-    @media (max-width: $breakpoint-lg) {
-      grid-template-columns: 1fr 320px;
-    }
-    @media (max-width: $breakpoint-md) {
-      grid-template-columns: 1fr; // mobile : une seule colonne
-      padding: $spacing-unit * 2 $spacing-unit;
-    }
+    @media (max-width: $breakpoint-lg) { grid-template-columns: 1fr 320px; }
+    @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; padding: $spacing-2 $spacing-1; }
 
-    // ========================
-    // Infos (colonne droite)
-    // ========================
+    // Infos
     .contact-info {
       display: flex;
       flex-direction: column;
-      gap: $spacing-unit * 1.25;
-      align-self: start;
+      gap: $spacing-1_25;
 
       .info-card {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: $spacing-unit * 1.5;
+        padding: $spacing-1_5;
         border-radius: $border-radius;
-        background-color: $light-card-bg;
+        background-color: $card-bg-light;
         box-shadow: $box-shadow;
         transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 
-        i {
-          font-size: 1.8rem;
-          margin-bottom: $spacing-half;
-          color: $color-light-primary;
-          transition: color 0.3s ease;
-        }
-
-        h3 {
-          margin: 0 0 $spacing-quarter 0;
-          font-size: 1.1rem;
-          color: $text-primary;
-        }
-
-        p {
-          margin: 0;
-          color: $text-secondary;
-          line-height: 1.5;
-        }
+        i { font-size: 1.8rem; margin-bottom: $spacing-half; color: $primary-color-light; }
+        h3 { font-size: 1.1rem; margin-bottom: $spacing-quarter; color: $text-primary; }
+        p { line-height: 1.5; color: $text-secondary; }
 
         &:hover { transform: translateY(-6px); }
       }
     }
 
-    // ========================
-    // Formulaire (colonne gauche)
-    // ========================
+    // Form
     .contact-form {
-      background-color: $light-card-bg;
-      padding: $spacing-unit * 2;
+      background-color: $card-bg-light;
+      padding: $spacing-2;
       border-radius: $border-radius;
       box-shadow: $box-shadow;
       transition: background-color 0.3s ease, color 0.3s ease;
 
-      h2 {
-        margin-top: 0;
-        margin-bottom: $spacing-unit;
-        color: $color-light-primary;
-      }
+      h2 { margin-bottom: $spacing-2; color: $primary-color-light; }
 
-      .alert { margin-bottom: $spacing-unit; }
+      .alert { margin-bottom: $spacing-2; }
 
       form {
         display: flex;
@@ -107,16 +72,10 @@
         .form-group {
           display: flex;
           flex-direction: column;
-          margin-bottom: $spacing-half;
 
-          label {
-            font-weight: 600;
-            margin-bottom: $spacing-quarter;
-            color: $text-primary;
-          }
-
+          label { font-weight: 600; margin-bottom: $spacing-quarter; color: $text-primary; }
           input, textarea {
-            padding: $spacing-half $spacing-unit;
+            padding: $spacing-half $spacing-2;
             border: 1px solid $border-color;
             border-radius: $border-radius;
             font-size: 1rem;
@@ -126,33 +85,25 @@
 
             &:focus {
               outline: none;
-              border-color: $color-light-primary;
-              box-shadow: 0 0 0 4px rgba($color-light-primary, 0.06);
+              border-color: $primary-color-light;
+              box-shadow: 0 0 0 4px rgba($primary-color-light, 0.06);
             }
           }
 
-          .error-message {
-            margin-top: $spacing-quarter;
-            color: $error-color;
-            font-size: 0.9rem;
-          }
+          .error-message { color: $error-color; font-size: 0.9rem; margin-top: $spacing-quarter; }
         }
 
-        .btn.btn-primary {
-          margin-top: $spacing-unit;
-          padding: $spacing-half $spacing-unit;
-          background-color: $color-light-primary;
-          color: $color-light-btn-text;
-          border: none;
+        .btn-primary {
+          margin-top: $spacing-2;
+          padding: $spacing-half $spacing-2;
+          background-color: $primary-color-light;
+          color: $btn-text-light;
           border-radius: $border-radius;
           font-weight: 700;
           cursor: pointer;
           transition: transform 0.15s ease, background-color 0.2s ease;
 
-          &:hover:not(:disabled) {
-            transform: translateY(-3px);
-            background-color: $primary-light;
-          }
+          &:hover:not(:disabled) { transform: translateY(-3px); background-color: $primary-light; }
           &:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
         }
       }
@@ -160,76 +111,48 @@
   }
 
   // Map
-  .map-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 $spacing-unit * 2 $spacing-unit * 4;
-    iframe {
-      width: 100%;
-      height: 420px;
-      border: 0;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
-    }
+  .map-container iframe {
+    width: 100%;
+    height: 420px;
+    border: 0;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
   }
 
-  // ========================
   // Dark Mode
-  // ========================
   :host-context(.dark-mode) {
-    background-color: $color-dark-bg;
-    color: $color-dark-section-text;
+    background-color: $bg-dark;
+    color: $text-dark;
 
     .contact-hero {
-      background: linear-gradient(90deg, $color-dark-primary 0%, $secondary-dark 100%);
+      background: linear-gradient(90deg, $primary-color-dark 0%, $secondary-dark 100%);
       color: $text-light;
     }
 
     .contact-container {
       .contact-info .info-card {
-        background-color: $color-dark-card-bg;
-        color: $color-dark-section-text;
-
-        i { color: $color-dark-primary; }
+        background-color: $card-bg-dark;
+        color: $text-dark;
+        i { color: $primary-color-dark; }
         h3 { color: $text-light; }
-        p { color: $color-dark-section-text; }
+        p { color: $text-dark; }
       }
 
       .contact-form {
-        background-color: $color-dark-card-bg;
-        color: $color-dark-section-text;
-
+        background-color: $card-bg-dark;
+        color: $text-dark;
         h2 { color: $text-light; }
+        label { color: $text-dark; }
+        input, textarea { color: $text-dark; border-color: darken($card-bg-dark, 6%); }
 
-        label { color: $color-dark-section-text; }
-        input, textarea {
-          background-color: transparent;
-          color: $color-dark-section-text;
-          border-color: darken($color-dark-card-bg, 6%);
-        }
-
-        .btn.btn-primary {
-          background-color: $color-dark-primary;
-          color: $color-dark-btn-text;
-
-          &:hover:not(:disabled) { background-color: lighten($color-dark-primary, 6%); }
+        .btn-primary { 
+          background-color: $primary-color-dark; 
+          color: $btn-text-dark;
+          &:hover:not(:disabled) { background-color: lighten($primary-color-dark, 6%); }
         }
       }
     }
 
     .map-container iframe { filter: brightness(0.85); }
   }
-
-  // ========================
-  // Animations
-  // ========================
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .contact-hero h1 { animation: fadeUp 0.6s ease both; }
-  .contact-hero p { animation: fadeUp 0.7s ease both; }
-  .contact-container .info-card { animation: fadeUp 0.75s ease both; }
-  .contact-container .contact-form { animation: fadeUp 0.8s ease both; }
 }

@@ -1,232 +1,115 @@
-// .loan-illustration {
-//     width: 100%;
-//     border-radius: 8px;
-//     margin: 2rem 0;
-// }
-
-// .not-found {
-//     text-align: center;
-//     color: red;
-//     margin-top: 4rem;
-//     font-weight: bold;
-// }
-
-// .service-detail ul {
-//     padding-left: 0;
-//     list-style: none;
-// }
-
-// .service-detail li::before {
-//     content: '✔';
-//     color: #007bff;
-//     margin-right: 0.5rem;
-// }
-
-// Variables (à conserver cohérent avec le précédent)
-$primary-color: #1976d2;
-$primary-dark: #0d47a1;
-$primary-light: #63a4ff;
-$secondary-color: #03a9f4;
-$dark-bg: #121f2f;
-$darker-bg: #0c1622;
-$card-bg: #1a2a3a;
-$text-primary: #e0e0e0;
-$text-secondary: #b0bec5;
-$warning-color: #ff9800;
-$border-radius: 8px;
-$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-$transition: all 0.3s ease;
-
-// Layout de base
-app-service-layout {
-  display: block;
-  background-color: $dark-bg;
-  min-height: calc(100vh - 80px);
-  padding: 3rem 1.5rem;
-}
+@import '../../../assets/variables';
 
 .service-detail {
-  max-width: 1000px;
-  margin: 0 auto;
-  background: $card-bg;
-  border-radius: $border-radius;
-  padding: 2.5rem;
-  box-shadow: $box-shadow;
-  border: 1px solid rgba($primary-color, 0.1);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -50%;
-    width: 100%;
-    height: 200%;
-    background: radial-gradient(circle, rgba($primary-color, 0.05) 0%, transparent 70%);
-    z-index: 0;
-  }
-
-  > * {
-    position: relative;
-    z-index: 1;
-  }
+  font-family: 'Inter', sans-serif;
+  padding: $spacing-unit * 4;
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.4s ease, color 0.4s ease;
 
   h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1.5rem;
-    color: white;
-    font-weight: 600;
-    background: linear-gradient(90deg, $primary-color, $secondary-color);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-    padding-bottom: 0.5rem;
-    border-bottom: 3px solid rgba($primary-color, 0.3);
+    font-size: 2rem;
+    margin-bottom: $spacing-half;
+    color: $color-light-primary;
+    transition: color 0.4s ease;
   }
 
   p {
-    color: $text-primary;
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 2rem;
-  }
-}
-
-// Image du service
-.loan-illustration {
-  width: 100%;
-  max-height: 400px;
-  object-fit: contain;
-  border-radius: $border-radius;
-  margin: 2rem 0;
-  box-shadow: $box-shadow;
-  border: 1px solid rgba($primary-color, 0.2);
-  transition: $transition;
-
-  &:hover {
-    transform: scale(1.02);
-    box-shadow: 0 6px 25px rgba($primary-color, 0.2);
-  }
-}
-
-// Liste des avantages
-ul {
-  margin: 2rem 0;
-  padding-left: 1.5rem;
-  list-style-type: none;
-
-  li {
-    position: relative;
-    padding-left: 2rem;
-    margin-bottom: 1rem;
-    color: $text-primary;
-    font-size: 1.05rem;
-
-    &::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: $primary-light;
-      font-weight: bold;
-      background: rgba($primary-color, 0.2);
-      width: 1.5rem;
-      height: 1.5rem;
-      border-radius: 50%;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-right: 0.5rem;
-    }
-  }
-}
-
-// Section formulaire
-app-formulaire-pret {
-  display: block;
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid rgba($primary-color, 0.2);
-}
-
-// Alerte connexion
-.alert {
-  &-warning {
-    background-color: rgba($warning-color, 0.1);
-    border-left: 4px solid $warning-color;
-    padding: 1.25rem;
-    border-radius: $border-radius;
-    margin: 2rem 0;
-
-    p {
-      color: lighten($warning-color, 20%);
-      margin: 0;
-      font-size: 1rem;
-    }
-
-    a {
-      color: $warning-color;
-      text-decoration: none;
-      font-weight: 500;
-      transition: $transition;
-
-      &:hover {
-        color: lighten($warning-color, 15%);
-        text-decoration: underline;
-      }
-    }
-  }
-}
-
-// Page non trouvée
-.not-found {
-  min-height: calc(100vh - 80px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  background: $darker-bg;
-  color: $text-primary;
-  text-align: center;
-  padding: 2rem;
-
-  p {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
-  }
-
-  a {
-    color: $primary-light;
-    text-decoration: none;
-    font-weight: 500;
-    transition: $transition;
-    display: inline-flex;
-    align-items: center;
-
-    &:hover {
-      color: white;
-      transform: translateX(5px);
-    }
-
-    &::after {
-      content: '→';
-      margin-left: 5px;
-      transition: $transition;
-    }
-  }
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .service-detail {
-    padding: 1.5rem;
-
-    h2 {
-      font-size: 1.8rem;
-    }
+    font-size: 1rem;
+    margin-bottom: $spacing-unit * 2;
+    color: $text-secondary;
+    line-height: 1.6;
+    transition: color 0.4s ease;
   }
 
   .loan-illustration {
-    margin: 1.5rem 0;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    margin: $spacing-unit * 2 auto;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    transition: transform 0.3s ease;
+
+    &:hover { transform: scale(1.03); }
+  }
+
+  ul {
+    list-style-type: disc;
+    padding-left: $spacing-unit * 3;
+    margin-bottom: $spacing-unit * 3;
+
+    li {
+      margin-bottom: $spacing-half;
+      color: $text-primary;
+    }
+  }
+
+  .btn-primary {
+    font-size: 1rem;
+    padding: $spacing-half $spacing-unit;
+    border-radius: $border-radius;
+    transition: all 0.3s ease;
+
+    &:hover { transform: translateY(-2px); }
+  }
+
+  .alert {
+    font-size: 0.95rem;
+    padding: $spacing-half $spacing-unit;
+    border-radius: $border-radius;
+  }
+
+  .d-flex.gap-2 a.btn {
+    transition: all 0.3s ease;
+
+    &:hover { transform: translateY(-2px); }
+  }
+
+  .not-found {
+    text-align: center;
+    padding: $spacing-unit * 4;
+    font-size: 1.2rem;
+    color: $text-secondary;
+    background-color: $light-card-bg;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+  }
+
+  // ========================
+  // Dark Mode
+  // ========================
+  :host-context(.dark-mode) {
+    background-color: $color-dark-bg;
+    color: $color-dark-section-text;
+
+    h2 { color: $color-dark-primary; }
+    p, ul li { color: $color-dark-section-text; }
+
+    .loan-illustration {
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn-primary {
+      background-color: $color-dark-primary;
+      color: $color-dark-btn-text;
+      border-color: $color-dark-primary;
+
+      &:hover {
+        background-color: darken($color-dark-primary, 10%);
+      }
+    }
+
+    .alert {
+      background-color: $color-dark-card-bg;
+      color: $color-dark-section-text;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .not-found {
+      background-color: $color-dark-card-bg;
+      color: $color-dark-section-text;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
   }
 }

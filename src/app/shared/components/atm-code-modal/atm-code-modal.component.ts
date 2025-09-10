@@ -7,11 +7,21 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './atm-code-modal.component.html',
-  styleUrl: './atm-code-modal.component.scss'
+  styleUrls: ['./atm-code-modal.component.scss']
 })
 export class AtmCodeModalComponent {
   @Input() visible = false;
   @Output() onConfirm = new EventEmitter<string>();
   @Output() onCancel = new EventEmitter<void>();
   code = '';
+
+  confirm() {
+    this.onConfirm.emit(this.code);
+    this.code = '';
+  }
+
+  cancel() {
+    this.onCancel.emit();
+    this.code = '';
+  }
 }

@@ -1,5 +1,6 @@
 <div class="about-page">
-  <!-- Section Hero -->
+
+  <!-- Hero Section -->
   <section class="hero-section">
     <div class="container">
       <h1>Notre mission</h1>
@@ -7,21 +8,20 @@
     </div>
   </section>
 
-  <!-- Section Notre histoire -->
+  <!-- Story Section -->
   <section class="story-section">
     <div class="container">
       <div class="section-header">
         <h2>Notre histoire</h2>
         <div class="divider"></div>
       </div>
-      
+
       <div class="story-content">
         <p>
           Fondée en 2015, MicroFinance est née de la volonté de combler le fossé financier 
           dans notre communauté. Nous croyons que chacun mérite un accès équitable à des 
           services bancaires de qualité, indépendamment de son statut social ou économique.
         </p>
-        
         <p>
           Ce qui a commencé comme une petite initiative locale est devenu une plateforme 
           financière innovante, touchant des milliers de vies à travers la région.
@@ -30,7 +30,7 @@
     </div>
   </section>
 
-  <!-- Section Chiffres clés -->
+  <!-- Stats Section -->
   <section class="stats-section">
     <div class="container">
       <div class="stats-grid">
@@ -54,7 +54,7 @@
     </div>
   </section>
 
-  <!-- Section Équipe -->
+  <!-- Team Section -->
   <section class="team-section">
     <div class="container">
       <div class="section-header">
@@ -62,7 +62,7 @@
         <div class="divider"></div>
         <p class="section-subtitle">Des professionnels dévoués à votre service</p>
       </div>
-      
+
       <div class="team-grid">
         <div class="team-card" *ngFor="let member of teamMembers">
           <div class="team-avatar">
@@ -80,14 +80,14 @@
     </div>
   </section>
 
-  <!-- Section Historique -->
+  <!-- Timeline Section -->
   <section class="timeline-section">
     <div class="container">
       <div class="section-header">
         <h2>Nos réalisations</h2>
         <div class="divider"></div>
       </div>
-      
+
       <div class="timeline">
         <div class="timeline-item" *ngFor="let item of milestones">
           <div class="timeline-year">{{ item.year }}</div>
@@ -100,7 +100,7 @@
     </div>
   </section>
 
-  <!-- Section CTA -->
+  <!-- CTA Section -->
   <section class="cta-section">
     <div class="container">
       <h2>Prêt à nous rejoindre ?</h2>
@@ -111,4 +111,5 @@
       </div>
     </div>
   </section>
+
 </div>

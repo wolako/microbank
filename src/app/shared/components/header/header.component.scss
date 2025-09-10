@@ -1,15 +1,21 @@
-@import '../../../../assets/variables'; // Vérifie le chemin
+@import '../../../../assets/variables';
 
 // ================================
 // Navbar
 // ================================
 .navbar {
-  background: $color-light-bg; // fond par défaut
+  background-color: $light-bg;
   padding: 1rem 0;
   border-bottom: 1px solid rgba($primary-color, 0.1);
   position: sticky;
   top: 0;
   z-index: $z-header;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+
+  &.dark-mode {
+    background: linear-gradient(135deg, $primary-dark, $dark-card-bg, $secondary-dark);
+    border-bottom: 1px solid rgba($primary-light, 0.2);
+  }
 
   .container {
     max-width: 1200px;
@@ -21,19 +27,12 @@
     justify-content: space-between;
     position: relative;
   }
-
-  // Mode sombre
-  &.dark-mode {
-    background: linear-gradient(135deg, $primary-dark, $dark-card-bg, $secondary-dark);
-    border-bottom: 1px solid rgba($primary-light, 0.2);
-  }
 }
 
 // ================================
-// Navbar brand / logo
+// Navbar Brand / Logo
 // ================================
 .navbar-brand {
-  color: $text-dark;
   font-size: 1.5rem;
   font-weight: 700;
   text-decoration: none;
@@ -50,20 +49,20 @@
   }
 
   .dark-mode & {
-    color: $text-light;
+    -webkit-text-fill-color: $text-light;
   }
 }
 
 // ================================
-// Toggler mobile
+// Navbar toggler (mobile)
 // ================================
 .navbar-toggler {
+  display: none;
   background: transparent;
   border: 1px solid rgba($primary-color, 0.3);
   border-radius: $border-radius;
   padding: 0.5rem 0.75rem;
   cursor: pointer;
-  display: none;
 
   .navbar-toggler-icon {
     display: inline-block;
@@ -77,14 +76,9 @@
 }
 
 // ================================
-// Toggle thème
+// Theme toggle button
 // ================================
 .theme-toggle {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 1rem;
-  z-index: $z-tooltip;
   padding: 0.5rem 1rem;
   border-radius: 50px;
   font-weight: 600;
@@ -124,9 +118,9 @@
 .navbar-nav {
   display: flex;
   flex-direction: row;
+  list-style: none;
   padding-left: 0;
   margin-bottom: 0;
-  list-style: none;
 
   &.me-auto { margin-right: auto; }
   &.ms-auto { margin-left: auto; }
@@ -172,24 +166,22 @@
 }
 
 // ================================
-// Boutons
+// Buttons
 // ================================
 .btn {
   padding: 0.5rem 1rem;
   border-radius: $border-radius;
   font-weight: 500;
-  transition: $transition;
   cursor: pointer;
+  transition: $transition;
 
   &-primary {
     background: linear-gradient(135deg, $primary-color, $primary-dark);
     color: $text-light;
     border: none;
-    box-shadow: 0 4px 15px rgba($primary-color, 0.2);
 
     &:hover {
       background: linear-gradient(135deg, lighten($primary-color, 5%), lighten($primary-dark, 5%));
-      box-shadow: 0 6px 20px rgba($primary-color, 0.3);
       transform: translateY(-2px);
     }
 
@@ -220,19 +212,20 @@
 // Responsive
 // ================================
 @media (max-width: 992px) {
-  .navbar-toggler { display: block; }
+  .navbar-toggler {
+    display: block;
+  }
 
   .navbar-collapse {
     flex-basis: 100%;
     flex-direction: column;
-    overflow: hidden;        // important pour cacher le contenu
-    max-height: 0;           // menu fermé
-    padding: 0;              // supprimer padding fermé
+    overflow: hidden;
+    max-height: 0;
+    padding: 0;
     transition: max-height 0.35s ease, padding 0.35s ease;
 
     &.show {
-      display: flex;
-      max-height: 1000px;   // valeur assez grande pour contenir le menu
+      max-height: 1000px;
       padding: 1rem 0;
     }
   }
@@ -240,8 +233,8 @@
   .navbar-nav {
     flex-direction: column;
     width: 100%;
-    margin: 0.5rem 0;
     align-items: center;
+    margin: 0.5rem 0;
 
     .nav-item { margin: 0.25rem 0; }
 

@@ -1,326 +1,152 @@
-// .loan-details-container {
-//   padding: 1.5rem;
+@import '../../../../assets/variables';
 
-//   .summary {
-//     margin-bottom: 2rem;
-
-//     p {
-//       margin: 0.5rem 0;
-//     }
-//   }
-
-//   table {
-//     width: 100%;
-//     th, td {
-//       padding: 0.5rem;
-//       text-align: left;
-//     }
-//   }
-// }
-
-// Variables (cohérentes avec les précédents)
-$primary-color: #1976d2;
-$primary-dark: #0d47a1;
-$primary-light: #63a4ff;
-$secondary-color: #03a9f4;
-$dark-bg: #121f2f;
-$darker-bg: #0c1622;
-$card-bg: #1a2a3a;
-$text-primary: #e0e0e0;
-$text-secondary: #b0bec5;
-$success-color: #4caf50;
-$error-color: #f44336;
-$warning-color: #ff9800;
-$border-radius: 8px;
-$box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-$transition: all 0.3s ease;
-
-// Conteneur principal
 .loan-details-container {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 2.5rem;
-  background: $card-bg;
+  font-family: 'Inter', sans-serif;
+  background-color: $light-card-bg;
+  color: $text-primary;
+  padding: $spacing-unit * 3;
   border-radius: $border-radius;
   box-shadow: $box-shadow;
-  border: 1px solid rgba($primary-color, 0.1);
-  position: relative;
-  overflow: hidden;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 5px;
-    background: linear-gradient(90deg, $primary-color, $secondary-color);
-  }
+  transition: background-color 0.35s ease, color 0.35s ease;
 
   h2, h3 {
-    color: white;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    position: relative;
-    padding-bottom: 0.5rem;
-
-    &::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 50px;
-      height: 3px;
-      background: linear-gradient(90deg, $primary-color, $secondary-color);
-    }
-  }
-
-  h2 {
-    font-size: 1.8rem;
-    background: linear-gradient(90deg, $primary-color, $secondary-color);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: inline-block;
-  }
-
-  h3 {
-    font-size: 1.4rem;
-    margin-top: 2.5rem;
-  }
-}
-
-// Résumé du prêt
-.summary {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 2rem;
-  padding: 1.5rem;
-  background: rgba($primary-color, 0.05);
-  border-radius: $border-radius;
-  border: 1px solid rgba($primary-color, 0.1);
-
-  p {
-    margin: 0;
-    color: $text-primary;
-    font-size: 1rem;
-    line-height: 1.6;
-
-    strong {
-      color: $primary-light;
-      font-weight: 500;
-      display: inline-block;
-      min-width: 150px;
-    }
-  }
-}
-
-// Tableau d'échéancier
-.table {
-  width: 100%;
-  margin-bottom: 2.5rem;
-  border-collapse: separate;
-  border-spacing: 0;
-  color: $text-primary;
-  background: $darker-bg;
-  border-radius: $border-radius;
-  overflow: hidden;
-
-  thead {
-    background: linear-gradient(90deg, $primary-dark, $primary-color);
-    
-    th {
-      padding: 1rem;
-      text-align: left;
-      font-weight: 500;
-      color: rgb(19, 18, 18);
-    }
-  }
-
-  tbody {
-    tr {
-      transition: $transition;
-      
-      &:nth-child(even) {
-        background: rgba(white, 0.03);
-      }
-
-      &:hover {
-        background: rgba($primary-color, 0.1);
-      }
-
-      td {
-        padding: 0.8rem 1rem;
-        border-top: 1px solid rgba($primary-color, 0.1);
-      }
-    }
-  }
-}
-
-.status-paid {
-  color: #28a745; // vert
-  font-weight: bold;
-}
-
-.status-pending {
-  color: #007bff; // bleu
-  font-weight: bold;
-}
-
-.status-late {
-  color: #dc3545; // rouge
-  font-weight: bold;
-}
-
-.summary p {
-  margin: 0.3rem 0;
-}
-
-// Formulaire de paiement
-.payment-form {
-  background: rgba(white, 0.03);
-  padding: 1.5rem;
-  border-radius: $border-radius;
-  border: 1px solid rgba($primary-color, 0.1);
-  margin-top: 1.5rem;
-
-  .form-label {
-    color: $text-primary;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .form-control, .form-select {
-    background-color: rgba(white, 0.05);
-    border: 1px solid rgba($primary-color, 0.3);
-    border-radius: $border-radius;
-    padding: 0.8rem 1rem;
-    color: $text-primary;
-    font-size: 1rem;
-    transition: $transition;
-    width: 100%;
-
-    &:focus {
-      outline: none;
-      border-color: $primary-color;
-      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
-      background-color: rgba(white, 0.08);
-    }
-
-    &.is-invalid {
-      border-color: $error-color;
-      background-color: rgba($error-color, 0.05);
-    }
-  }
-
-  .invalid-feedback {
-    color: $error-color;
-    font-size: 0.85rem;
-    margin-top: 0.25rem;
-  }
-}
-
-// Bouton de paiement
-.btn-primary {
-  background: linear-gradient(135deg, $primary-color, $primary-dark);
-  color: white;
-  border: none;
-  padding: 0.8rem 1.8rem;
-  border-radius: $border-radius;
-  font-weight: 500;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: $transition;
-  margin-top: 1rem;
-  box-shadow: 0 4px 15px rgba($primary-color, 0.2);
-  position: relative;
-
-  &:hover:not(:disabled) {
-    background: linear-gradient(135deg, lighten($primary-color, 5%), lighten($primary-dark, 5%));
-    box-shadow: 0 6px 20px rgba($primary-color, 0.3);
-    transform: translateY(-2px);
-  }
-
-  &:disabled {
-    background: linear-gradient(135deg, desaturate($primary-color, 50%), desaturate($primary-dark, 50%));
-    cursor: not-allowed;
-    opacity: 0.7;
-  }
-
-  &::after {
-    content: '→';
-    margin-left: 8px;
-    transition: $transition;
-  }
-
-  &:hover:not(:disabled)::after {
-    transform: translateX(3px);
-  }
-}
-
-// Alertes
-.alert {
-  padding: 1rem;
-  border-radius: $border-radius;
-  font-size: 0.95rem;
-  margin: 1rem 0;
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-
-  &::before {
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    font-size: 1.2rem;
-  }
-
-  &-danger {
-    background-color: rgba($error-color, 0.1);
-    border-left: 4px solid $error-color;
-    color: lighten($error-color, 20%);
-
-    &::before {
-      content: '\f06a'; // icône triangle exclamation
-    }
-  }
-
-  &-success {
-    background-color: rgba($success-color, 0.1);
-    border-left: 4px solid $success-color;
-    color: lighten($success-color, 20%);
-
-    &::before {
-      content: '\f058'; // icône check-circle
-    }
-  }
-}
-
-// Animation de chargement
-.text-center {
-  text-align: center;
-  color: $text-secondary;
-  padding: 2rem;
-  font-size: 1.1rem;
-}
-
-// Responsive
-@media (max-width: 768px) {
-  .loan-details-container {
-    padding: 1.5rem;
-    margin: 1rem;
-
-    h2 {
-      font-size: 1.5rem;
-    }
+    color: $color-light-primary;
+    margin-bottom: $spacing-unit * 2;
   }
 
   .summary {
-    grid-template-columns: 1fr;
+    margin-bottom: $spacing-unit * 3;
+    p {
+      margin-bottom: $spacing-half;
+
+      strong {
+        color: $text-primary;
+      }
+
+      span.status-paid { color: green; font-weight: 600; }
+      span.status-active { color: orange; font-weight: 600; }
+    }
   }
 
-  .table {
-    display: block;
-    overflow-x: auto;
+  table.table {
+    width: 100%;
+    margin-bottom: $spacing-unit * 3;
+    th, td {
+      text-align: center;
+      vertical-align: middle;
+    }
+    .status-paid { color: green; font-weight: 600; }
+    .status-pending { color: orange; font-weight: 600; }
+    .status-late { color: red; font-weight: 600; }
+  }
+
+  .payment-form {
+    .mb-3 {
+      margin-bottom: $spacing-unit * 1.5;
+
+      label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: $spacing-quarter;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: $spacing-half $spacing-unit;
+        border-radius: $border-radius;
+        border: 1px solid $border-color;
+        font-size: 1rem;
+        background: transparent;
+        color: inherit;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+
+        &:focus {
+          outline: none;
+          border-color: $color-light-primary;
+          box-shadow: 0 0 0 4px rgba($color-light-primary, 0.06);
+        }
+
+        &.is-invalid {
+          border-color: $danger-color;
+        }
+      }
+
+      small.form-text {
+        font-size: 0.85rem;
+        color: $text-secondary;
+      }
+
+      .invalid-feedback {
+        font-size: 0.85rem;
+      }
+    }
+
+    button.btn-primary {
+      padding: $spacing-half $spacing-unit;
+      border-radius: $border-radius;
+      font-weight: 600;
+      transition: all 0.3s ease;
+
+      &:hover:not(:disabled) {
+        transform: translateY(-2px);
+        background-color: lighten($color-light-primary, 5%);
+      }
+
+      &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .alert {
+    margin-top: $spacing-unit * 1.5;
+    border-radius: $border-radius;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .text-center {
+    font-size: 1.1rem;
+    color: $text-secondary;
+  }
+
+  // ========================
+  // Dark Mode
+  // ========================
+  :host-context(.dark-mode) {
+    background-color: $color-dark-card-bg;
+    color: $color-dark-section-text;
+
+    h2, h3 { color: $color-dark-primary; }
+
+    .summary p strong { color: $color-dark-primary; }
+
+    table.table {
+      th, td { color: $color-dark-section-text; }
+    }
+
+    input,
+    select {
+      background-color: transparent;
+      color: $color-dark-section-text;
+      border-color: darken($color-dark-card-bg, 6%);
+    }
+
+    .payment-form button.btn-primary {
+      background-color: $color-dark-primary;
+      color: $color-dark-btn-text;
+
+      &:hover:not(:disabled) {
+        background-color: lighten($color-dark-primary, 6%);
+      }
+    }
+
+    .alert {
+      &.alert-success { background-color: darken($color-dark-primary, 30%); color: $color-dark-btn-text; }
+      &.alert-danger { background-color: darken($color-dark-accent, 25%); color: $color-dark-btn-text; }
+    }
+
+    .text-center { color: $text-secondary; }
   }
 }

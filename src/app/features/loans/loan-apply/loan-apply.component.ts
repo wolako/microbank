@@ -71,7 +71,6 @@ export class LoanApplyComponent {
   private initializeForm() {
     if (!this.product) return;
 
-    // Champs vides au départ
     this.form = this.fb.group({
       fullName: ['', [Validators.required, Validators.pattern(/^[a-zA-Z]+(\s[a-zA-Z]+)+$/)]],
       email: ['', [Validators.required, Validators.email]],
@@ -86,7 +85,6 @@ export class LoanApplyComponent {
   }
 
   private setupFieldValidations() {
-    // Nom complet
     this.form.get('fullName')?.valueChanges.subscribe(value => {
       if (value.trim().length === 0) {
         this.fieldErrors.fullName = 'Le nom complet est requis.';
@@ -97,7 +95,6 @@ export class LoanApplyComponent {
       }
     });
 
-    // Email
     this.form.get('email')?.valueChanges.subscribe(value => {
       if (value.trim().length === 0) {
         this.fieldErrors.email = 'L’email est requis.';
@@ -108,7 +105,6 @@ export class LoanApplyComponent {
       }
     });
 
-    // Téléphone : uniquement format
     this.form.get('phone')?.valueChanges.subscribe(value => {
       if (value.trim().length === 0) {
         this.fieldErrors.phone = 'Le téléphone est requis.';
@@ -129,6 +125,9 @@ export class LoanApplyComponent {
     }
 
     this.loading = true;
+    this.error = '';
+    this.success = '';
+
     const formData = {
       productId: this.product.id,
       fullName: this.form.value.fullName,
@@ -142,12 +141,16 @@ export class LoanApplyComponent {
 
     this.loanService.applyForLoan(formData).subscribe({
       next: () => {
-        this.success = 'Votre demande a été envoyée avec succès.';
-        this.router.navigate(['/dashboard']);
+        this.loading = false;
+        this.success = '✅ Votre demande a été envoyée avec succès.';
+        // attendre 3 secondes avant redirection
+        setTimeout(() => {
+          this.router.navigate(['/dashboard']);
+        }, 3000);
       },
       error: (err) => {
         console.error('Erreur demande prêt:', err);
-        this.error = 'Erreur lors de la soumission de la demande.';
+        this.error = '❌ Erreur lors de la soumission de la demande.';
         this.loading = false;
       }
     });
