@@ -5,6 +5,9 @@
   font-family: $font-base;
   background-color: $light-bg;
   color: $text-secondary;
+  transition: $transition;
+  max-width: 1200px;
+  margin: 0 auto;
 
   h3 {
     font-size: $h2-font-size;
@@ -28,14 +31,16 @@
         text-align: center;
         font-weight: 600;
         padding: 0.75rem;
+        color: $text-primary;
       }
     }
 
     tbody {
       tr {
+        transition: background-color 0.2s ease;
+
         &:hover {
           background-color: rgba($primary-color, 0.05);
-          transition: $transition;
         }
 
         td {
@@ -51,17 +56,18 @@
     padding: $padding-section-md;
 
     table {
-      font-size: 0.85rem;
+      font-size: 0.9rem;
 
-      th, td {
+      th,
+      td {
         padding: 0.5rem;
       }
     }
   }
 }
 
-/* Dark mode */
-[data-theme='dark'] {
+/* Dark mode (Angular host context) */
+:host-context(.dark-mode) {
   .loan-products {
     background-color: $dark-bg;
     color: $text-light;
@@ -75,6 +81,7 @@
 
       thead {
         background-color: lighten($dark-card-bg, 5%);
+
         th {
           color: $text-light;
         }
@@ -83,7 +90,7 @@
       tbody {
         tr {
           &:hover {
-            background-color: rgba($primary-light, 0.15);
+            background-color: rgba($primary-light, 0.12);
           }
 
           td {

@@ -1,5 +1,6 @@
 @import '../../../../assets/variables';
 
+
 .user-role {
   padding: $padding-section;
   font-family: $font-base;
@@ -29,12 +30,13 @@
     transition: $transition;
 
     thead {
-      background-color: lighten($light-card-bg, 5%);
+      background-color: lighten($light-card-bg, 3%);
 
       th {
         text-align: center;
         font-weight: 600;
         padding: 0.75rem;
+        color: $text-primary;
       }
     }
 
@@ -50,10 +52,8 @@
           padding: 0.65rem;
 
           select.form-select {
+            border-radius: $border-radius;
             transition: $transition;
-            &:hover {
-              border-color: $primary-color;
-            }
           }
 
           button {
@@ -78,11 +78,13 @@
     table {
       font-size: 0.85rem;
 
-      th, td {
+      th,
+      td {
         padding: 0.5rem;
       }
 
-      td button, td select.form-select {
+      td button,
+      td select.form-select {
         font-size: 0.75rem;
       }
     }
@@ -108,7 +110,7 @@
       background-color: $dark-card-bg;
 
       thead {
-        background-color: lighten($dark-card-bg, 5%);
+        background-color: lighten($dark-card-bg, 3%);
         th {
           color: $text-light;
         }
@@ -126,7 +128,7 @@
             select.form-select {
               background-color: $dark-card-bg;
               color: $text-light;
-              border-color: $secondary-dark;
+              border: 1px solid $secondary-dark;
             }
 
             button {
