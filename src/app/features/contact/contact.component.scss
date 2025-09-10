@@ -1,17 +1,17 @@
 @import '../../../assets/variables';
 
 .contact-page {
-  font-family: $font-primary;
+  font-family: $font-base;
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.35s ease, color 0.35s ease;
 
   // Hero
   .contact-hero {
-    padding: $spacing-5 $spacing-2;
+    padding: 4rem 1.5rem;
     text-align: center;
 
-    h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: $spacing-1; color: $primary-color-light; }
+    h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: 0.75rem; color: $primary-color; }
     p { opacity: 0.95; color: $text-secondary; }
   }
 
@@ -19,33 +19,33 @@
   .contact-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: $spacing-4 $spacing-2;
+    padding: 3rem 1.5rem;
     display: grid;
     grid-template-columns: 1fr 360px;
-    gap: $spacing-2;
+    gap: 1.5rem;
 
-    @media (max-width: $breakpoint-lg) { grid-template-columns: 1fr 320px; }
-    @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; padding: $spacing-2 $spacing-1; }
+    @media (max-width: 992px) { grid-template-columns: 1fr 320px; }
+    @media (max-width: 768px) { grid-template-columns: 1fr; padding: 1.5rem 1rem; }
 
     // Infos
     .contact-info {
       display: flex;
       flex-direction: column;
-      gap: $spacing-1_25;
+      gap: 1.25rem;
 
       .info-card {
         display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
-        padding: $spacing-1_5;
+        padding: 1.5rem;
         border-radius: $border-radius;
-        background-color: $card-bg-light;
+        background-color: $light-card-bg;
         box-shadow: $box-shadow;
         transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
 
-        i { font-size: 1.8rem; margin-bottom: $spacing-half; color: $primary-color-light; }
-        h3 { font-size: 1.1rem; margin-bottom: $spacing-quarter; color: $text-primary; }
+        i { font-size: 1.8rem; margin-bottom: 0.75rem; color: $primary-color; }
+        h3 { font-size: 1.1rem; margin-bottom: 0.25rem; color: $text-primary; }
         p { line-height: 1.5; color: $text-secondary; }
 
         &:hover { transform: translateY(-6px); }
@@ -54,28 +54,28 @@
 
     // Form
     .contact-form {
-      background-color: $card-bg-light;
-      padding: $spacing-2;
+      background-color: $light-card-bg;
+      padding: 1.5rem;
       border-radius: $border-radius;
       box-shadow: $box-shadow;
       transition: background-color 0.3s ease, color 0.3s ease;
 
-      h2 { margin-bottom: $spacing-2; color: $primary-color-light; }
+      h2 { margin-bottom: 1.5rem; color: $primary-color; }
 
-      .alert { margin-bottom: $spacing-2; }
+      .alert { margin-bottom: 1.5rem; }
 
       form {
         display: flex;
         flex-direction: column;
-        gap: $spacing-half;
+        gap: 0.75rem;
 
         .form-group {
           display: flex;
           flex-direction: column;
 
-          label { font-weight: 600; margin-bottom: $spacing-quarter; color: $text-primary; }
+          label { font-weight: 600; margin-bottom: 0.25rem; color: $text-primary; }
           input, textarea {
-            padding: $spacing-half $spacing-2;
+            padding: 0.75rem 1.5rem;
             border: 1px solid $border-color;
             border-radius: $border-radius;
             font-size: 1rem;
@@ -85,25 +85,25 @@
 
             &:focus {
               outline: none;
-              border-color: $primary-color-light;
-              box-shadow: 0 0 0 4px rgba($primary-color-light, 0.06);
+              border-color: $primary-color;
+              box-shadow: 0 0 0 4px rgba($primary-color, 0.06);
             }
           }
 
-          .error-message { color: $error-color; font-size: 0.9rem; margin-top: $spacing-quarter; }
+          .error-message { color: $error-color; font-size: 0.9rem; margin-top: 0.25rem; }
         }
 
         .btn-primary {
-          margin-top: $spacing-2;
-          padding: $spacing-half $spacing-2;
-          background-color: $primary-color-light;
-          color: $btn-text-light;
+          margin-top: 1.5rem;
+          padding: 0.75rem 1.5rem;
+          background-color: $primary-color;
+          color: $text-light;
           border-radius: $border-radius;
           font-weight: 700;
           cursor: pointer;
           transition: transform 0.15s ease, background-color 0.2s ease;
 
-          &:hover:not(:disabled) { transform: translateY(-3px); background-color: $primary-light; }
+          &:hover:not(:disabled) { transform: translateY(-3px); background-color: lighten($primary-color, 6%); }
           &:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
         }
       }
@@ -121,34 +121,34 @@
 
   // Dark Mode
   :host-context(.dark-mode) {
-    background-color: $bg-dark;
-    color: $text-dark;
+    background-color: $dark-bg;
+    color: $text-light;
 
     .contact-hero {
-      background: linear-gradient(90deg, $primary-color-dark 0%, $secondary-dark 100%);
+      background: linear-gradient(90deg, $primary-dark 0%, $primary-dark 100%);
       color: $text-light;
     }
 
     .contact-container {
       .contact-info .info-card {
-        background-color: $card-bg-dark;
-        color: $text-dark;
-        i { color: $primary-color-dark; }
+        background-color: $dark-card-bg;
+        color: $text-light;
+        i { color: $primary-dark; }
         h3 { color: $text-light; }
-        p { color: $text-dark; }
+        p { color: $text-light; }
       }
 
       .contact-form {
-        background-color: $card-bg-dark;
-        color: $text-dark;
+        background-color: $dark-card-bg;
+        color: $text-light;
         h2 { color: $text-light; }
-        label { color: $text-dark; }
-        input, textarea { color: $text-dark; border-color: darken($card-bg-dark, 6%); }
+        label { color: $text-light; }
+        input, textarea { color: $text-light; border-color: darken($dark-card-bg, 6%); }
 
         .btn-primary { 
-          background-color: $primary-color-dark; 
-          color: $btn-text-dark;
-          &:hover:not(:disabled) { background-color: lighten($primary-color-dark, 6%); }
+          background-color: $primary-dark; 
+          color: $text-light;
+          &:hover:not(:disabled) { background-color: lighten($primary-dark, 6%); }
         }
       }
     }

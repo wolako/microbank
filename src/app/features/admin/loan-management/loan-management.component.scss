@@ -1,24 +1,34 @@
 @import '../../../../assets/variables';
 
-.loan-manager-page {
-  padding: $spacing-unit;
+.loan-manager {
+  padding: $padding-section;
+  font-family: $font-base;
+  background-color: $light-bg;
+  color: $text-secondary;
 
   h3 {
-    margin-bottom: $spacing-unit * 2;
-    color: $primary-color;
-    font-weight: 600;
+    font-size: $h2-font-size;
+    color: $text-primary;
+    margin-bottom: 1.5rem;
   }
 
+  /* Formulaire de filtres */
   form {
-    .form-label {
+    background-color: $light-card-bg;
+    padding: 1rem;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    margin-bottom: 2rem;
+    transition: $transition;
+
+    label {
       font-weight: 500;
     }
 
     .form-control,
     .form-select {
       border-radius: $border-radius;
-      border: 1px solid $border-color;
-      padding: $spacing-half $spacing-unit;
+      border: 1px solid darken($light-card-bg, 10%);
       transition: $transition;
 
       &:focus {
@@ -27,154 +37,162 @@
       }
     }
 
-    .btn {
-      border-radius: $border-radius * 2;
-      font-weight: 600;
+    button {
+      border-radius: $border-radius;
       transition: $transition;
 
       &:hover {
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        opacity: 0.9;
       }
     }
   }
 
-  // Tableau responsive mobile-first
-  .table-responsive {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+  /* Tableau des prêts */
+  table {
+    width: 100%;
+    border-collapse: collapse;
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
+    th {
+      text-align: center;
+      font-weight: 600;
+      background-color: lighten($light-card-bg, 5%);
+    }
 
-      th, td {
-        padding: $spacing-half $spacing-unit;
-        border: 1px solid $border-color;
-        font-size: 0.9rem;
-        text-align: left;
-      }
+    td {
+      text-align: center;
+      vertical-align: middle;
+    }
 
-      th {
-        background-color: $light-card-bg;
-        color: $text-primary;
-      }
+    tbody tr:hover {
+      background-color: rgba($primary-color, 0.05);
+      transition: $transition;
+    }
 
-      tr:hover {
-        background-color: lighten($primary-light, 45%);
-        transition: $transition;
-      }
-
-      .badge {
-        text-transform: capitalize;
-      }
-
-      // MOBILE-FIRST : transformer en carte
-      @media (max-width: $breakpoint-md) {
-        display: block;
-        thead, tbody, th, td, tr {
-          display: block;
-          width: 100%;
-        }
-
-        thead {
-          display: none;
-        }
-
-        tr {
-          margin-bottom: $spacing-unit;
-          border: 1px solid $border-color;
-          border-radius: $border-radius;
-          padding: $spacing-half;
-          background-color: $light-card-bg;
-
-          td {
-            display: flex;
-            justify-content: space-between;
-            padding: $spacing-half $spacing-unit;
-
-            &::before {
-              content: attr(data-label);
-              font-weight: 600;
-              color: $text-secondary;
-            }
-
-            span.badge {
-              flex-shrink: 0;
-            }
-          }
-        }
-      }
+    .btn-sm {
+      padding: 0.25rem 0.5rem;
+      border-radius: $border-radius;
     }
   }
 
-  p.text-muted {
-    text-align: center;
-    margin-top: $spacing-unit;
+  /* Badges de statut */
+  .badge {
+    text-transform: capitalize;
+    font-size: 0.8rem;
+    padding: 0.35rem 0.65rem;
+    border-radius: $border-radius;
+
+    &.bg-secondary { background-color: $secondary-color; color: $text-light; }
+    &.bg-success { background-color: #28a745; color: $text-light; }
+    &.bg-warning { background-color: #ffc107; color: $text-secondary; }
+    &.bg-danger { background-color: $error-color; color: $text-light; }
   }
 
+  /* Pagination */
   .d-flex {
-    flex-wrap: wrap;
-    gap: $spacing-half;
+    font-size: 0.9rem;
 
     button {
-      min-width: 50px;
+      min-width: 40px;
+      font-weight: bold;
+      border-radius: $border-radius;
+      transition: $transition;
+
+      &:hover {
+        opacity: 0.85;
+      }
     }
   }
 
-  .modal-dialog {
-    max-width: 95%;
+  /* Modal */
+  .modal.show {
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .modal-dialog {
+      margin-top: 10vh;
+    }
+
+    .modal-content {
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      transition: $transition;
+
+      .modal-header {
+        background: $primary-color;
+        color: $text-light;
+        border-bottom: none;
+        border-radius: $border-radius $border-radius 0 0;
+
+        .btn-close {
+          filter: brightness(0) invert(1);
+        }
+      }
+
+      .modal-body {
+        p {
+          margin-bottom: 0.5rem;
+          strong {
+            color: $text-primary;
+          }
+        }
+      }
+
+      .modal-footer {
+        border-top: none;
+
+        button {
+          border-radius: $border-radius;
+        }
+      }
+    }
   }
 
-  // Dark mode
-  &.dark-mode {
-    background-color: $color-dark-bg;
-    color: $color-dark-section-text;
-
-    h3 {
-      color: $color-dark-primary;
-    }
+  /* Responsive */
+  @media (max-width: 768px) {
+    padding: $padding-section-md;
 
     form {
-      .form-label {
-        color: $color-dark-section-text;
+      .col-md-2, .col-md-3 {
+        width: 100%;
       }
-
-      .form-control,
-      .form-select {
-        background-color: darken($color-dark-section-bg, 5%);
-        color: $color-dark-section-text;
-        border: 1px solid lighten($color-dark-section-text, 40%);
-      }
-
-      .btn {
-        color: $color-dark-btn-text;
-        background-color: $color-dark-primary;
-
-        &:hover {
-          background-color: lighten($color-dark-primary, 5%);
-        }
+      .d-flex {
+        flex-direction: column;
+        gap: 0.5rem;
       }
     }
 
-    .table-responsive {
-      table {
-        tr {
-          background-color: $color-dark-card-bg;
-
-          td {
-            color: $color-dark-section-text;
-            border-color: lighten($color-dark-section-text, 40%);
-          }
-
-          &:hover {
-            background-color: darken($color-dark-section-bg, 5%);
-          }
-        }
-
-        th {
-          background-color: $color-dark-card-bg;
-        }
+    table {
+      font-size: 0.85rem;
+      th, td {
+        padding: 0.5rem;
       }
     }
   }
 }
+
+/* Dark mode */
+[data-theme='dark'] {
+  .loan-manager {
+    background-color: $dark-bg;
+    color: $text-light;
+
+    form, table, .modal-content {
+      background-color: $dark-card-bg;
+      color: $text-light;
+    }
+
+    table tbody tr:hover {
+      background-color: rgba($primary-light, 0.15);
+    }
+
+    .badge.bg-secondary { background-color: $secondary-dark; color: $text-light; }
+    .badge.bg-success { background-color: #28a745; color: $text-light; }
+    .badge.bg-warning { background-color: #ffc107; color: $text-dark; }
+    .badge.bg-danger { background-color: $error-color; color: $text-light; }
+
+    .modal-header {
+      background-color: $primary-dark;
+      color: $text-light;
+    }
+  }
+}
+

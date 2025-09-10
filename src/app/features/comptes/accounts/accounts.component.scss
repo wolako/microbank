@@ -1,191 +1,184 @@
 @import '../../../../assets/variables';
 
 .account-page {
-  font-family: 'Inter', sans-serif;
-  background: $color-light-bg;
+  font-family: $font-primary;
+  background-color: $light-bg;
   color: $text-primary;
-  transition: background 0.4s ease, color 0.4s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
 
-  h1, h2, h3, h4, h5, h6, p, label, span, td, th, small, li {
-    transition: color 0.4s ease;
-  }
-
-  /* Header */
-  .account-header {
-    background: $color-light-section-bg;
-    color: $text-primary;
-    padding: 3rem 0;
-
-    .user-profile {
-      display: flex;
-      align-items: center;
-      gap: 2rem;
-
-      .avatar {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: rgba(255,255,255,0.2);
-        color: $text-primary;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        font-weight: bold;
-      }
-
-      .user-info {
-        h1 { margin: 0; font-size: 2rem; color: $text-primary; }
-        p { margin: 0.5rem 0 0; opacity: 0.9; color: $text-secondary; }
-      }
-    }
-  }
-
-  /* Container */
-  .account-container {
-    display: grid;
-    grid-template-columns: 250px 1fr;
+  /* ===================== Container principal ===================== */
+  .accounts-container {
     max-width: 1200px;
     margin: 2rem auto;
-    gap: 2rem;
+    padding: 0 1rem;
+  }
 
-    @media (max-width: 768px) { grid-template-columns: 1fr; }
+  /* ===================== Tabs ===================== */
+  .nav-tabs {
+    margin-bottom: 1.5rem;
+    .nav-link {
+      color: $text-secondary;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      position: relative;
 
-    /* Sidebar */
-    .account-sidebar {
-      background: $color-light-card-bg;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      padding: 1.5rem;
+      &:hover { color: $primary-color; }
 
-      nav ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-
-        li {
-          padding: 0.75rem 1rem;
-          margin-bottom: 0.5rem;
-          border-radius: 6px;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          gap: 0.75rem;
-          transition: all 0.2s ease;
-          color: $text-primary;
-
-          &:hover { background: rgba($primary-color, 0.1); color: $primary-color; }
-          &.active { background: rgba($primary-color, 0.2); color: $primary-color; font-weight: 500; }
-
-          i { font-size: 1.1rem; }
+      &.active {
+        color: $primary-color;
+        font-weight: 600;
+        &::after {
+          content: '';
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          width: 100%;
+          height: 2px;
+          background-color: $primary-color;
+          border-radius: 2px;
+          animation: tab-underline 0.3s ease forwards;
         }
       }
-    }
-
-    /* Content */
-    .account-content {
-      background: $color-light-card-bg;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      padding: 2rem;
-
-      h2 { color: $primary-color; margin-top: 0; }
-      p, label, span, td, th, small, li { color: $text-secondary; }
-
-      .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-
-      /* Formulaires horizontaux */
-      .form-group {
-        display: flex;
-        align-items: center;
-        gap: 1rem; 
-        margin-bottom: 1.5rem;
-
-        label { flex-shrink: 0; color: $text-primary; font-weight: 500; min-width: 120px; }
-
-        input, select, textarea {
-          flex: 1;
-          padding: 0.5rem 0.75rem;
-          border: 1px solid $border-color;
-          border-radius: $border-radius;
-          font-size: 1rem;
-          color: $text-primary;
-          background-color: $color-light-bg;
-          transition: all 0.3s ease;
-
-          &:focus { outline: none; border-color: $primary-color; box-shadow: 0 0 0 2px rgba($primary-color, 0.2); }
-          &.ng-invalid.ng-touched { border-color: $error-color; }
-        }
-      }
-
-      .form-row { display: flex; gap: 1.5rem; flex-wrap: wrap; }
-
-      .form-actions {
-        display: flex;
-        justify-content: flex-end;
-        gap: 1rem;
-        margin-top: 2rem;
-
-        button.btn-primary { background-color: $primary-color; color: $text-light; }
-        button.btn-outline { color: $primary-color; border-color: $primary-color; &:hover { background-color: $primary-color; color: $text-light; } }
-      }
-
-      /* Switches notifications / 2FA */
-      .form-check { display: flex; align-items: center; gap: 1rem; }
-
-      .card { background-color: $color-light-card-bg; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
-
-      .table { th { background-color: $color-light-section-bg; color: $primary-color; } td { background-color: $color-light-card-bg; color: $text-primary; } }
     }
   }
 
-  /* Dark Mode */
+  @keyframes tab-underline {
+    from { width: 0; }
+    to { width: 100%; }
+  }
+
+  /* ===================== Formulaires ===================== */
+  form {
+    max-width: 800px;
+    margin: 0 auto;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+
+    .form-group {
+      margin-bottom: $spacing-2;
+      display: flex;
+      flex-direction: column;
+
+      label { font-weight: 500; margin-bottom: $spacing-half; color: $text-primary; }
+
+      input, textarea, select {
+        padding: $spacing-half $spacing-2;
+        border: 1px solid $border-color;
+        border-radius: $border-radius;
+        font-size: 1rem;
+        color: inherit;
+        background: transparent;
+        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+
+        &:focus {
+          outline: none;
+          border-color: $primary-color;
+          box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
+          transform: scale(1.02);
+        }
+
+        &.ng-invalid.ng-touched { border-color: $error-color; }
+      }
+
+      .error-message { color: $error-color; font-size: 0.9rem; margin-top: $spacing-quarter; }
+    }
+
+    .form-actions {
+      display: flex;
+      gap: $spacing-1;
+      margin-top: $spacing-3;
+      button { min-width: 120px; position: relative; }
+
+      .btn-primary {
+        background-color: $primary-color;
+        color: $btn-text-light;
+        transition: all 0.2s ease;
+        &:hover:not(:disabled) { background-color: lighten($primary-color, 6%); transform: translateY(-2px); }
+      }
+
+      .btn-outline {
+        border: 1px solid $primary-color;
+        color: $primary-color;
+        transition: all 0.2s ease;
+        &:hover { background-color: $primary-color; color: $btn-text-light; transform: translateY(-2px); }
+      }
+
+      .spinner-border {
+        width: 1rem;
+        height: 1rem;
+        animation: spin 0.8s linear infinite;
+      }
+    }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  /* ===================== Documents ===================== */
+  .list-group {
+    .list-group-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.2s ease;
+      &:hover { background: rgba($primary-color, 0.05); transform: translateX(2px); }
+      button { font-size: 0.85rem; }
+    }
+  }
+
+  /* ===================== Sécurité / 2FA ===================== */
+  .security-card, .password-form, .two-fa-container {
+    background-color: $card-bg-light;
+    padding: $spacing-2;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
+    &:hover { transform: translateY(-2px); }
+
+    input { margin-bottom: $spacing-half; }
+    small { display: block; margin-top: $spacing-quarter; }
+    .text-danger { margin-top: $spacing-half; }
+  }
+
+  .form-check { display: flex; align-items: center; gap: 1rem; }
+
+  /* ===================== Transactions ===================== */
+  app-transactions { margin-top: $spacing-2; }
+
+  /* ===================== Responsive ===================== */
+  @media (max-width: 768px) {
+    .accounts-container { padding: 0 $spacing-2; }
+    .nav-tabs { flex-wrap: wrap; }
+    .list-group-item { flex-direction: column; align-items: flex-start; gap: $spacing-half; }
+    form { max-width: 100%; }
+  }
+
+  /* ===================== Dark Mode ===================== */
   :host-context(.dark-mode) {
-    background: $color-dark-bg;
-    color: $color-dark-section-text;
+    background-color: $bg-dark;
+    color: $text-dark;
 
-    h1,h2,h3,h4,h5,h6,p,label,span,td,th,small,li { color: $color-dark-section-text; }
+    h1, h2, h3, h4, h5, h6, p, label, span, td, th, small, li { color: $text-dark; }
 
-    .account-header { background: $color-dark-section-bg; }
+    .accounts-container {
+      form, .security-card, .password-form, .two-fa-container {
+        background-color: $card-bg-dark;
+        color: $text-dark;
 
-    .account-container {
-      .account-sidebar {
-        background: $color-dark-card-bg;
-        nav ul li {
-          color: $color-dark-section-text;
-          &:hover { background: rgba($primary-color, 0.1); color: $primary-color; }
-          &.active { background: rgba($primary-color, 0.2); color: $primary-color; font-weight: 500; }
-        }
+        input, textarea, select { background-color: $card-bg-dark; color: $text-dark; border-color: darken($card-bg-dark, 6%); }
       }
 
-      .account-content {
-        background: $color-dark-card-bg;
-        h2 { color: $primary-color; }
-        p,label,span,td,th,small,li { color: $color-dark-section-text; }
+      .list-group-item { background-color: $card-bg-dark; color: $text-dark; &:hover { background-color: rgba($primary-color, 0.1); } }
 
-        .form-group {
-          label { color: $color-dark-section-text; }
-          input, select, textarea { color: $color-dark-section-text; background-color: $color-dark-card-bg; }
-        }
-
-        .form-actions {
-          button.btn-primary { background-color: $primary-color; color: $text-light; }
-          button.btn-outline { color: $primary-color; border-color: $primary-color; &:hover { background-color: $primary-color; color: $text-light; } }
-        }
-
-        .form-check { gap: 1rem; }
-        .switch .slider { background-color: #555; }
-        .switch input:checked + .slider { background-color: $primary-color; }
-
-        .card { background-color: $color-dark-card-bg; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
-
-        .table { th { background-color: $color-dark-section-bg; color: $primary-color; } td { background-color: $color-dark-card-bg; color: $color-dark-section-text; } }
-
-        /* ===== Correction texte sécurité ===== */
-        .security-card, .password-form {
-          p, small, li { color: $color-dark-section-text !important; }
-        }
-      }
+      .btn-primary { background-color: $primary-color-dark; color: $btn-text-dark; &:hover { background-color: lighten($primary-color-dark, 6%); transform: translateY(-2px); } }
+      .btn-outline { color: $primary-color-dark; border-color: $primary-color-dark; &:hover { background-color: $primary-color-dark; color: $btn-text-dark; transform: translateY(-2px); } }
     }
   }
 }

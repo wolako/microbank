@@ -1,10 +1,72 @@
+@import '../../../../assets/variables';
+
 .login-wrapper {
-  height: 100vh;
-  background: #f8f9fa;
+  min-height: 100vh;
+  background: $gradient-light;
+  font-family: $font-base;
 }
 
 .login-card {
   width: 100%;
   max-width: 420px;
-  border-radius: 12px;
+  background: $light-card-bg;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: $transition;
+
+  h3 {
+    font-weight: 600;
+    color: $primary-color;
+  }
+
+  .form-label {
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  .form-control {
+    border-radius: $border-radius;
+    padding: 0.65rem 1rem;
+    font-size: 1rem;
+    transition: $transition;
+    border: 1px solid #ddd;
+
+    &:focus {
+      border-color: $primary-light;
+      box-shadow: 0 0 6px rgba(60, 90, 154, 0.4);
+      outline: none;
+    }
+  }
+
+  .btn-primary {
+    background: $gradient-light;
+    border: none;
+    padding: 0.7rem;
+    font-weight: 600;
+    border-radius: $border-radius;
+    transition: $transition;
+
+    &:hover {
+      opacity: 0.9;
+      transform: translateY(-2px);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+
+  .alert {
+    border-radius: $border-radius;
+    font-size: 0.95rem;
+  }
+}
+
+// 📱 Responsive
+@media (max-width: 576px) {
+  .login-card {
+    margin: 0 1rem;
+    padding: 1.5rem;
+  }
 }

@@ -1,19 +1,27 @@
 @import '../../../../assets/variables';
 
+// ================================
+// Conteneur général de l'auth
+// ================================
 .auth-container {
   min-height: 100vh;
-  @include flex-center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.35s ease, color 0.35s ease;
 
-  // Dark mode (hérité via :host-context)
   :host-context(.dark-mode) & {
     background-color: $dark-bg;
     color: $color-dark-section-text;
   }
 }
 
+// ================================
+// Carte Auth
+// ================================
 .auth-card {
   width: 100%;
   max-width: 400px;
@@ -28,7 +36,11 @@
     color: $color-dark-section-text;
   }
 
+  // ================================
+  // Header
+  // ================================
   .auth-header {
+    text-align: center;
     margin-bottom: $spacing-unit * 2;
 
     .logo {
@@ -37,22 +49,39 @@
     }
 
     h2 {
-      margin: 0;
+      margin: 0.5rem 0;
       font-size: 1.6rem;
       font-weight: 700;
-      color: $text-primary; // <-- UTILISE COULEUR DE TEXTE
+      color: $text-primary;
       transition: color 0.3s ease;
 
       :host-context(.dark-mode) & {
-        color: $color-dark-section-text; // <-- S'ADAPTE AU MODE SOMBRE
+        color: $color-dark-section-text;
+      }
+    }
+
+    p {
+      font-size: 1rem;
+      color: $text-secondary;
+      transition: color 0.3s ease;
+
+      :host-context(.dark-mode) & {
+        color: lighten($color-dark-section-text, 10%);
       }
     }
   }
 
+  // ================================
+  // Formulaire
+  // ================================
   .auth-form {
+    display: flex;
+    flex-direction: column;
+
     .form-group {
       display: flex;
       flex-direction: column;
+      margin-bottom: $spacing-unit;
 
       label {
         font-weight: 600;
@@ -90,22 +119,30 @@
           }
         }
       }
+
+      .text-danger {
+        font-size: 0.875rem;
+        margin-top: 0.25rem;
+      }
     }
 
     .forgot-password {
       font-size: 0.9rem;
-      color: $text-primary; // <-- couleur texte normale
+      color: $text-primary;
       text-decoration: none;
       transition: color 0.2s ease;
+      margin-top: $spacing-half;
 
-      &:hover { text-decoration: underline; }
+      &:hover {
+        text-decoration: underline;
+      }
 
       :host-context(.dark-mode) & {
-        color: $color-dark-section-text; // <-- s'adapte au sombre
+        color: $color-dark-section-text;
       }
     }
 
-    .btn.btn-primary {
+    button.btn-primary {
       margin-top: $spacing-unit;
       padding: $spacing-half $spacing-unit;
       background-color: $color-light-primary;
@@ -121,7 +158,11 @@
         background-color: $primary-light;
       }
 
-      &:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+      &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+        transform: none;
+      }
 
       :host-context(.dark-mode) & {
         background-color: $color-dark-primary;
@@ -134,7 +175,13 @@
     }
   }
 
+  // ================================
+  // Footer
+  // ================================
   .auth-footer {
+    text-align: center;
+    margin-top: $spacing-unit;
+
     p {
       font-size: 0.95rem;
       color: $text-secondary;
@@ -145,16 +192,57 @@
       }
 
       a {
-        color: $text-primary; // <-- couleur de texte normale
+        color: $text-primary;
         font-weight: 600;
         text-decoration: none;
         transition: color 0.2s ease;
 
-        &:hover { text-decoration: underline; }
+        &:hover {
+          text-decoration: underline;
+        }
 
         :host-context(.dark-mode) & {
-          color: $color-dark-section-text; // <-- s'adapte au sombre
+          color: $color-dark-section-text;
         }
+      }
+    }
+  }
+}
+
+// ================================
+// Responsive
+// ================================
+@include respond-md {
+  .auth-container {
+    padding: 1.5rem;
+
+    .auth-card {
+      padding: 1.5rem;
+
+      .auth-header h2 {
+        font-size: 1.5rem;
+      }
+
+      .auth-header p {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
+
+@include respond-sm {
+  .auth-container {
+    padding: 1rem;
+
+    .auth-card {
+      padding: 1rem;
+
+      .auth-header h2 {
+        font-size: 1.3rem;
+      }
+
+      .auth-header p {
+        font-size: 0.9rem;
       }
     }
   }

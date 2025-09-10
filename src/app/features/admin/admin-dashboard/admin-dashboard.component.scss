@@ -1,61 +1,109 @@
-:host {
-  display: block;
-  width: 100%;
-}
+@import '../../../../assets/variables';
 
 .container {
-  padding: 1rem;
+  max-width: 1200px;
+  font-family: $font-base;
 }
 
-.card {
-  border-radius: 0.5rem;
-  transition: box-shadow 0.3s;
-}
-
-.card:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.card-title {
+h2 {
   font-weight: 600;
-  font-size: 1.1rem;
-}
+  color: $primary-color;
+  margin-bottom: 1.5rem;
+  font-size: $h2-font-size;
 
-.card-text {
-  font-size: 1rem;
-}
-
-.chart-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 1rem;
-  width: 100%;
-  overflow-x: auto;
-}
-
-ngx-charts-pie-chart {
-  display: block;
-  width: 100%;
-  height: auto;
-
-  svg {
-    max-width: 100%;
-    height: auto;
+  @media (max-width: 768px) {
+    font-size: $h2-font-size-md;
   }
 }
 
-// ✅ Responsive Layout
+// 📌 Navigation (onglets)
+.nav-pills {
+  .nav-link {
+    border-radius: 50px;
+    font-weight: 500;
+    padding: 0.6rem 1.2rem;
+    color: $primary-color;
+    background-color: transparent;
+    transition: $transition;
+
+    &:hover {
+      background: $gradient-light;
+      color: $text-light;
+    }
+
+    &.active {
+      background: $primary-color;
+      color: $text-light;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    }
+  }
+}
+
+// 📊 Cartes statistiques
+.card {
+  border: none;
+  border-radius: $border-radius;
+  background: $light-card-bg;
+  box-shadow: $box-shadow;
+  transition: $transition;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  }
+
+  .card-body {
+    padding: 1.5rem;
+    text-align: center;
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: $text-secondary;
+      margin-bottom: 0.75rem;
+    }
+
+    .card-text {
+      font-size: 1.4rem;
+      font-weight: bold;
+      color: $primary-color;
+    }
+
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+
+      li {
+        font-size: 0.95rem;
+        margin: 0.3rem 0;
+        color: $text-secondary;
+
+        strong {
+          color: $primary-color;
+        }
+      }
+    }
+  }
+}
+
+// 📱 Responsive
 @media (max-width: 768px) {
-  .card-title {
-    font-size: 1rem;
+  .nav-pills {
+    flex-wrap: wrap;
+
+    .nav-link {
+      margin-bottom: 0.5rem;
+    }
   }
 
-  .card-text {
-    font-size: 0.9rem;
-  }
+  .card-body {
+    .card-title {
+      font-size: 1rem;
+    }
 
-  ngx-charts-pie-chart {
-    min-width: 280px;
+    .card-text {
+      font-size: 1.2rem;
+    }
   }
 }

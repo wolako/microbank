@@ -1,23 +1,138 @@
+@import '../../../../assets/variables';
+
 .container {
-  margin-top: 2rem;
+  padding: $padding-section;
+  font-family: $font-base;
 
   h3 {
+    color: $primary-color;
+    font-size: $h2-font-size;
     font-weight: 600;
     margin-bottom: 1.5rem;
+    text-align: center;
   }
 
-  table {
-    th, td {
-      vertical-align: middle;
+  .table {
+    background: $light-card-bg;
+    border-radius: $border-radius;
+    box-shadow: $box-shadow;
+    overflow: hidden;
+
+    thead {
+      background: $gradient-light;
+      color: $text-light;
+      font-weight: 600;
+
+      th {
+        padding: 1rem;
+        text-align: center;
+      }
     }
 
-    td {
-      font-size: 0.9rem;
+    tbody {
+      tr {
+        transition: $transition;
+
+        &:hover {
+          background: rgba(60, 90, 154, 0.05);
+        }
+
+        td {
+          padding: 0.9rem;
+          text-align: center;
+          vertical-align: middle;
+          color: $text-secondary;
+        }
+      }
+    }
+  }
+
+  // Boutons d'action
+  .btn-sm {
+    padding: 0.4rem 0.75rem;
+    border-radius: $border-radius;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition: $transition;
+
+    &.btn-success {
+      background: linear-gradient(135deg, #28a745, #218838);
+      border: none;
+      color: $text-light;
+
+      &:hover {
+        background: linear-gradient(135deg, #218838, #1e7e34);
+        transform: scale(1.05);
+      }
     }
 
-    .btn {
-      font-size: 0.75rem;
-      margin-right: 0.5rem;
+    &.btn-danger {
+      background: linear-gradient(135deg, #dc3545, #c82333);
+      border: none;
+      color: $text-light;
+
+      &:hover {
+        background: linear-gradient(135deg, #c82333, #bd2130);
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+// 🌙 Mode sombre
+body.dark-mode {
+  .container {
+    h3 {
+      color: $primary-light;
+    }
+
+    .table {
+      background: $dark-card-bg;
+
+      thead {
+        background: $gradient-dark;
+      }
+
+      tbody tr td {
+        color: $text-light;
+      }
+
+      tbody tr:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+    }
+  }
+}
+
+// 📱 Responsive
+@media (max-width: 768px) {
+  .table {
+    font-size: 0.9rem;
+
+    thead {
+      display: none;
+    }
+
+    tbody tr {
+      display: block;
+      margin-bottom: 1rem;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      background: $light-card-bg;
+      padding: 1rem;
+
+      td {
+        display: flex;
+        justify-content: space-between;
+        text-align: left;
+        padding: 0.5rem 0;
+
+        &:before {
+          content: attr(data-label);
+          font-weight: bold;
+          color: $primary-color;
+        }
+      }
     }
   }
 }

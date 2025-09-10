@@ -1,18 +1,96 @@
-.container {
-  margin-top: 2rem;
+@import '../../../../assets/variables';
+
+.loan-products {
+  padding: $padding-section;
+  font-family: $font-base;
+  background-color: $light-bg;
+  color: $text-secondary;
 
   h3 {
-    font-weight: 600;
+    font-size: $h2-font-size;
+    color: $text-primary;
     margin-bottom: 1.5rem;
   }
 
   table {
-    th, td {
-      vertical-align: middle;
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: $border-radius;
+    overflow: hidden;
+    box-shadow: $box-shadow;
+    background-color: $light-card-bg;
+    transition: $transition;
+
+    thead {
+      background-color: lighten($light-card-bg, 5%);
+
+      th {
+        text-align: center;
+        font-weight: 600;
+        padding: 0.75rem;
+      }
     }
 
-    td {
-      font-size: 0.9rem;
+    tbody {
+      tr {
+        &:hover {
+          background-color: rgba($primary-color, 0.05);
+          transition: $transition;
+        }
+
+        td {
+          text-align: center;
+          padding: 0.65rem;
+        }
+      }
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    padding: $padding-section-md;
+
+    table {
+      font-size: 0.85rem;
+
+      th, td {
+        padding: 0.5rem;
+      }
+    }
+  }
+}
+
+/* Dark mode */
+[data-theme='dark'] {
+  .loan-products {
+    background-color: $dark-bg;
+    color: $text-light;
+
+    h3 {
+      color: $primary-light;
+    }
+
+    table {
+      background-color: $dark-card-bg;
+
+      thead {
+        background-color: lighten($dark-card-bg, 5%);
+        th {
+          color: $text-light;
+        }
+      }
+
+      tbody {
+        tr {
+          &:hover {
+            background-color: rgba($primary-light, 0.15);
+          }
+
+          td {
+            color: $text-light;
+          }
+        }
+      }
     }
   }
 }

@@ -1,0 +1,94 @@
+@import '../../../../assets/variables';
+
+.confirm-email-container {
+  max-width: 600px;
+  margin: 5rem auto;
+  padding: 2rem;
+  text-align: center;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  background-color: $dark-card-bg;
+  color: $text-light;
+  transition: $transition;
+
+  body.light-mode & {
+    background-color: $light-card-bg;
+    color: $text-primary;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    @include text-color($text-primary, $text-light);
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+    @include text-color($text-secondary, $text-light);
+  }
+
+  .btn {
+    min-width: 150px;
+    padding: 0.5rem 1rem;
+    border-radius: $border-radius;
+    font-weight: 500;
+    transition: $transition;
+
+    &.btn-secondary {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      @include text-color($text-light, $text-dark);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+      }
+    }
+
+    &.btn-primary {
+      background-color: $primary-color;
+      border-color: $primary-color;
+      color: $text-light;
+
+      &:hover {
+        background-color: darken($primary-color, 10%);
+        border-color: darken($primary-color, 10%);
+      }
+    }
+  }
+
+  // Icônes ou emoji
+  .status-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+
+  // Loader
+  .loading-text {
+    font-size: 1.2rem;
+    @include text-color($text-secondary, $text-light);
+  }
+}
+
+// Responsive
+@include respond-md {
+  .confirm-email-container {
+    margin: 3rem auto;
+    padding: 1.5rem;
+  }
+}
+
+@include respond-sm {
+  .confirm-email-container {
+    margin: 2rem auto;
+    padding: 1rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+}

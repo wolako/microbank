@@ -3,20 +3,20 @@
 .service-layout {
   display: flex;
   flex-direction: column;
-  gap: $spacing-unit * 3;
-  font-family: 'Inter', sans-serif;
+  gap: 3rem; // $spacing-unit * 3
+  font-family: $font-base;
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.4s ease, color 0.4s ease;
-  padding: $spacing-unit * 4;
+  padding: $padding-section;
 
   .content {
     width: 100%;
   }
 
   .cta-box {
-    background-color: $color-light-section-bg;
-    padding: $spacing-unit * 3;
+    background-color: $light-card-bg;
+    padding: 3rem; // $spacing-unit * 3
     border-radius: $border-radius;
     text-align: center;
     box-shadow: $box-shadow;
@@ -24,31 +24,31 @@
 
     h4 {
       font-size: 1.5rem;
-      margin-bottom: $spacing-half;
-      color: $color-light-primary;
+      margin-bottom: 1.5rem; // $spacing-half
+      color: $text-primary;
       transition: color 0.4s ease;
     }
 
     p {
-      font-size: 1rem;
-      margin-bottom: $spacing-unit * 2;
+      font-size: $p-font-size;
+      margin-bottom: 2rem;
       color: $text-secondary;
       transition: color 0.4s ease;
     }
 
     a {
       display: inline-block;
-      padding: $spacing-half $spacing-unit * 2;
+      padding: 1.5rem 3rem; // $spacing-half $spacing-unit * 2
       font-weight: 600;
       border-radius: $border-radius;
-      background-color: $color-light-primary;
-      color: $color-light-btn-text;
+      background-color: $text-primary;
+      color: $text-light;
       text-decoration: none;
-      transition: all 0.3s ease;
+      transition: $transition;
 
       &:hover {
         transform: translateY(-2px);
-        background-color: darken($color-light-primary, 5%);
+        background-color: darken($text-primary, 5%);
       }
     }
   }
@@ -57,31 +57,29 @@
   // Dark Mode
   // ========================
   :host-context(.dark-mode) {
-    background-color: $color-dark-bg;
-    color: $color-dark-section-text;
+    background-color: $dark-bg;
+    color: $text-light;
 
     .cta-box {
-      background-color: $color-dark-card-bg;
+      background-color: $dark-card-bg;
 
-      h4 { color: $color-dark-primary; }
-      p { color: $color-dark-section-text; }
+      h4 { color: $primary-dark; }
+      p { color: $text-light; }
 
       a {
-        background-color: $color-dark-primary;
-        color: $color-dark-btn-text;
+        background-color: $primary-dark;
+        color: $text-light;
 
-        &:hover {
-          background-color: lighten($color-dark-primary, 10%);
-        }
+        &:hover { background-color: lighten($primary-dark, 10%); }
       }
     }
   }
 
-  @media (max-width: $breakpoint-md) {
-    padding: $spacing-unit * 2;
+  @media (max-width: 768px) {
+    padding: $padding-section-md;
 
     .cta-box {
-      padding: $spacing-unit * 2;
+      padding: 2rem; // $spacing-unit * 2
 
       h4 { font-size: 1.3rem; }
       p { font-size: 0.95rem; }

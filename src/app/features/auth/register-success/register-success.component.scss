@@ -1,3 +1,96 @@
+/* register-success.component.scss */
 .container {
   max-width: 600px;
+  margin: 4rem auto;
+  padding: 2.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  text-align: center;
+
+  h2 {
+    font-size: 1.9rem;
+    font-weight: 600;
+    margin-bottom: 1.2rem;
+    color: #28a745; // success green
+  }
+
+  p {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 1rem;
+    line-height: 1.6;
+
+    &.text-muted {
+      font-size: 0.9rem;
+      color: #6c757d;
+      margin-top: 0.8rem;
+    }
+  }
+
+  a.btn {
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 0.7rem 1.4rem;
+    border-radius: 8px;
+    margin-top: 1.5rem;
+    transition: all 0.3s ease;
+
+    &.btn-primary {
+      background-color: #007bff;
+      border: none;
+
+      &:hover {
+        background-color: darken(#007bff, 7%);
+      }
+    }
+  }
+}
+
+/* 🌙 Dark Mode */
+body.dark-mode {
+  .container {
+    background: #1e1e2f;
+    color: #f1f1f1;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+
+    h2 {
+      color: #4cd964; // bright green for dark mode
+    }
+
+    p {
+      color: #dcdcdc;
+
+      &.text-muted {
+        color: #aaa;
+      }
+    }
+
+    a.btn-primary {
+      background-color: #3399ff;
+
+      &:hover {
+        background-color: lighten(#3399ff, 5%);
+      }
+    }
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 576px) {
+  .container {
+    padding: 1.8rem;
+
+    h2 {
+      font-size: 1.5rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+
+    a.btn {
+      width: 100%;
+    }
+  }
 }

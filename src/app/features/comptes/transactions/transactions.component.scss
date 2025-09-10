@@ -1,110 +1,21 @@
+@import '../../../../assets/variables';
+
 .transactions-container {
   max-width: 600px;
   margin: 2rem auto;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-  font-family: 'Segoe UI', sans-serif;
-  transition: all 0.3s ease-in-out;
-
-  /* Mode clair / sombre */
-  body.light-mode & {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    color: #333;
-
-    h2 {
-      color: #0d47a1;
-    }
-
-    input,
-    select {
-      background-color: #fff;
-      color: #333;
-      border: 1px solid #ccc;
-
-      &:focus {
-        border-color: #0d47a1;
-        box-shadow: 0 0 6px rgba(13, 71, 161, 0.4);
-      }
-    }
-
-    button[type='submit'] {
-      background-color: #2196f3;
-      color: #fff;
-
-      &:hover {
-        background-color: #1976d2;
-      }
-
-      &:disabled {
-        background-color: #90caf9;
-        color: #fff;
-      }
-    }
-
-    .alert-success {
-      background-color: #e8f5e9;
-      color: #2e7d32;
-    }
-
-    .alert-danger {
-      background-color: #fbe9e7;
-      color: #c62828;
-    }
-  }
-
-  body.dark-mode & {
-    background-color: #1e1e2f;
-    border: 1px solid #333;
-    color: #eee;
-
-    h2 {
-      color: #63a4ff;
-    }
-
-    input,
-    select {
-      background-color: #2b2b3d;
-      color: #eee;
-      border: 1px solid #555;
-
-      &:focus {
-        border-color: #63a4ff;
-        box-shadow: 0 0 6px rgba(99, 164, 255, 0.5);
-      }
-    }
-
-    button[type='submit'] {
-      background-color: #2196f3;
-      color: #fff;
-
-      &:hover {
-        background-color: #63a4ff;
-      }
-
-      &:disabled {
-        background-color: #555;
-        color: #aaa;
-      }
-    }
-
-    .alert-success {
-      background-color: #274b27;
-      color: #a5d6a7;
-    }
-
-    .alert-danger {
-      background-color: #4a1e1e;
-      color: #f28b82;
-    }
-  }
+  padding: $padding-section;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  font-family: $font-base;
+  line-height: $line-height-base;
+  transition: $transition;
 
   h2 {
     text-align: center;
     margin-bottom: 1.5rem;
-    font-size: 1.6rem;
-    transition: color 0.3s ease-in-out;
+    font-size: $h2-font-size;
+    color: $text-primary;
+    transition: color $transition-speed;
   }
 
   form {
@@ -115,71 +26,137 @@
     label {
       font-weight: 500;
       margin-bottom: 0.3rem;
-      transition: color 0.3s ease-in-out;
+      transition: color $transition-speed;
+      color: $text-secondary;
     }
 
     input,
     select {
       width: 100%;
       padding: 0.6rem;
-      border-radius: 4px;
-      font-size: 1rem;
-      transition: all 0.3s ease-in-out;
-    }
+      border-radius: $border-radius;
+      font-size: $p-font-size;
+      line-height: $p-line-height;
+      border: 1px solid $secondary-color;
+      background-color: $light-card-bg;
+      color: $text-primary;
+      transition: $transition;
 
-    input[formControlName='amount'] {
-      transition: all 0.3s ease-in-out;
+      &:focus {
+        border-color: $primary-color;
+        box-shadow: 0 0 6px rgba(11, 26, 63, 0.3);
+        outline: none;
+      }
     }
 
     button[type='submit'] {
       padding: 0.8rem;
       font-weight: bold;
-      font-size: 1rem;
+      font-size: $p-font-size;
       border: none;
-      border-radius: 4px;
+      border-radius: $border-radius;
       cursor: pointer;
-      transition: all 0.25s ease-in-out;
+      background: $gradient-light;
+      color: $text-light;
+      transition: $transition;
+
+      &:hover { opacity: 0.9; transform: translateY(-1px); }
+      &:disabled {
+        background-color: $secondary-color;
+        color: lighten($text-light, 20%);
+        cursor: not-allowed;
+      }
+
+      .spinner-border {
+        width: 1rem;
+        height: 1rem;
+        margin-left: 0.5rem;
+        animation: spin 0.8s linear infinite;
+      }
     }
 
-    .alert-success,
-    .alert-danger {
+    .alert-success {
+      background-color: lighten($primary-color, 40%);
+      color: darken($primary-color, 20%);
       padding: 0.8rem;
-      border-radius: 4px;
+      border-radius: $border-radius;
       font-size: 0.95rem;
-      transition: all 0.3s ease-in-out;
+      transition: $transition;
+    }
+
+    .alert-danger {
+      background-color: $error-color;
+      color: $text-light;
+      padding: 0.8rem;
+      border-radius: $border-radius;
+      font-size: 0.95rem;
+      transition: $transition;
     }
   }
 
   .balance {
     font-weight: bold;
     margin-top: 1rem;
+    color: $text-primary;
   }
 
+  /* Responsive */
   @media (max-width: 480px) {
-    padding: 1rem;
+    padding: $padding-section-md;
 
-    h2 {
-      font-size: 1.3rem;
-    }
+    h2 { font-size: $h2-font-size-md; }
 
     form {
       gap: 1rem;
 
       input,
-      select {
-        font-size: 0.95rem;
-        padding: 0.5rem;
-      }
+      select { font-size: 0.95rem; padding: 0.5rem; }
 
-      button[type='submit'] {
-        font-size: 0.95rem;
-        padding: 0.7rem;
-      }
+      button[type='submit'] { font-size: 0.95rem; padding: 0.7rem; }
 
       .alert-success,
-      .alert-danger {
-        font-size: 0.9rem;
-      }
+      .alert-danger { font-size: 0.9rem; }
     }
   }
+
+  /* ================= Dark Mode ================= */
+  :host-context(.dark-mode) & {
+    background-color: $dark-card-bg;
+    color: $text-light;
+
+    h2 { color: $primary-light; }
+
+    label { color: $text-light; }
+
+    input,
+    select {
+      background-color: darken($dark-card-bg, 5%);
+      color: $text-light;
+      border: 1px solid darken($dark-card-bg, 20%);
+
+      &:focus {
+        border-color: $primary-light;
+        box-shadow: 0 0 6px rgba(60, 90, 154, 0.5);
+      }
+    }
+
+    button[type='submit'] {
+      background: $gradient-dark;
+      color: $text-light;
+
+      &:hover { opacity: 0.9; }
+      &:disabled { background-color: $secondary-dark; color: lighten($text-light, 20%); }
+    }
+
+    .alert-success { background-color: lighten($secondary-dark, 20%); color: $primary-light; }
+    .alert-danger { background-color: darken($error-color, 10%); color: $text-light; }
+
+    .balance { color: $text-light; }
+  }
+}
+
+/* ================= Animations ================= */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }

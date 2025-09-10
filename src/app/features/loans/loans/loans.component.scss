@@ -1,20 +1,20 @@
 @import '../../../../assets/variables';
 
 .loans-section {
-  font-family: 'Inter', sans-serif;
-  padding: $spacing-unit * 4 0;
+  font-family: $font-base;
+  padding: 3rem 0; // $spacing-unit * 4
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.4s ease, color 0.4s ease;
 
   .section-header {
     text-align: center;
-    margin-bottom: $spacing-unit * 4;
+    margin-bottom: 3rem; // $spacing-unit * 4
 
     h1 { 
       font-size: 2.5rem; 
-      color: $color-light-primary;
-      margin-bottom: $spacing-half;
+      color: $primary-color; // remplace $color-light-primary
+      margin-bottom: 0.75rem; // $spacing-half
       transition: color 0.4s ease;
     }
 
@@ -28,23 +28,23 @@
   .loan-products-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: $spacing-unit * 2;
+    gap: 1.5rem; // $spacing-unit * 2
 
-    @media (max-width: $breakpoint-lg) { grid-template-columns: repeat(2, 1fr); }
-    @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; }
+    @media (max-width: 1200px) { grid-template-columns: repeat(2, 1fr); }
+    @media (max-width: 768px) { grid-template-columns: 1fr; }
   }
 
   .product-card {
     background-color: $light-card-bg;
     border-radius: $border-radius;
-    padding: $spacing-unit * 2;
+    padding: 1.5rem; // $spacing-unit * 2
     box-shadow: $box-shadow;
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
     cursor: pointer;
 
     &.selected {
-      border: 2px solid $color-light-primary;
+      border: 2px solid $primary-color;
       transform: scale(1.02);
       box-shadow: 0 8px 25px rgba(0,0,0,0.15);
     }
@@ -56,23 +56,23 @@
 
     .product-icon {
       font-size: 3rem;
-      color: $color-light-primary;
-      margin-bottom: $spacing-half;
+      color: $primary-color;
+      margin-bottom: 0.75rem; // $spacing-half
       transition: color 0.3s ease;
     }
 
     h3 {
-      margin-bottom: $spacing-half;
+      margin-bottom: 0.75rem;
       font-weight: 600;
       color: $text-primary;
       transition: color 0.3s ease;
     }
 
     .product-details {
-      margin-bottom: $spacing-unit * 2;
+      margin-bottom: 3rem; // $spacing-unit * 2
       p {
         font-size: 0.95rem;
-        margin-bottom: $spacing-quarter;
+        margin-bottom: 0.25rem; // $spacing-quarter
         color: $text-secondary;
 
         strong { color: $text-primary; }
@@ -80,50 +80,48 @@
     }
 
     button.btn-outline {
-      padding: $spacing-half $spacing-unit;
+      padding: 0.75rem 1.5rem;
       border-radius: $border-radius;
-      border: 1px solid $color-light-primary;
-      color: $color-light-primary;
+      border: 1px solid $primary-color;
+      color: $primary-color;
       background: transparent;
       font-weight: 600;
       transition: all 0.3s ease;
 
       &:hover {
-        background-color: $color-light-primary;
-        color: $color-light-btn-text;
+        background-color: $primary-color;
+        color: $text-light;
         transform: translateY(-2px);
       }
     }
   }
 
-  // ========================
   // Dark Mode
-  // ========================
   :host-context(.dark-mode) {
-    background-color: $color-dark-bg;
-    color: $color-dark-section-text;
+    background-color: $dark-bg;
+    color: $text-light;
 
     .section-header {
-      h1 { color: $color-dark-primary; }
-      p { color: $color-dark-section-text; }
+      h1 { color: $primary-dark; }
+      p { color: $text-light; }
     }
 
     .product-card {
-      background-color: $color-dark-card-bg;
-      color: $color-dark-section-text;
+      background-color: $dark-card-bg;
+      color: $text-light;
 
-      .product-icon { color: $color-dark-primary; }
-      h3 { color: $color-dark-primary; }
-      .product-details p { color: $color-dark-section-text; strong { color: $color-dark-primary; } }
+      .product-icon { color: $primary-dark; }
+      h3 { color: $primary-dark; }
+      .product-details p { color: $text-light; strong { color: $primary-dark; } }
 
-      &.selected { border-color: $color-dark-primary; }
+      &.selected { border-color: $primary-dark; }
       button.btn-outline {
-        border-color: $color-dark-primary;
-        color: $color-dark-primary;
+        border-color: $primary-dark;
+        color: $primary-dark;
 
         &:hover {
-          background-color: $color-dark-primary;
-          color: $color-dark-btn-text;
+          background-color: $primary-dark;
+          color: $text-light;
         }
       }
     }

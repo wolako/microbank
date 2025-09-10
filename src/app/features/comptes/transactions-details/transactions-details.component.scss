@@ -1,17 +1,23 @@
+@import '../../../../assets/variables';
+
 .transaction-details {
-  background-color: #0d1117;
-  color: #c9d1d9;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+  background-color: $light-card-bg;
+  color: $text-primary;
+  padding: $padding-section;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
   max-width: 720px;
   margin: 2rem auto;
+  font-family: $font-base;
+  line-height: $line-height-base;
+  transition: $transition;
 
   h2 {
-    font-size: 1.8rem;
+    font-size: $h2-font-size;
     margin-bottom: 1.5rem;
     text-align: center;
-    color: #58a6ff;
+    color: $primary-color;
+    transition: color $transition-speed;
   }
 
   ul {
@@ -21,17 +27,19 @@
 
     li {
       padding: 0.6rem 0;
-      font-size: 1rem;
-      border-bottom: 1px solid #30363d;
+      font-size: $p-font-size;
+      border-bottom: 1px solid lighten($secondary-color, 30%);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
 
       strong {
-        display: inline-block;
         width: 240px;
-        color: #79c0ff;
+        color: $primary-color;
       }
 
       span {
-        color: #c9d1d9;
+        color: $text-secondary;
       }
     }
   }
@@ -41,51 +49,52 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    // margin: 1.5rem 0;
     flex-wrap: wrap;
 
     button {
-        flex: 0 1 auto;
-        white-space: nowrap; // empêche le retour à la ligne dans le bouton
-        padding: 0.5rem 1rem;
-        font-size: 1rem;
-        // min-width: 180px;
+      flex: 0 1 auto;
+      white-space: nowrap;
+      padding: 0.5rem 1rem;
+      font-size: $p-font-size;
+      border-radius: $border-radius;
+      transition: $transition;
     }
 
     .btn-outline-primary {
-      color: #58a6ff;
-      border-color: #58a6ff;
+      color: $primary-color;
+      border-color: $primary-color;
 
       &:hover {
-        background-color: #58a6ff;
-        color: #0d1117;
+        background-color: $primary-color;
+        color: $text-light;
       }
     }
 
     .btn-outline-success {
-      color: #3fb950;
-      border-color: #3fb950;
+      color: $secondary-color;
+      border-color: $secondary-color;
 
       &:hover {
-        background-color: #3fb950;
-        color: #0d1117;
+        background-color: $secondary-color;
+        color: $text-light;
       }
     }
 
     .btn-secondary {
-      background-color: #21262d;
-      border-color: #30363d;
-      color: #c9d1d9;
+      background-color: lighten($dark-card-bg, 5%);
+      border-color: $secondary-color;
+      color: $text-primary;
 
       &:hover {
-        background-color: #30363d;
-        color: #fff;
+        background-color: $secondary-color;
+        color: $text-light;
       }
     }
   }
 
+  /* ================= Responsive ================= */
   @media (max-width: 576px) {
-    padding: 1rem;
+    padding: $padding-section-md;
 
     ul li strong {
       width: 100%;
@@ -97,18 +106,74 @@
       flex-direction: column;
       align-items: stretch;
 
-      button {
-        width: 100%;
+      button { width: 100%; }
+    }
+  }
+
+  /* ================= Dark Mode ================= */
+  :host-context(.dark-mode) & {
+    background-color: $dark-card-bg;
+    color: $text-light;
+
+    h2 { color: $primary-light; }
+
+    ul li {
+      border-bottom: 1px solid darken($dark-card-bg, 10%);
+      strong { color: $primary-light; }
+      span { color: $text-light; }
+    }
+
+    .actions {
+      .btn-outline-primary {
+        color: $primary-light;
+        border-color: $primary-light;
+
+        &:hover {
+          background-color: $primary-light;
+          color: $dark-bg;
+        }
+      }
+
+      .btn-outline-success {
+        color: $primary-light;
+        border-color: $primary-light;
+
+        &:hover {
+          background-color: $primary-light;
+          color: $dark-bg;
+        }
+      }
+
+      .btn-secondary {
+        background-color: $secondary-dark;
+        border-color: $primary-dark;
+        color: $text-light;
+
+        &:hover {
+          background-color: $primary-dark;
+          color: $text-light;
+        }
       }
     }
   }
 }
 
+/* ================= Alerts ================= */
 .alert {
   max-width: 720px;
   margin: 1rem auto;
   text-align: center;
-  background-color: #161b22;
-  border-color: #30363d;
-  color: #c9d1d9;
+  background-color: $light-card-bg;
+  border-color: lighten($secondary-color, 30%);
+  color: $text-primary;
+  border-radius: $border-radius;
+  padding: 0.75rem;
+  font-size: $p-font-size;
+  transition: $transition;
+
+  :host-context(.dark-mode) & {
+    background-color: $dark-card-bg;
+    border-color: $secondary-dark;
+    color: $text-light;
+  }
 }

@@ -1,4 +1,107 @@
-.container {
-  max-width: 600px;
-  margin: auto;
+@import '../../../../assets/variables';
+
+.pending-approval-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  text-align: center;
+  background-color: $light-bg;
+  color: $text-primary;
+  transition: background-color 0.35s ease, color 0.35s ease;
+
+  :host-context(.dark-mode) & {
+    background-color: $dark-bg;
+    color: $color-dark-section-text;
+  }
+
+  h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: $spacing-unit;
+    color: $text-primary;
+    transition: color 0.3s ease;
+
+    :host-context(.dark-mode) & {
+      color: $color-dark-section-text;
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+    color: $text-secondary;
+    transition: color 0.3s ease;
+
+    :host-context(.dark-mode) & {
+      color: lighten($color-dark-section-text, 10%);
+    }
+
+    strong {
+      font-weight: 700;
+    }
+  }
+
+  a.btn {
+    margin-top: $spacing-unit;
+    padding: $spacing-half $spacing-unit;
+    border-radius: $border-radius;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.2s ease, color 0.2s ease;
+
+    &.btn-secondary {
+      background-color: rgba($text-primary, 0.1);
+      color: $text-primary;
+      border: 1px solid rgba($text-primary, 0.2);
+
+      &:hover {
+        background-color: rgba($text-primary, 0.2);
+        text-decoration: none;
+      }
+
+      :host-context(.dark-mode) & {
+        background-color: rgba($color-dark-section-text, 0.15);
+        color: $color-dark-section-text;
+        border: 1px solid rgba($color-dark-section-text, 0.2);
+
+        &:hover {
+          background-color: rgba($color-dark-section-text, 0.25);
+        }
+      }
+    }
+  }
+}
+
+// ================================
+// Responsive
+// ================================
+@include respond-md {
+  .pending-approval-container {
+    padding: 1.5rem;
+
+    h2 {
+      font-size: 1.6rem;
+    }
+
+    p {
+      font-size: 0.95rem;
+    }
+  }
+}
+
+@include respond-sm {
+  .pending-approval-container {
+    padding: 1rem;
+
+    h2 {
+      font-size: 1.4rem;
+    }
+
+    p {
+      font-size: 0.9rem;
+    }
+  }
 }

@@ -1,22 +1,22 @@
 @import '../../../assets/variables';
 
 .about-page {
-  font-family: $font-primary;
+  font-family: $font-base;
   background-color: $light-bg;
   color: $text-primary;
   transition: background-color 0.4s ease, color 0.4s ease;
 
   .hero-section {
-    padding: $spacing-6 $spacing-2;
+    padding: 4rem 1.5rem;
     text-align: center;
-    background-color: $section-bg-light;
+    background-color: $section-bg;
     transition: background-color 0.4s ease;
 
     h1 {
       font-size: 2.8rem;
       font-weight: 700;
-      color: $primary-color-light;
-      margin-bottom: $spacing-1;
+      color: $primary-color;
+      margin-bottom: 0.75rem;
       transition: color 0.4s ease;
     }
 
@@ -28,17 +28,17 @@
   }
 
   .story-section {
-    padding: $spacing-4 $spacing-2;
-    background-color: $section-bg-light;
+    padding: 3rem 1.5rem;
+    background-color: $section-bg;
     text-align: center;
     transition: background-color 0.4s ease;
 
     .section-header {
-      h2 { color: $primary-color-light; transition: color 0.4s ease; }
+      h2 { color: $primary-color; transition: color 0.4s ease; }
       .divider { 
         width: 60px; height: 3px; 
-        background-color: $primary-color-light; 
-        margin: $spacing-half auto $spacing-3 auto; 
+        background-color: $primary-color; 
+        margin: 0.5rem auto 1.5rem auto; 
         border-radius: 2px; 
         transition: background-color 0.4s ease;
       }
@@ -51,92 +51,92 @@
       p {
         color: $text-secondary;
         line-height: 1.6;
-        margin-bottom: $spacing-2;
+        margin-bottom: 1.5rem;
         transition: color 0.4s ease;
       }
     }
   }
 
   .stats-section {
-    padding: $spacing-4 $spacing-2;
+    padding: 3rem 1.5rem;
 
     .stats-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: $spacing-2;
+      gap: 1.5rem;
       text-align: center;
 
-      @media (max-width: $breakpoint-lg) { grid-template-columns: repeat(2, 1fr); }
-      @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; }
+      @media (max-width: 992px) { grid-template-columns: repeat(2, 1fr); }
+      @media (max-width: 768px) { grid-template-columns: 1fr; }
     }
 
     .stat-item {
-      background-color: $card-bg-light;
-      padding: $spacing-2;
+      background-color: $card-bg;
+      padding: 1.5rem;
       border-radius: $border-radius;
       box-shadow: $box-shadow;
       transition: all 0.4s ease;
 
-      .stat-number { color: $primary-color-light; font-weight: 700; font-size: 2rem; }
+      .stat-number { color: $primary-color; font-weight: 700; font-size: 2rem; }
       .stat-label { color: $text-secondary; font-size: 0.95rem; }
     }
   }
 
   .team-section {
-    padding: $spacing-4 $spacing-2;
+    padding: 3rem 1.5rem;
 
     .team-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: $spacing-2;
-      @media (max-width: $breakpoint-lg) { grid-template-columns: repeat(2, 1fr); }
-      @media (max-width: $breakpoint-md) { grid-template-columns: 1fr; }
+      gap: 1.5rem;
+      @media (max-width: 992px) { grid-template-columns: repeat(2, 1fr); }
+      @media (max-width: 768px) { grid-template-columns: 1fr; }
     }
 
     .team-card {
-      background-color: $card-bg-light;
-      padding: $spacing-2;
+      background-color: $card-bg;
+      padding: 1.5rem;
       border-radius: $border-radius;
       text-align: center;
       box-shadow: $box-shadow;
       transition: all 0.4s ease;
 
-      h3 { color: $primary-color-light; margin-bottom: $spacing-half; }
+      h3 { color: $primary-color; margin-bottom: 0.75rem; }
       .team-role, p { color: $text-secondary; }
-      .social-links a { color: $primary-color-light; transition: color 0.3s ease; &:hover { color: $secondary-color; } }
+      .social-links a { color: $primary-color; transition: color 0.3s ease; &:hover { color: $accent-color; } }
     }
   }
 
   .timeline-section {
-    padding: $spacing-4 $spacing-2;
+    padding: 3rem 1.5rem;
 
     .timeline-item {
       display: flex;
-      gap: $spacing-2;
+      gap: 1.5rem;
       flex-wrap: wrap;
 
-      .timeline-year { color: $primary-color-light; font-weight: 700; font-size: 1.5rem; }
-      .timeline-content h3 { color: $primary-color-light; margin-bottom: $spacing-half; }
+      .timeline-year { color: $primary-color; font-weight: 700; font-size: 1.5rem; }
+      .timeline-content h3 { color: $primary-color; margin-bottom: 0.75rem; }
       .timeline-content p { color: $text-secondary; }
     }
   }
 
   .cta-section {
-    padding: $spacing-6 $spacing-2;
+    padding: 4rem 1.5rem;
     text-align: center;
-    background-color: $section-bg-light;
+    background-color: $section-bg;
 
-    h2 { color: $primary-color-light; margin-bottom: $spacing-half; }
-    p { color: $text-secondary; margin-bottom: $spacing-2; }
+    h2 { color: $primary-color; margin-bottom: 0.75rem; }
+    p { color: $text-secondary; margin-bottom: 1.5rem; }
 
-    .cta-buttons .btn-primary { background-color: $primary-color-light; color: $btn-text-light; }
-    .cta-buttons .btn-outline { border-color: $primary-color-light; color: $primary-color-light; }
+    .cta-buttons .btn-primary { background-color: $primary-color; color: $text-light; }
+    .cta-buttons .btn-outline { border-color: $primary-color; color: $primary-color; }
   }
 
   // Dark Mode
   :host-context(.dark-mode) {
-    background-color: $bg-dark;
-    color: $text-dark;
+    background-color: $dark-bg;
+    color: $text-light;
 
     .hero-section,
     .story-section,
@@ -146,15 +146,15 @@
     .cta-section {
       background-color: $section-bg-dark;
 
-      h1, h2, h3 { color: $primary-color-dark; }
-      p, .lead, .section-subtitle { color: $text-dark; }
+      h1, h2, h3 { color: $primary-dark; }
+      p, .lead, .section-subtitle { color: $text-light; }
 
-      .divider { background-color: $primary-color-dark; }
-      .stat-number, .team-card h3 { color: $primary-color-dark; }
+      .divider { background-color: $primary-dark; }
+      .stat-number, .team-card h3 { color: $primary-dark; }
       .team-card, .stat-item { background-color: $card-bg-dark; }
-      .social-links a { color: $primary-color-dark; &:hover { color: $secondary-dark; } }
-      .cta-buttons .btn-primary { background-color: $primary-color-dark; color: $btn-text-dark; }
-      .cta-buttons .btn-outline { border-color: $primary-color-dark; color: $primary-color-dark; }
+      .social-links a { color: $primary-dark; &:hover { color: $accent-dark; } }
+      .cta-buttons .btn-primary { background-color: $primary-dark; color: $text-light; }
+      .cta-buttons .btn-outline { border-color: $primary-dark; color: $primary-dark; }
     }
   }
 }

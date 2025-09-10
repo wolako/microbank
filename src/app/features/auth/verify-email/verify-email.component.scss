@@ -1,5 +1,122 @@
+@import '../../../../assets/variables';
+
 .verify-email {
-    max-width: 500px;
-    margin: 60px auto;
-    text-align: center;
+  max-width: 480px;
+  margin: 4rem auto;
+  padding: 2.5rem;
+  background: $light-card-bg;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  text-align: center;
+  font-family: $font-base;
+
+  h2 {
+    font-size: $h2-font-size;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: $primary-color;
+  }
+
+  p {
+    font-size: $p-font-size;
+    line-height: $p-line-height;
+    color: $text-secondary;
+    margin-bottom: 1.5rem;
+  }
+
+  .alert {
+    border-radius: $border-radius;
+    font-size: 0.95rem;
+  }
+
+  button.btn {
+    font-weight: 500;
+    padding: 0.7rem 1.2rem;
+    border-radius: $border-radius;
+    transition: $transition;
+
+    &.btn-outline-primary {
+      border: 1px solid $primary-color;
+      color: $primary-color;
+      background: transparent;
+
+      &:hover:not(:disabled) {
+        background: $primary-color;
+        color: $text-light;
+      }
+
+      &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  a.btn-link {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: $primary-color;
+    text-decoration: none;
+    transition: color $transition-speed;
+
+    &:hover {
+      text-decoration: underline;
+      color: $primary-light;
+    }
+  }
+}
+
+/* 🌙 Dark Mode */
+body.dark-mode {
+  .verify-email {
+    background: $dark-card-bg;
+    color: $text-light;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+
+    h2 {
+      color: $primary-light;
+    }
+
+    p {
+      color: $text-light;
+    }
+
+    button.btn-outline-primary {
+      border-color: $primary-light;
+      color: $primary-light;
+
+      &:hover:not(:disabled) {
+        background: $primary-light;
+        color: $text-light;
+      }
+    }
+
+    a.btn-link {
+      color: $primary-light;
+
+      &:hover {
+        color: lighten($primary-light, 8%);
+      }
+    }
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 576px) {
+  .verify-email {
+    margin: 2rem 1rem;
+    padding: 1.8rem;
+
+    h2 {
+      font-size: $h2-font-size-md;
+    }
+
+    p {
+      font-size: 1rem;
+    }
+
+    button.btn {
+      width: 100%;
+    }
+  }
 }
