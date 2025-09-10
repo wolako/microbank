@@ -5,38 +5,38 @@ $light-bg: #ffffff;           // Fond global clair
 $light-card-bg: #fefefe;      // Fond des cards, sections
 $text-primary: #0b1a3f;       // Titres (bleu nuit)
 $text-secondary: #000000;     // Paragraphes et texte secondaire
-$text-light: #ffffff;          // Texte sur boutons / CTA clair
+$text-light: #ffffff;         // Texte sur boutons / CTA clair
 
 // ================================
 // Couleurs mode sombre
 // ================================
-$dark-bg: #0b1a3f;             // Fond global sombre
-$dark-card-bg: #1f2b44;        // Fond des cards, sections sombres
-$primary-dark: #0b1a3f;        // Couleur principale sombre
-$secondary-dark: #1f2b44;      // Couleur secondaire sombre
-$primary-light: #3c5a9a;       // Nuance plus claire pour hover / dégradé
+$dark-bg: #0b1a3f;            // Fond global sombre
+$dark-card-bg: #1f2b44;       // Fond des cards, sections sombres
+$primary-dark: #0b1a3f;       // Couleur principale sombre
+$secondary-dark: #1f2b44;     // Couleur secondaire sombre
+$primary-light: #3c5a9a;      // Nuance plus claire pour hover / dégradé
 
 // ================================
 // Couleurs boutons et erreurs
 // ================================
-$primary-color: #0b1a3f;       // Couleur principale (clair)
-$secondary-color: #1f2b44;     // Couleur secondaire (clair)
-$error-color: #dc3545;         // Rouge danger
+$primary-color: #0b1a3f;      // Couleur principale (clair)
+$secondary-color: #1f2b44;    // Couleur secondaire (clair)
+$error-color: #dc3545;        // Rouge danger
 
 // ================================
 // Bordures et arrondis
 // ================================
-$border-radius: 0.5rem;        // Arrondi général des cards, boutons, highlight-box
-$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Ombre légère pour les illustrations et cartes
+$border-radius: 0.5rem;       // Arrondi général
+$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Ombre légère
 
 // ================================
 // Transitions
 // ================================
-$transition: all 0.3s ease;    // Transition globale pour background, color, border
-$transition-speed: 0.3s;       // Vitesse standard pour animations CSS
+$transition: all 0.3s ease;
+$transition-speed: 0.3s;
 
 // ================================
-// Gradients (CTA / background hover)
+// Gradients
 // ================================
 $gradient-light: linear-gradient(135deg, $primary-color, $primary-light);
 $gradient-dark: linear-gradient(135deg, $primary-dark, $secondary-dark);
@@ -44,14 +44,14 @@ $gradient-dark: linear-gradient(135deg, $primary-dark, $secondary-dark);
 // ================================
 // Icones et texte auxiliaire
 // ================================
-$text-hover-light: $primary-light;   // Couleur hover pour liens clair
-$text-hover-dark: $primary-light;    // Couleur hover pour liens sombre
+$text-hover-light: $primary-light;
+$text-hover-dark: $primary-light;
 
 // ================================
 // Spacing et paddings globaux
 // ================================
-$padding-section: 3rem 1.5rem;      // Padding sections / service-detail
-$padding-section-md: 2rem 1rem;     // Padding pour écrans <768px
+$padding-section: 3rem 1.5rem;
+$padding-section-md: 2rem 1rem;
 
 // ================================
 // Typography
@@ -64,12 +64,31 @@ $p-font-size: 1.1rem;
 $p-line-height: 1.7;
 
 // ================================
-// Variables manquantes ajoutées
+// Variables ajoutées pour compatibilité
 // ================================
-$z-header: 1000;                   // header toujours au-dessus
-$section-bg: $light-card-bg;       // fond par défaut des sections
+$z-header: 1000;                   // header au-dessus
+$section-bg: $light-card-bg;       // fond par défaut
 $text-dark: #212529;               // texte sombre standard Bootstrap
 $color-dark-section-text: #f5f5f5; // texte dans les sections sombres
 $border-color: #dee2e6;            // gris clair pour bordures
-$spacing-unit: 1rem;               // unité de spacing globale
-$font-primary: 'Segoe UI', sans-serif; // police par défaut
+$spacing-unit: 1rem;               // unité de spacing
+$spacing-half: 0.5rem;             // moitié du spacing
+$spacing-quarter: 0.25rem;         // quart du spacing
+$spacing-2: 2rem;                  // double spacing
+$card-bg: $light-card-bg;          // alias pour compatibilité
+$font-primary: 'Segoe UI', sans-serif;
+
+// ================================
+// Mixins
+// ================================
+@mixin text-color($primary, $secondary) {
+  color: $primary;
+
+  a {
+    color: $secondary;
+
+    &:hover {
+      color: lighten($secondary, 10%);
+    }
+  }
+}
