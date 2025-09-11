@@ -1,148 +1,112 @@
 @import '../../../../assets/variables';
 
-// ================================
-// Page container
-// ================================
+
 .pending-approval-container {
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: $spacing-unit * 2;
-  background: linear-gradient(135deg, lighten($primary-color, 30%), $light-bg);
-  transition: background 0.35s ease, color 0.35s ease;
+  padding: $padding-section;
+  font-family: $font-base;
+  background: $light-bg;
+  color: $text-primary;
+  transition: $transition;
 
-  :host-context(.dark-mode) & {
-    background: linear-gradient(135deg, darken($dark-bg, 5%), $dark-bg);
-  }
-
-  // ================================
-  // Card principale
-  // ================================
   .card {
+    background: $light-card-bg;
+    border-radius: $border-radius;
+    padding: 2.5rem;
     max-width: 520px;
     width: 100%;
-    background-color: $light-card-bg;
-    border-radius: $border-radius * 1.5;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
-    padding: $spacing-unit * 2;
     text-align: center;
-    animation: fadeInUp 0.6s ease both;
+    box-shadow: $box-shadow;
 
-    :host-context(.dark-mode) & {
-      background-color: $dark-card-bg;
-      color: $color-dark-section-text;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
-    }
-
-    // ================================
-    // Illustration
-    // ================================
     .illustration {
       width: 120px;
       height: 120px;
-      margin: 0 auto $spacing-unit auto;
-      border-radius: 50%;
-      background: rgba($primary-color, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      svg, img {
-        width: 60%;
-        height: 60%;
-      }
-
-      :host-context(.dark-mode) & {
-        background: rgba($primary-color, 0.2);
-      }
+      margin: 0 auto 1.5rem;
+      background: url('/assets/images/pending.svg') no-repeat center;
+      background-size: contain;
     }
 
-    // ================================
-    // Texte
-    // ================================
     h2 {
-      font-size: 1.8rem;
+      font-size: $h2-font-size;
       font-weight: 700;
-      margin-bottom: $spacing-half;
+      margin-bottom: $spacing-unit;
       color: $text-primary;
-
-      :host-context(.dark-mode) & {
-        color: $color-dark-section-text;
-      }
     }
 
     p {
-      font-size: 1rem;
-      margin-bottom: $spacing-unit * 1.5;
+      font-size: $p-font-size;
+      line-height: $p-line-height;
+      margin-bottom: $spacing-2;
       color: $text-secondary;
-      line-height: $line-height-base;
 
-      :host-context(.dark-mode) & {
-        color: lighten($color-dark-section-text, 10%);
+      strong {
+        font-weight: 600;
+        color: $primary-color;
       }
     }
 
-    // ================================
-    // Bouton CTA
-    // ================================
     .btn-cta {
       display: inline-block;
-      padding: $spacing-half $spacing-unit * 2;
+      padding: $spacing-half $spacing-unit * 1.5;
       border-radius: $border-radius;
       font-weight: 600;
-      background-color: $primary-color;
-      color: $text-light;
       text-decoration: none;
-      transition: background-color 0.25s ease, transform 0.15s ease;
+      background: $gradient-light;
+      color: $text-light;
+      transition: $transition;
 
       &:hover {
-        background-color: darken($primary-color, 8%);
-        transform: translateY(-2px);
-      }
-
-      &:active {
-        transform: translateY(0);
-      }
-
-      :host-context(.dark-mode) & {
-        background-color: lighten($primary-color, 5%);
-        color: $text-light;
-
-        &:hover {
-          background-color: lighten($primary-color, 10%);
-        }
+        background: darken($primary-color, 5%);
       }
     }
   }
 }
 
-// ================================
-// Animations
-// ================================
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+/* 🌙 Dark mode */
+:host-context(.dark-mode) .pending-approval-container {
+  background: $dark-bg;
+  color: $color-dark-section-text;
+
+  .card {
+    background: $dark-card-bg;
+    color: $color-dark-section-text;
+
+    h2 {
+      color: $color-dark-section-text;
+    }
+
+    p {
+      color: lighten($color-dark-section-text, 12%);
+    }
+
+    .btn-cta {
+      background: $gradient-dark;
+      color: $text-light;
+
+      &:hover {
+        background: lighten($primary-light, 5%);
+      }
+    }
   }
 }
 
-// ================================
-// Responsive
-// ================================
+/* 📱 Responsive */
 @include respond-md {
   .pending-approval-container {
-    padding: $spacing-unit * 1.5;
+    padding: $padding-section-md;
 
     .card {
-      padding: $spacing-unit * 1.5;
+      padding: 2rem;
 
       h2 {
-        font-size: 1.6rem;
+        font-size: $h2-font-size-md;
+      }
+
+      p {
+        font-size: 1rem;
       }
     }
   }
@@ -150,17 +114,20 @@
 
 @include respond-sm {
   .pending-approval-container {
-    padding: $spacing-unit;
-
     .card {
-      padding: $spacing-unit;
+      padding: 1.5rem;
+
+      .illustration {
+        width: 90px;
+        height: 90px;
+      }
 
       h2 {
         font-size: 1.4rem;
       }
 
       p {
-        font-size: 0.9rem;
+        font-size: 0.95rem;
       }
     }
   }

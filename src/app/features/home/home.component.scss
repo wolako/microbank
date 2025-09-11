@@ -7,57 +7,98 @@
   color: $text-primary;
   transition: background-color 0.4s ease, color 0.4s ease;
 
-  // Hero Section
+  /* ======================
+     Hero Section
+  ====================== */
   .hero-section {
     display: flex;
     align-items: center;
     justify-content: space-between;
     padding: 3rem 1.5rem;
     background-color: $light-card-bg;
-    border-bottom: 1px solid rgba(0,0,0,0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
     transition: background-color 0.4s ease, color 0.4s ease;
 
-    @media (max-width: 768px) { flex-direction: column; text-align: center; }
+    @media (max-width: 768px) {
+      flex-direction: column;
+      text-align: center;
+    }
 
     .hero-content {
       max-width: 600px;
       flex: 1;
 
-      .hero-title { 
-        font-size: 2.5rem; font-weight: 700; margin-bottom: 0.75rem; 
-        color: $primary-color; transition: color 0.4s ease;
+      .hero-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+        color: $primary-color;
+        transition: color 0.4s ease;
+
         @media (max-width: 768px) { font-size: 2rem; }
         @media (max-width: 576px) { font-size: 1.6rem; }
       }
 
-      .hero-subtitle { 
-        font-size: 1.2rem; margin-bottom: 1.5rem; 
-        color: $text-secondary; transition: color 0.4s ease;
+      .hero-subtitle {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        color: $text-secondary;
+        transition: color 0.4s ease;
+
         @media (max-width: 768px) { font-size: 1rem; }
       }
 
       .hero-actions {
-        display: flex; gap: 0.75rem; flex-wrap: wrap; justify-content: flex-start;
+        display: flex;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        justify-content: flex-start;
 
         @media (max-width: 768px) { justify-content: center; }
 
-        .btn { padding: 0.75rem 1.5rem; font-weight: 600; border-radius: $border-radius; transition: all 0.3s ease; }
-        .btn-primary { background-color: $primary-color; color: $text-light; }
-        .btn-outline { border: 1px solid $primary-color; color: $primary-color; background: transparent; }
-        .btn-outline-warning { border: 1px solid $error-color; color: $error-color; background: transparent; }
+        .btn {
+          padding: 0.75rem 1.5rem;
+          font-weight: 600;
+          border-radius: $border-radius;
+          transition: all 0.3s ease;
+        }
 
-        .btn:hover { transform: translateY(-2px); }
+        .btn-primary {
+          background-color: $primary-color;
+          color: $text-light;
+        }
+
+        .btn-outline {
+          border: 1px solid $primary-color;
+          color: $primary-color;
+          background: transparent;
+        }
+
+        .btn-outline-warning {
+          border: 1px solid $error-color;
+          color: $error-color;
+          background: transparent;
+        }
+
+        .btn:hover {
+          transform: translateY(-2px);
+        }
       }
     }
   }
 
-  // Services Section
+  /* ======================
+     Services Section
+  ====================== */
   .services-section {
     padding: 3rem 1.5rem;
     background-color: $light-card-bg;
-    transition: background-color 0.4s ease;
+    transition: background-color 0.4s ease, color 0.4s ease;
 
-    .section-header { text-align: center; margin-bottom: 2.25rem;
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.25rem;
+
       h2 { color: $primary-color; transition: color 0.4s ease; }
       p { color: $text-secondary; transition: color 0.4s ease; }
     }
@@ -66,57 +107,127 @@
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 1.5rem;
+
       @media (max-width: 992px) { grid-template-columns: repeat(2, 1fr); }
       @media (max-width: 768px) { grid-template-columns: 1fr; }
     }
 
     .service-card {
-      text-align: center; padding: 1.5rem; border-radius: $border-radius;
-      background-color: $light-card-bg; box-shadow: $box-shadow; transition: all 0.4s ease;
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: $border-radius;
+      background-color: $light-card-bg;
+      box-shadow: $box-shadow;
+      transition: all 0.4s ease;
 
-      &:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+      &:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
 
-      .service-icon { font-size: 2.5rem; margin-bottom: 0.75rem; color: $primary-color; transition: color 0.4s ease; }
-      h3 { margin-bottom: 0.75rem; color: $text-primary; transition: color 0.4s ease; }
-      p { font-size: 0.95rem; margin-bottom: 0.75rem; color: $text-secondary; transition: color 0.4s ease; }
-      .service-link { @extend .btn-outline; }
+      .service-icon {
+        font-size: 2.5rem;
+        margin-bottom: 0.75rem;
+        color: $primary-color;
+        transition: color 0.4s ease;
+      }
+
+      h3 {
+        margin-bottom: 0.75rem;
+        color: $text-primary;
+        transition: color 0.4s ease;
+      }
+
+      p {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+        color: $text-secondary;
+        transition: color 0.4s ease;
+      }
+
+      .service-link {
+        @extend .btn-outline;
+      }
     }
   }
 
-  // Calculator Section
+  /* ======================
+     Calculator Section
+  ====================== */
   .calculator-section {
-    text-align: center; margin-bottom: 2.25rem; padding: 3rem 1.5rem;
-    h2 { color: $primary-color; transition: color 0.4s ease; }
+    text-align: center;
+    margin-bottom: 2.25rem;
+    padding: 3rem 1.5rem;
+
+    h2 {
+      color: $primary-color;
+      transition: color 0.4s ease;
+    }
   }
 
-  // Testimonials Section
+  /* ======================
+     Testimonials Section
+  ====================== */
   .testimonials-section {
     padding: 3rem 1.5rem;
 
-    .section-header { text-align: center; margin-bottom: 2.25rem;
+    .section-header {
+      text-align: center;
+      margin-bottom: 2.25rem;
+
       h2 { color: $primary-color; transition: color 0.4s ease; }
       p { color: $text-secondary; transition: color 0.4s ease; }
     }
 
     .testimonials-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
     }
 
     .testimonial-card {
-      text-align: center; padding: 1.5rem; border-radius: $border-radius; background-color: $light-card-bg; box-shadow: $box-shadow; transition: all 0.4s ease;
+      text-align: center;
+      padding: 1.5rem;
+      border-radius: $border-radius;
+      background-color: $light-card-bg;
+      box-shadow: $box-shadow;
+      transition: all 0.4s ease;
 
-      &:hover { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+      &:hover {
+        transform: translateY(-5px) scale(1.02);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
 
-      .testimonial-content p { font-size: 0.95rem; margin-bottom: 0.75rem; color: $text-secondary; transition: color 0.4s ease; }
-      .testimonial-author { display: flex; align-items: center; justify-content: center; gap: 0.75rem; flex-wrap: wrap;
-        img { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; }
+      .testimonial-content p {
+        font-size: 0.95rem;
+        margin-bottom: 0.75rem;
+        color: $text-secondary;
+        transition: color 0.4s ease;
+      }
+
+      .testimonial-author {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
         strong { color: $text-primary; transition: color 0.4s ease; }
         span { color: $text-secondary; transition: color 0.4s ease; }
       }
     }
   }
 
-  // Dark Mode
+  /* ======================
+     Dark Mode
+  ====================== */
   :host-context(.dark-mode) {
     background-color: $dark-bg;
     color: $text-light;
@@ -126,19 +237,47 @@
     .calculator-section,
     .testimonials-section {
       background-color: $dark-card-bg;
+      border-color: rgba(255, 255, 255, 0.1);
 
-      .hero-title { color: $primary-dark; }
-      .hero-subtitle { color: $text-light; }
-      h2, h3 { color: $primary-dark; }
-      p { color: $text-light; }
+      .hero-title,
+      h2,
+      h3 {
+        color: $primary-dark;
+      }
 
-      .service-card, .testimonial-card { background-color: $dark-card-bg; }
-      .service-icon, .testimonial-author strong { color: $primary-dark; }
-      .testimonial-author span { color: $text-light; }
+      .hero-subtitle,
+      p {
+        color: $text-light;
+      }
 
-      .hero-actions .btn-primary { background-color: $primary-dark; color: $text-light; }
-      .hero-actions .btn-outline { border-color: $primary-dark; color: $primary-dark; }
-      .hero-actions .btn-outline-warning { border-color: $error-color; color: $error-color; }
+      .service-card,
+      .testimonial-card {
+        background-color: $dark-card-bg;
+      }
+
+      .service-icon,
+      .testimonial-author strong {
+        color: $primary-dark;
+      }
+
+      .testimonial-author span {
+        color: $text-light;
+      }
+
+      .hero-actions {
+        .btn-primary {
+          background-color: $primary-dark;
+          color: $text-light;
+        }
+        .btn-outline {
+          border-color: $primary-dark;
+          color: $primary-dark;
+        }
+        .btn-outline-warning {
+          border-color: $error-color;
+          color: $error-color;
+        }
+      }
     }
   }
 }
