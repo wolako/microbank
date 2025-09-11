@@ -19,229 +19,132 @@ html {
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  line-height: 1.6;
+  font-family: $font-base;
+  line-height: $line-height-base;
   margin: 0;
   padding: 0;
+  background-color: $bg-main;
+  color: $text-secondary;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 // ================================
-// Mode clair
+// Titres et liens
 // ================================
-body.light-mode {
-  background-color: $light-bg;
+h1, h2, h3, h4, h5, h6 {
+  color: $text-primary;
+  font-weight: 600;
+}
+
+a {
+  color: $primary-color;
+  text-decoration: none;
+  transition: $transition;
+
+  &:hover {
+    color: $hover-color;
+  }
+}
+
+// ================================
+// Cards, sections et containers
+// ================================
+.card, .container, .navbar, section, .service-detail, .highlight-box, .cta-box, .modal-content {
+  background-color: $bg-card;
   color: $text-secondary;
+  border-radius: $border-radius;
+  box-shadow: $box-shadow;
+  transition: all 0.3s ease;
+  padding: $spacing-unit;
+}
 
-  h1, h2, h3, h4, h5, h6 {
-    color: $text-primary;
-  }
+// ================================
+// Boutons
+// ================================
+.btn {
+  border-radius: $border-radius;
+  transition: $transition;
 
-  a {
-    color: $primary-color;
-    text-decoration: none;
-
-    &:hover {
-      color: $primary-light;
-    }
-  }
-
-  .card, .container, .navbar, section, .service-detail, .highlight-box, .cta-box {
-    background-color: $light-card-bg;
-    color: $text-secondary;
-    border-color: transparent;
-    transition: all 0.3s ease;
-  }
-
-  .btn-primary {
+  &-primary {
     background-color: $primary-color;
     border-color: $primary-color;
     color: $text-light;
 
     &:hover {
-      background-color: $primary-light;
-      border-color: $primary-light;
+      background-color: $hover-color;
+      border-color: $hover-color;
     }
   }
 
-  .btn-outline {
-    border: 2px solid $text-secondary;
-    color: $text-secondary;
-    background: transparent;
+  &-secondary {
+    background-color: $bg-card;
+    border: 1px solid $primary-color;
+    color: $primary-color;
 
     &:hover {
-      background: $text-secondary;
-      color: $primary-color;
+      background-color: $primary-color;
+      color: $text-light;
     }
   }
 
-  .btn-outline-danger {
-    border: 1px solid $error-color;
-    color: $error-color;
-    background: transparent;
+  &-success {
+    background-color: $secondary-color;
+    color: $text-light;
 
     &:hover {
-      background: rgba($error-color, 0.1);
-      color: lighten($error-color, 10%);
-      border-color: lighten($error-color, 10%);
+      background-color: darken($secondary-color, 10%);
+    }
+  }
+
+  &-danger {
+    background-color: $error-color;
+    color: $text-light;
+
+    &:hover {
+      background-color: darken($error-color, 10%);
     }
   }
 }
 
 // ================================
-// Mode sombre
+// Inputs et formulaires
 // ================================
-body.dark-mode {
-  background-color: $dark-bg;
-  color: $text-light;
-
-  h1, h2, h3, h4, h5, h6 {
-    color: $text-light;
-  }
-
-  a {
-    color: $secondary-dark;
-    text-decoration: none;
-
-    &:hover {
-      color: $primary-light;
-    }
-  }
-
-  .card, .container, .navbar, section, .service-detail, .highlight-box, .cta-box {
-    background-color: $dark-card-bg;
-    color: $text-light;
-    border-color: $primary-dark;
-    transition: all 0.3s ease;
-  }
-
-  .btn-primary {
-    background-color: $primary-dark;
-    border-color: $primary-dark;
-    color: $text-light;
-
-    &:hover {
-      background-color: $secondary-dark;
-      border-color: $secondary-dark;
-    }
-  }
-
-  .btn-outline {
-    border: 2px solid $text-light;
-    color: $text-light;
-    background: transparent;
-
-    &:hover {
-      background: $text-light;
-      color: $primary-dark;
-    }
-  }
-
-  .btn-outline-danger {
-    border: 1px solid $error-color;
-    color: $error-color;
-    background: transparent;
-
-    &:hover {
-      background: rgba($error-color, 0.1);
-      color: lighten($error-color, 10%);
-      border-color: lighten($error-color, 10%);
-    }
-  }
-}
-
-// ================================
-// Sections et Service-Detail
-// ================================
-section,
-.service-detail {
-  padding: 3rem 1.5rem;
+input.form-control,
+select.form-control,
+textarea.form-control {
   border-radius: $border-radius;
-  transition: all 0.3s ease;
+  border: 1px solid lighten($primary-color, 50%);
+  padding: $spacing-half $spacing-unit;
+  color: $text-secondary;
+  transition: $transition;
 
-  h2 {
-    font-size: 2.2rem;
-    margin-bottom: 1.2rem;
+  &:focus {
+    border-color: $primary-color;
+    outline: none;
+    box-shadow: 0 0 0 0.2rem rgba(11, 26, 63, 0.25);
   }
+}
 
-  p {
-    font-size: 1.1rem;
-    line-height: 1.7;
-    margin-bottom: 1rem;
-  }
+// ================================
+// Nav tabs
+// ================================
+.nav-tabs {
+  border-bottom: 2px solid lighten($primary-color, 50%);
 
-  ul {
-    list-style: none;
-    padding-left: 0;
+  .nav-link {
+    color: $text-secondary;
+    font-weight: 500;
+    transition: $transition;
 
-    li::before {
-      content: '✔';
-      margin-right: 0.5rem;
-    }
-  }
-
-  .highlight-box {
-    padding: 1rem 1.2rem;
-    border-left: 4px solid $primary-color;
-    border-radius: $border-radius;
-    margin: 2rem 0;
-  }
-
-  .loan-illustration {
-    width: 100%;
-    max-height: 300px;
-    object-fit: cover;
-    border-radius: $border-radius;
-    margin: 2rem 0;
-    box-shadow: $box-shadow;
-  }
-
-  .cta-box {
-    padding: 2rem;
-    border-radius: $border-radius;
-    text-align: center;
-    margin-top: 3rem;
-    background: linear-gradient(135deg, $primary-color, $primary-light);
-    color: $text-light;
-
-    h4 {
-      font-size: 1.6rem;
-      margin-bottom: 0.8rem;
-    }
-
-    p {
-      font-size: 1.1rem;
-      margin-bottom: 1.2rem;
-      color: lighten($text-light, 20%);
-    }
-
-    a {
-      display: inline-block;
-      background: $text-light;
+    &.active {
       color: $primary-color;
-      padding: 0.7rem 1.5rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
-      text-decoration: none;
-      transition: background 0.3s;
+      font-weight: 600;
+      border-color: $primary-color $primary-color $bg-main;
+    }
 
-      &:hover {
-        background: lighten($primary-color, 60%);
-      }
+    &:hover {
+      color: $hover-color;
     }
   }
 }
 
-// ================================
-// Responsiveness
-// ================================
-@media (max-width: 768px) {
-  section,
-  .service-detail {
-    padding: 2rem 1rem;
-
-    h2 {
-      font-size: 1.8rem;
-    }
-  }
-}

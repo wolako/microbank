@@ -1,11 +1,12 @@
 @import '../../../../assets/variables';
 
 .accounts-container {
+  display: flex;
+  flex-direction: column;
   padding: $padding-section;
   font-family: $font-base;
-  background-color: $light-bg;
+  background-color: $bg-main;
   color: $text-secondary;
-  transition: $transition;
 
   h2 {
     font-size: $h2-font-size;
@@ -13,240 +14,91 @@
     margin-bottom: 2rem;
   }
 
-  // Tabs navigation
+  // Wrapper pour sidebar + contenu
+  .row {
+    display: flex;
+    flex-wrap: nowrap;
+  }
+
+  // Onglets
   .nav-tabs {
-    border-bottom: 2px solid $border-color;
+    flex: 0 0 200px; // largeur fixe de la sidebar
+    flex-direction: column;
+    border-bottom: none;
+    border-right: 2px solid lighten($bg-card, 20%);
+    margin-right: 2rem;
+
+    .nav-item {
+      width: 100%;
+    }
 
     .nav-link {
+      display: block;
       color: $text-secondary;
       font-weight: 500;
+      border: 1px solid transparent;
+      border-radius: $border-radius;
+      margin-bottom: $spacing-half;
       transition: $transition;
 
       &.active {
-        color: $primary-color;
-        border-color: $primary-color $primary-color $light-bg;
-        font-weight: 600;
-      }
-
-      &:hover {
-        color: $primary-light;
-      }
-    }
-  }
-
-  // Inputs & selects
-  input.form-control,
-  select.form-control {
-    border: 1px solid $border-color;
-    border-radius: $border-radius;
-    padding: $spacing-half $spacing-unit;
-    background-color: $card-bg;
-    color: $text-secondary;
-    transition: $transition;
-
-    &:focus {
-      border-color: $primary-color;
-      box-shadow: 0 0 0 0.2rem rgba(11, 26, 63, 0.25);
-      outline: none;
-    }
-
-    &:read-only {
-      background-color: $light-card-bg;
-      color: $text-secondary;
-    }
-  }
-
-  label.form-label {
-    font-weight: 500;
-    color: $text-primary;
-  }
-
-  // Buttons
-  .btn {
-    border-radius: $border-radius;
-    transition: $transition;
-
-    &-primary {
-      background-color: $primary-color;
-      border-color: $primary-color;
-      color: $text-light;
-
-      &:hover {
-        background-color: $primary-light;
-        border-color: $primary-light;
-      }
-    }
-
-    &-secondary {
-      background-color: transparent;
-      border-color: $border-color;
-      color: $text-secondary;
-
-      &:hover {
-        background-color: $light-card-bg;
-      }
-    }
-
-    &-success {
-      background-color: darken($primary-color, 10%);
-      border-color: darken($primary-color, 10%);
-      color: $text-light;
-
-      &:hover {
+        color: #fff;
         background-color: $primary-color;
         border-color: $primary-color;
       }
-    }
-  }
 
-  // Row & flex
-  .row {
-    margin-bottom: $spacing-2;
-  }
-
-  .d-flex.gap-2 {
-    margin-top: $spacing-unit;
-  }
-
-  // Listes de documents
-  .list-group-item {
-    border: 1px solid $border-color;
-    border-radius: $border-radius;
-    margin-bottom: $spacing-half;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    transition: $transition;
-
-    &:hover {
-      background-color: $light-card-bg;
-    }
-
-    .btn {
-      padding: 0.25rem 0.5rem;
-      font-size: 0.85rem;
-    }
-  }
-
-  // Sécurité / 2FA
-  .form-check-input {
-    cursor: pointer;
-  }
-
-  .border.rounded.p-3 {
-    border-color: $border-color;
-    background-color: $card-bg;
-    box-shadow: $box-shadow;
-    border-radius: $border-radius;
-  }
-
-  // Toaster / notifications
-  app-toast {
-    position: fixed;
-    top: $spacing-unit;
-    right: $spacing-unit;
-    z-index: $z-header;
-  }
-
-  // ===================== Mode sombre =====================
-  &.dark-mode {
-    background-color: $dark-bg;
-    color: $color-dark-section-text;
-
-    h2 {
-      color: $text-light;
-    }
-
-    .nav-tabs {
-      border-bottom: 2px solid $secondary-dark;
-
-      .nav-link {
-        color: $text-light;
-
-        &.active {
-          color: $primary-light;
-          border-color: $primary-light $primary-light $dark-card-bg;
-        }
-
-        &:hover {
-          color: $primary-light;
-        }
+      &:hover {
+        background-color: lighten($primary-color, 30%);
+        color: #fff;
       }
     }
+  }
+
+  // Contenu des tabs
+  [ngIf] {
+    flex: 1;
+    background-color: $bg-card;
+    border-radius: $border-radius;
+    padding: $spacing-2;
+    box-shadow: $box-shadow;
+    transition: $transition;
 
     input.form-control,
     select.form-control {
-      background-color: $dark-card-bg;
-      color: $text-light;
-      border: 1px solid $secondary-dark;
+      border-radius: $border-radius;
+      border: 1px solid lighten($bg-card, 20%);
+      padding: $spacing-half $spacing-unit;
 
       &:focus {
-        border-color: $primary-light;
-        box-shadow: 0 0 0 0.2rem rgba(60, 90, 154, 0.25);
+        border-color: $primary-color;
+        box-shadow: 0 0 0 0.2rem rgba(11, 26, 63, 0.25);
       }
 
       &:read-only {
-        background-color: $dark-card-bg;
-        color: $text-light;
+        background-color: lighten($bg-card, 5%);
       }
     }
 
-    .btn {
-      &-primary {
-        background-color: $primary-dark;
-        border-color: $primary-dark;
-
-        &:hover {
-          background-color: $primary-light;
-          border-color: $primary-light;
-        }
-      }
-
-      &-secondary {
-        border-color: $secondary-dark;
-        color: $text-light;
-
-        &:hover {
-          background-color: $dark-card-bg;
-        }
-      }
-
-      &-success {
-        background-color: $primary-light;
-        border-color: $primary-light;
-        color: $text-light;
-
-        &:hover {
-          background-color: $primary-dark;
-          border-color: $primary-dark;
-        }
-      }
-    }
-
-    .list-group-item {
-      border-color: $secondary-dark;
-
-      &:hover {
-        background-color: $dark-card-bg;
-      }
-    }
-
-    .border.rounded.p-3 {
-      background-color: $dark-card-bg;
-      border-color: $secondary-dark;
+    label.form-label {
+      font-weight: 500;
+      color: $text-primary;
     }
   }
 
-  // ===================== Responsive =====================
   @include respond-md {
-    padding: $padding-section-md;
-
-    h2 {
-      font-size: $h2-font-size-md;
+    .row {
+      flex-direction: column;
     }
 
-    .d-flex.gap-2 {
-      flex-direction: column;
+    .nav-tabs {
+      flex-direction: row;
+      border-right: none;
+      border-bottom: 2px solid lighten($bg-card, 20%);
+      margin-bottom: 1rem;
+
+      .nav-item {
+        margin-right: 0.5rem;
+      }
     }
   }
 }

@@ -1,61 +1,34 @@
 // ================================
-// Couleurs mode clair
+// Couleurs
 // ================================
-$light-bg: #ffffff;           // Fond global clair
-$light-card-bg: #fefefe;      // Fond des cards, sections
-$text-primary: #0b1a3f;       // Titres (bleu nuit)
-$text-secondary: #000000;     // Paragraphes et texte secondaire
-$text-light: #ffffff;         // Texte sur boutons / CTA clair
+$bg-main: #ffffff;            // Fond principal blanc
+$bg-card: #fefefe;            // Fond des cartes / sections
+$text-primary: #0b1a3f;       // Bleu nuit pour titres et menus
+$text-secondary: #000000;     // Texte noir standard
+$logo-gradient: linear-gradient(135deg, #0b1a3f, #6a1b9a); // Dégradé bleu nuit → violet
 
-// ================================
-// Couleurs mode sombre
-// ================================
-$dark-bg: #0b1a3f;            // Fond global sombre
-$dark-card-bg: #1f2b44;       // Fond des cards, sections sombres
-$primary-dark: #0b1a3f;       // Couleur principale sombre
-$secondary-dark: #1f2b44;     // Couleur secondaire sombre
-$primary-light: #3c5a9a;      // Nuance plus claire pour hover / dégradé
-
-// ================================
-// Couleurs boutons et erreurs
-// ================================
-$primary-color: #0b1a3f;      // Couleur principale (clair)
-$secondary-color: #1f2b44;    // Couleur secondaire (clair)
+$primary-color: #0b1a3f;      // Couleur principale bleu nuit (boutons, accents)
+$secondary-color: #6a1b9a;    // Accent violet
+$hover-color: #3c5a9a;        // Bleu clair pour hover
 $error-color: #dc3545;        // Rouge danger
 
 // ================================
 // Bordures et arrondis
 // ================================
-$border-radius: 0.5rem;       // Arrondi général
-$box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); // Ombre légère
+$border-radius: 0.5rem;
+$box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 
 // ================================
 // Transitions
 // ================================
 $transition: all 0.3s ease;
-$transition-speed: 0.3s;
 
 // ================================
-// Gradients
-// ================================
-$gradient-light: linear-gradient(135deg, $primary-color, $primary-light);
-$gradient-dark: linear-gradient(135deg, $primary-dark, $secondary-dark);
-
-// ================================
-// Icones et texte auxiliaire
-// ================================
-$text-hover-light: $primary-light;
-$text-hover-dark: $primary-light;
-
-// ================================
-// Spacing et paddings globaux
+// Spacing & typography
 // ================================
 $padding-section: 3rem 1.5rem;
 $padding-section-md: 2rem 1rem;
 
-// ================================
-// Typography
-// ================================
 $font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 $line-height-base: 1.6;
 $h2-font-size: 2.2rem;
@@ -64,38 +37,23 @@ $p-font-size: 1.1rem;
 $p-line-height: 1.7;
 
 // ================================
-// Variables ajoutées pour compatibilité
+// Z-index et utilitaires
 // ================================
-$z-header: 1000;                   // header au-dessus
-$section-bg: $light-card-bg;       // fond par défaut
-$text-dark: #212529;               // texte sombre standard Bootstrap
-$color-dark-section-text: #f5f5f5; // texte dans les sections sombres
-$border-color: #dee2e6;            // gris clair pour bordures
-$spacing-unit: 1rem;               // unité de spacing
-$spacing-half: 0.5rem;             // moitié du spacing
-$spacing-quarter: 0.25rem;         // quart du spacing
-$spacing-2: 2rem;                  // double spacing
-$card-bg: $light-card-bg;          // alias pour compatibilité
-$font-primary: 'Segoe UI', sans-serif;
+$z-header: 1000;
+$spacing-unit: 1rem;
+$spacing-half: 0.5rem;
+$spacing-2: 2rem;
 
 // ================================
 // Mixins
 // ================================
 @mixin text-color($primary, $secondary) {
   color: $primary;
-
   a {
     color: $secondary;
-
     &:hover {
       color: lighten($secondary, 10%);
     }
-  }
-}
-
-@mixin respond-sm {
-  @media (max-width: 576px) {
-    @content;
   }
 }
 
@@ -104,16 +62,3 @@ $font-primary: 'Segoe UI', sans-serif;
     @content;
   }
 }
-
-@mixin respond-lg {
-  @media (max-width: 992px) {
-    @content;
-  }
-}
-
-@mixin respond-xl {
-  @media (max-width: 1200px) {
-    @content;
-  }
-}
-
