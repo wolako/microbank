@@ -1,248 +1,252 @@
-@import '../../../../assets/variables';
+@import '../../../assets/variables';
 
-:host {
-  display: block;
+.accounts-container {
+  padding: $padding-section;
   font-family: $font-base;
   background-color: $light-bg;
-  color: $text-primary;
-  padding: $spacing-2;
+  color: $text-secondary;
+  transition: $transition;
 
-  .accounts-container {
-    max-width: 1000px;
-    margin: 0 auto;
+  h2 {
+    font-size: $h2-font-size;
+    color: $text-primary;
+    margin-bottom: 2rem;
+  }
 
-    h2 {
-      font-size: 2rem;
-      color: $primary-color;
-      margin-bottom: $spacing-2;
+  // Tabs navigation
+  .nav-tabs {
+    border-bottom: 2px solid $border-color;
+
+    .nav-link {
+      color: $text-secondary;
+      font-weight: 500;
+      transition: $transition;
+
+      &.active {
+        color: $primary-color;
+        border-color: $primary-color $primary-color $light-bg;
+        font-weight: 600;
+      }
+
+      &:hover {
+        color: $primary-light;
+      }
+    }
+  }
+
+  // Inputs & selects
+  input.form-control,
+  select.form-control {
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    padding: $spacing-half $spacing-unit;
+    background-color: $card-bg;
+    color: $text-secondary;
+    transition: $transition;
+
+    &:focus {
+      border-color: $primary-color;
+      box-shadow: 0 0 0 0.2rem rgba(11, 26, 63, 0.25);
+      outline: none;
     }
 
-    // ========================
-    // Tabs
-    // ========================
+    &:read-only {
+      background-color: $light-card-bg;
+      color: $text-secondary;
+    }
+  }
+
+  label.form-label {
+    font-weight: 500;
+    color: $text-primary;
+  }
+
+  // Buttons
+  .btn {
+    border-radius: $border-radius;
+    transition: $transition;
+
+    &-primary {
+      background-color: $primary-color;
+      border-color: $primary-color;
+      color: $text-light;
+
+      &:hover {
+        background-color: $primary-light;
+        border-color: $primary-light;
+      }
+    }
+
+    &-secondary {
+      background-color: transparent;
+      border-color: $border-color;
+      color: $text-secondary;
+
+      &:hover {
+        background-color: $light-card-bg;
+      }
+    }
+
+    &-success {
+      background-color: darken($primary-color, 10%);
+      border-color: darken($primary-color, 10%);
+      color: $text-light;
+
+      &:hover {
+        background-color: $primary-color;
+        border-color: $primary-color;
+      }
+    }
+  }
+
+  // Row & flex
+  .row {
+    margin-bottom: $spacing-2;
+  }
+
+  .d-flex.gap-2 {
+    margin-top: $spacing-unit;
+  }
+
+  // Listes de documents
+  .list-group-item {
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
+    margin-bottom: $spacing-half;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: $transition;
+
+    &:hover {
+      background-color: $light-card-bg;
+    }
+
+    .btn {
+      padding: 0.25rem 0.5rem;
+      font-size: 0.85rem;
+    }
+  }
+
+  // Sécurité / 2FA
+  .form-check-input {
+    cursor: pointer;
+  }
+
+  .border.rounded.p-3 {
+    border-color: $border-color;
+    background-color: $card-bg;
+    box-shadow: $box-shadow;
+    border-radius: $border-radius;
+  }
+
+  // Toaster / notifications
+  app-toast {
+    position: fixed;
+    top: $spacing-unit;
+    right: $spacing-unit;
+    z-index: $z-header;
+  }
+
+  // ===================== Mode sombre =====================
+  &.dark-mode {
+    background-color: $dark-bg;
+    color: $color-dark-section-text;
+
+    h2 {
+      color: $text-light;
+    }
+
     .nav-tabs {
-      border-bottom: 2px solid $border-color;
+      border-bottom: 2px solid $secondary-dark;
 
       .nav-link {
-        color: $text-secondary;
-        font-weight: 500;
-        padding: $spacing-half $spacing-unit;
-        border: 1px solid transparent;
-        border-radius: $border-radius $border-radius 0 0;
-        margin-right: 0.25rem;
+        color: $text-light;
 
         &.active {
-          color: $primary-color;
-          background-color: $light-card-bg;
-          border-color: $border-color $border-color $light-card-bg;
+          color: $primary-light;
+          border-color: $primary-light $primary-light $dark-card-bg;
         }
 
         &:hover {
-          color: $primary-color;
+          color: $primary-light;
         }
       }
     }
 
-    // ========================
-    // Forms
-    // ========================
-    form {
-      background-color: $light-card-bg;
-      padding: $spacing-2;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
-      margin-bottom: $spacing-2;
+    input.form-control,
+    select.form-control {
+      background-color: $dark-card-bg;
+      color: $text-light;
+      border: 1px solid $secondary-dark;
 
-      .form-label {
-        font-weight: 600;
-        color: $text-primary;
+      &:focus {
+        border-color: $primary-light;
+        box-shadow: 0 0 0 0.2rem rgba(60, 90, 154, 0.25);
       }
 
-      input.form-control,
-      select.form-control {
-        border: 1px solid $border-color;
-        border-radius: $border-radius;
-        padding: $spacing-half $spacing-unit;
-        background-color: $bg-light;
-        color: $text-primary;
-
-        &:read-only {
-          background-color: $bg-muted;
-        }
-      }
-
-      .btn {
-        min-width: 100px;
-      }
-
-      .spinner-border {
-        vertical-align: middle;
+      &:read-only {
+        background-color: $dark-card-bg;
+        color: $text-light;
       }
     }
 
-    // ========================
-    // File Upload & Document List
-    // ========================
-    #docUpload {
-      margin-bottom: $spacing-unit;
+    .btn {
+      &-primary {
+        background-color: $primary-dark;
+        border-color: $primary-dark;
+
+        &:hover {
+          background-color: $primary-light;
+          border-color: $primary-light;
+        }
+      }
+
+      &-secondary {
+        border-color: $secondary-dark;
+        color: $text-light;
+
+        &:hover {
+          background-color: $dark-card-bg;
+        }
+      }
+
+      &-success {
+        background-color: $primary-light;
+        border-color: $primary-light;
+        color: $text-light;
+
+        &:hover {
+          background-color: $primary-dark;
+          border-color: $primary-dark;
+        }
+      }
     }
 
     .list-group-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-radius: $border-radius;
-      margin-bottom: 0.25rem;
-      padding: $spacing-half $spacing-unit;
-      background-color: $bg-light;
-      border: 1px solid $border-color;
+      border-color: $secondary-dark;
 
-      .btn {
-        font-size: 0.85rem;
-        padding: 0.25rem 0.5rem;
-      }
-    }
-
-    .text-info {
-      font-size: 0.875rem;
-      margin-top: $spacing-half;
-    }
-
-    // ========================
-    // Notifications
-    // ========================
-    .form-check {
-      margin-bottom: $spacing-half;
-
-      input.form-check-input {
-        accent-color: $primary-color;
-      }
-
-      label {
-        font-weight: 500;
-        color: $text-primary;
-      }
-    }
-
-    // ========================
-    // Security
-    // ========================
-    .form-switch .form-check-input {
-      width: 2rem;
-      height: 1rem;
-      border-radius: 1rem;
-      accent-color: $primary-color;
-    }
-
-    .text-muted {
-      font-size: 0.85rem;
-    }
-
-    img {
-      max-width: 150px;
-      height: auto;
-      border-radius: $border-radius;
-      border: 1px solid $border-color;
-    }
-
-    .border {
-      border-color: $border-color !important;
-    }
-
-    .rounded {
-      border-radius: $border-radius !important;
-    }
-
-    .p-3 {
-      padding: $spacing-2 !important;
-    }
-
-    .text-danger {
-      font-size: 0.875rem;
-      margin-top: $spacing-half;
-    }
-
-    .btn-outline-primary,
-    .btn-outline-danger {
-      min-width: 80px;
-      font-size: 0.85rem;
-    }
-
-    .btn + .btn {
-      margin-left: $spacing-half;
-    }
-  }
-
-  // ========================
-  // Responsive adjustments
-  // ========================
-  @media (max-width: 768px) {
-    .accounts-container {
-      padding: $spacing-half;
-
-      .row {
-        flex-direction: column;
-
-        .col-md-6 {
-          margin-bottom: $spacing-unit;
-        }
-      }
-    }
-  }
-
-  // ========================
-  // Dark mode
-  // ========================
-  :host-context(.dark-mode) {
-    background-color: $dark-bg;
-    color: $text-light;
-
-    .accounts-container {
-      background-color: transparent;
-
-      form,
-      .list-group-item,
-      .border {
+      &:hover {
         background-color: $dark-card-bg;
-        color: $text-light;
-        border-color: $border-dark;
       }
+    }
 
-      .nav-tabs .nav-link {
-        color: $text-light;
-        &.active {
-          background-color: $dark-card-bg;
-          border-color: $border-dark $border-dark $dark-card-bg;
-          color: $primary-dark;
-        }
-      }
+    .border.rounded.p-3 {
+      background-color: $dark-card-bg;
+      border-color: $secondary-dark;
+    }
+  }
 
-      input.form-control,
-      select.form-control {
-        background-color: $bg-dark;
-        color: $text-light;
-        border-color: $border-dark;
+  // ===================== Responsive =====================
+  @include respond-md {
+    padding: $padding-section-md;
 
-        &:read-only {
-          background-color: $bg-muted-dark;
-        }
-      }
+    h2 {
+      font-size: $h2-font-size-md;
+    }
 
-      .btn-primary {
-        background-color: $primary-dark;
-        border-color: $primary-dark;
-        color: $text-light;
-      }
-
-      .btn-outline-primary,
-      .btn-outline-danger {
-        border-color: $primary-dark;
-        color: $primary-dark;
-      }
-
-      .spinner-border {
-        border-top-color: $primary-dark;
-      }
+    .d-flex.gap-2 {
+      flex-direction: column;
     }
   }
 }
