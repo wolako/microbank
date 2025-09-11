@@ -1,319 +1,276 @@
 @import '../../../assets/variables';
 
-.dashboard-container {
-  padding: 2rem;
-  background: $light-bg;
+:host {
+  display: block;
+  font-family: $font-base;
+  background-color: $light-bg;
   color: $text-primary;
-  transition: background 0.3s ease, color 0.3s ease;
+  transition: background-color 0.4s ease, color 0.4s ease;
 
-  /* =========================
-     HEADER
-  ========================= */
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 2rem;
-    flex-wrap: wrap;
-    gap: 1rem;
-
-    h1 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      margin: 0;
-      color: $primary-color;
-    }
-
-    .user-info {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-
-      span {
-        font-size: 1rem;
-        font-weight: 500;
-      }
-
-      .avatar {
-        background: $primary-color;
-        color: $text-light;
-        font-weight: bold;
-        border-radius: 50%;
-        width: 42px;
-        height: 42px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-    }
-  }
-
-  /* =========================
-     Bank Access (à droite)
-  ========================= */
-  .bank-access {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin-top: -2rem;
-    margin-bottom: 2rem;
-
-    a {
-      min-width: 240px;
-      text-align: center;
-    }
-  }
-
-  /* =========================
-     Stats Grid
-  ========================= */
-  .stats-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 1.5rem;
-    margin-bottom: 2rem;
-
-    .stat-card {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      background: $light-card-bg;
-      border-radius: $border-radius;
-      padding: 1.25rem;
-      box-shadow: $box-shadow;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-
-      &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-      }
-
-      .stat-icon {
-        font-size: 2rem;
-        color: $primary-color;
-      }
-
-      .stat-content {
-        h3 {
-          font-size: 1.4rem;
-          margin: 0;
-          font-weight: bold;
-        }
-        p {
-          margin: 0;
-          font-size: 0.9rem;
-          color: $text-secondary;
-        }
-      }
-    }
-  }
-
-  /* =========================
-     Current Loan Summary
-  ========================= */
-  .current-loan-summary {
-    background: $light-card-bg;
-    border-radius: $border-radius;
-    padding: 1.5rem;
-    margin-bottom: 2rem;
-    box-shadow: $box-shadow;
-
-    h3 {
-      margin-bottom: 1rem;
-      color: $primary-color;
-    }
-
-    p {
-      margin: 0.4rem 0;
-      color: $text-secondary;
-    }
-
-    .btn {
-      margin-right: 0.5rem;
-    }
-  }
-
-  /* =========================
-     Installments
-  ========================= */
-  .payment-reminders {
-    margin-bottom: 2rem;
-
-    h3 {
-      margin-bottom: 1rem;
-      font-size: 1.3rem;
-      color: $primary-color;
-    }
-
-    .installment-grid {
-      display: grid;
-      gap: 1rem;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    }
-
-    .installment-card {
-      background: $light-card-bg;
-      border-radius: $border-radius;
-      padding: 1rem;
-      box-shadow: $box-shadow;
-
-      .installment-header {
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 0.5rem;
-        font-weight: 500;
-      }
-
-      .installment-status {
-        font-size: 0.8rem;
-        padding: 0.2rem 0.6rem;
-        border-radius: $border-radius-sm;
-        text-transform: uppercase;
-
-        &.paid {
-          background: #d1e7dd;
-          color: #0f5132;
-        }
-
-        &.pending {
-          background: #fff3cd;
-          color: #664d03;
-        }
-
-        &.overdue {
-          background: #f8d7da;
-          color: #842029;
-        }
-      }
-
-      .installment-amount {
-        font-weight: bold;
-        color: $text-primary;
-      }
-    }
-  }
-
-  /* =========================
-     Recent Transactions
-  ========================= */
-  .recent-transactions {
-    margin-top: 2rem;
-
-    h3 {
-      margin-bottom: 1rem;
-      color: $primary-color;
-    }
-
-    .transaction-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .transaction-item {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      background: $light-card-bg;
-      padding: 1rem;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
-
-      .tx-icon {
-        font-size: 1.4rem;
-        margin-right: 1rem;
-        color: $primary-color;
-      }
-
-      .tx-details {
-        flex: 1;
-
-        strong {
-          display: block;
-          margin-bottom: 0.2rem;
-        }
-
-        span {
-          font-size: 0.85rem;
-          color: $text-secondary;
-        }
-
-        .tx-link {
-          font-size: 0.85rem;
-          color: $primary-color;
-        }
-      }
-
-      .tx-amount {
-        font-weight: bold;
-
-        &.credit { color: #28a745; }
-        &.debit { color: #dc3545; }
-      }
-    }
-
-    .view-all {
-      display: inline-block;
-      margin-top: 1rem;
-      font-size: 0.9rem;
-      color: $primary-color;
-    }
-  }
-
-  /* =========================
-     Modals
-  ========================= */
+  // ========================
+  // Modals
+  // ========================
   .modal {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0,0,0,0.4);
+    z-index: 2000;
 
     .modal-content {
-      background: $light-card-bg;
-      padding: 2rem;
+      background-color: $light-card-bg;
+      color: $text-primary;
+      padding: $spacing-2;
       border-radius: $border-radius;
       width: 100%;
       max-width: 400px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+      box-shadow: $box-shadow;
+      transition: background-color 0.3s ease, color 0.3s ease;
 
-      h4 {
-        margin-bottom: 1.5rem;
-        color: $primary-color;
+      h4 { margin-bottom: $spacing-unit; }
+      label { display: block; margin-top: $spacing-half; margin-bottom: 0.25rem; font-weight: 600; }
+      input, select { 
+        width: 100%; 
+        padding: $spacing-half $spacing-unit; 
+        border: 1px solid $border-color; 
+        border-radius: $border-radius; 
+        margin-bottom: $spacing-unit; 
       }
-
-      .form-control {
-        margin-bottom: 1rem;
-      }
-
-      .btn {
-        min-width: 100px;
-      }
+      .text-danger { font-size: 0.875rem; }
+      .btn { margin-right: 0.5rem; }
     }
   }
-}
 
-/* =========================
-   Dark Mode
-========================= */
-:host-context(.dark-mode) {
+  // ========================
+  // Dashboard container
+  // ========================
   .dashboard-container {
-    background: $dark-bg;
+    padding: $spacing-2;
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: $spacing-2;
+
+      h1 { font-size: 2rem; color: $primary-color; }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: $spacing-half;
+
+        span { font-weight: 500; color: $text-primary; }
+        .avatar {
+          width: 40px; height: 40px;
+          background-color: $primary-color;
+          color: $text-light;
+          border-radius: 50%;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-weight: 700;
+        }
+      }
+    }
+
+    // ========================
+    // Bank Access (align right)
+    // ========================
+    .bank-access {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      margin-bottom: $spacing-2;
+
+      .btn { margin-top: $spacing-half; }
+
+      @media (max-width: 768px) {
+        align-items: center;
+      }
+    }
+
+    // ========================
+    // Stats Grid
+    // ========================
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: $spacing-unit;
+      margin-bottom: $spacing-2;
+
+      .stat-card {
+        display: flex;
+        align-items: center;
+        padding: $spacing-unit;
+        border-radius: $border-radius;
+        background-color: $light-card-bg;
+        box-shadow: $box-shadow;
+        transition: all 0.3s ease;
+
+        &:hover { transform: translateY(-3px); box-shadow: 0 6px 18px rgba(0,0,0,0.12); }
+
+        .stat-icon {
+          font-size: 2rem;
+          color: $primary-color;
+          margin-right: $spacing-half;
+        }
+
+        .stat-content h3 { margin: 0; font-size: 1.4rem; color: $text-primary; }
+        .stat-content p { margin: 0; font-size: 0.9rem; color: $text-secondary; }
+      }
+    }
+
+    // ========================
+    // Current Loan Summary
+    // ========================
+    .current-loan-summary {
+      padding: $spacing-unit;
+      background-color: $light-card-bg;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
+      margin-bottom: $spacing-2;
+
+      h3 { font-size: 1.5rem; color: $primary-color; margin-bottom: $spacing-half; }
+      p { margin-bottom: $spacing-half; color: $text-secondary; }
+      .badge { font-size: 0.8rem; }
+      .btn { margin-top: $spacing-half; }
+    }
+
+    // ========================
+    // Payment Reminders
+    // ========================
+    .payment-reminders {
+      margin-bottom: $spacing-2;
+
+      h3 { font-size: 1.5rem; color: $primary-color; margin-bottom: $spacing-half; }
+      .installment-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: $spacing-half;
+
+        .installment-card {
+          padding: $spacing-half $spacing-unit;
+          border-radius: $border-radius;
+          background-color: $light-card-bg;
+          box-shadow: $box-shadow;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .installment-header { display: flex; justify-content: space-between; width: 100%; margin-bottom: 0.25rem; }
+          .installment-date { font-weight: 500; color: $text-primary; }
+          .installment-status { font-size: 0.8rem; text-transform: uppercase; }
+
+          .installment-amount { font-weight: 600; color: $primary-color; }
+        }
+      }
+
+      p.text-muted { text-align: center; margin-top: $spacing-unit; }
+    }
+
+    // ========================
+    // New Loan CTA
+    // ========================
+    .new-loan-cta {
+      text-align: center;
+      margin-bottom: $spacing-2;
+
+      h4 { font-size: 1.3rem; color: $primary-color; margin-bottom: $spacing-half; }
+      .btn { margin-top: $spacing-half; }
+    }
+
+    // ========================
+    // Charts
+    // ========================
+    .charts-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: $spacing-unit;
+      margin-bottom: $spacing-2;
+
+      canvas { flex: 1 1 300px; max-width: 600px; background-color: $light-card-bg; border-radius: $border-radius; padding: $spacing-half; box-shadow: $box-shadow; }
+    }
+
+    // ========================
+    // Recent Transactions
+    // ========================
+    .recent-transactions {
+      margin-bottom: $spacing-2;
+
+      h3 { color: $primary-color; margin-bottom: $spacing-half; }
+
+      .transaction-list {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-half;
+
+        .transaction-item {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          padding: $spacing-half;
+          border-radius: $border-radius;
+          background-color: $light-card-bg;
+          box-shadow: $box-shadow;
+
+          .tx-icon { font-size: 1.5rem; color: $primary-color; margin-right: $spacing-half; }
+          .tx-details { flex: 1; margin-right: $spacing-half; }
+          .tx-details strong { color: $text-primary; }
+          .tx-details span, .tx-details .text-muted, .tx-details .tx-link { color: $text-secondary; font-size: 0.85rem; }
+          .tx-amount.credit { color: $primary-color; }
+        }
+      }
+
+      .view-all { display: block; text-align: right; margin-top: $spacing-half; color: $primary-color; text-decoration: none; &:hover { text-decoration: underline; } }
+    }
+  }
+
+  // ========================
+  // Dark Mode
+  // ========================
+  :host-context(.dark-mode) {
+    background-color: $dark-bg;
     color: $text-light;
 
-    .stat-card,
-    .current-loan-summary,
-    .installment-card,
-    .transaction-item,
-    .modal-content {
-      background: $dark-card-bg;
-      color: $text-light;
-    }
+    .dashboard-container {
+      .modal .modal-content,
+      .current-loan-summary,
+      .installment-card,
+      .charts-row canvas,
+      .recent-transactions .transaction-item,
+      .stats-grid .stat-card,
+      .bank-access .btn {
+        background-color: $dark-card-bg;
+        color: $text-light;
+      }
 
-    .transaction-item .tx-link {
-      color: $primary-dark;
+      h1, h3, h4 { color: $primary-dark; }
+      p, span, .tx-details span, .tx-details .text-muted, .installment-status { color: $text-light; }
+      .stat-icon, .tx-icon { color: $primary-dark; }
+      .btn-primary { background-color: $primary-dark; color: $text-light; }
+      .btn-outline-secondary { border-color: $primary-dark; color: $primary-dark; }
+      .progress-bar { background-color: $primary-dark; }
     }
+  }
+
+  // ========================
+  // Responsive
+  // ========================
+  @media (max-width: 992px) {
+    .stats-grid { grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); }
+  }
+
+  @media (max-width: 768px) {
+    .bank-access { align-items: center; }
+    .charts-row { flex-direction: column; gap: $spacing-half; }
+    .installment-grid { grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); }
+  }
+
+  @media (max-width: 576px) {
+    .dashboard-container { padding: $spacing-half; }
   }
 }
