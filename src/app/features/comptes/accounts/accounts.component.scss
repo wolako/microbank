@@ -1,184 +1,248 @@
 @import '../../../../assets/variables';
 
-.account-page {
-  font-family: $font-primary;
+:host {
+  display: block;
+  font-family: $font-base;
   background-color: $light-bg;
   color: $text-primary;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  padding: $spacing-2;
 
-  /* ===================== Container principal ===================== */
   .accounts-container {
-    max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-  }
+    max-width: 1000px;
+    margin: 0 auto;
 
-  /* ===================== Tabs ===================== */
-  .nav-tabs {
-    margin-bottom: 1.5rem;
-    .nav-link {
-      color: $text-secondary;
-      font-weight: 500;
-      transition: all 0.3s ease;
-      position: relative;
+    h2 {
+      font-size: 2rem;
+      color: $primary-color;
+      margin-bottom: $spacing-2;
+    }
 
-      &:hover { color: $primary-color; }
+    // ========================
+    // Tabs
+    // ========================
+    .nav-tabs {
+      border-bottom: 2px solid $border-color;
 
-      &.active {
-        color: $primary-color;
-        font-weight: 600;
-        &::after {
-          content: '';
-          position: absolute;
-          bottom: 0;
-          left: 0;
-          width: 100%;
-          height: 2px;
-          background-color: $primary-color;
-          border-radius: 2px;
-          animation: tab-underline 0.3s ease forwards;
+      .nav-link {
+        color: $text-secondary;
+        font-weight: 500;
+        padding: $spacing-half $spacing-unit;
+        border: 1px solid transparent;
+        border-radius: $border-radius $border-radius 0 0;
+        margin-right: 0.25rem;
+
+        &.active {
+          color: $primary-color;
+          background-color: $light-card-bg;
+          border-color: $border-color $border-color $light-card-bg;
+        }
+
+        &:hover {
+          color: $primary-color;
         }
       }
     }
-  }
 
-  @keyframes tab-underline {
-    from { width: 0; }
-    to { width: 100%; }
-  }
-
-  /* ===================== Formulaires ===================== */
-  form {
-    max-width: 800px;
-    margin: 0 auto;
-    opacity: 0;
-    animation: fadeIn 0.5s forwards;
-
-    .form-group {
+    // ========================
+    // Forms
+    // ========================
+    form {
+      background-color: $light-card-bg;
+      padding: $spacing-2;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow;
       margin-bottom: $spacing-2;
-      display: flex;
-      flex-direction: column;
 
-      label { font-weight: 500; margin-bottom: $spacing-half; color: $text-primary; }
+      .form-label {
+        font-weight: 600;
+        color: $text-primary;
+      }
 
-      input, textarea, select {
-        padding: $spacing-half $spacing-unit;
+      input.form-control,
+      select.form-control {
         border: 1px solid $border-color;
         border-radius: $border-radius;
-        font-size: 1rem;
-        color: inherit;
-        background: transparent;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+        padding: $spacing-half $spacing-unit;
+        background-color: $bg-light;
+        color: $text-primary;
 
-        &:focus {
-          outline: none;
-          border-color: $primary-color;
-          box-shadow: 0 0 0 3px rgba($primary-color, 0.1);
-          transform: scale(1.02);
+        &:read-only {
+          background-color: $bg-muted;
         }
-
-        &.ng-invalid.ng-touched { border-color: $error-color; }
       }
 
-      .error-message { color: $error-color; font-size: 0.9rem; margin-top: $spacing-quarter; }
-    }
-
-    .form-actions {
-      display: flex;
-      gap: $spacing-unit;
-      margin-top: $spacing-2;
-      button { min-width: 120px; position: relative; }
-
-      .btn-primary {
-        background-color: $primary-color;
-        color: $text-light;
-        transition: all 0.2s ease;
-        &:hover:not(:disabled) { background-color: lighten($primary-color, 6%); transform: translateY(-2px); }
-      }
-
-      .btn-outline {
-        border: 1px solid $primary-color;
-        color: $primary-color;
-        transition: all 0.2s ease;
-        &:hover { background-color: $primary-color; color: $text-light; transform: translateY(-2px); }
+      .btn {
+        min-width: 100px;
       }
 
       .spinner-border {
-        width: 1rem;
-        height: 1rem;
-        animation: spin 0.8s linear infinite;
+        vertical-align: middle;
       }
     }
-  }
 
-  @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+    // ========================
+    // File Upload & Document List
+    // ========================
+    #docUpload {
+      margin-bottom: $spacing-unit;
+    }
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
-
-  /* ===================== Documents ===================== */
-  .list-group {
     .list-group-item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: all 0.2s ease;
-      &:hover { background: rgba($primary-color, 0.05); transform: translateX(2px); }
-      button { font-size: 0.85rem; }
+      border-radius: $border-radius;
+      margin-bottom: 0.25rem;
+      padding: $spacing-half $spacing-unit;
+      background-color: $bg-light;
+      border: 1px solid $border-color;
+
+      .btn {
+        font-size: 0.85rem;
+        padding: 0.25rem 0.5rem;
+      }
+    }
+
+    .text-info {
+      font-size: 0.875rem;
+      margin-top: $spacing-half;
+    }
+
+    // ========================
+    // Notifications
+    // ========================
+    .form-check {
+      margin-bottom: $spacing-half;
+
+      input.form-check-input {
+        accent-color: $primary-color;
+      }
+
+      label {
+        font-weight: 500;
+        color: $text-primary;
+      }
+    }
+
+    // ========================
+    // Security
+    // ========================
+    .form-switch .form-check-input {
+      width: 2rem;
+      height: 1rem;
+      border-radius: 1rem;
+      accent-color: $primary-color;
+    }
+
+    .text-muted {
+      font-size: 0.85rem;
+    }
+
+    img {
+      max-width: 150px;
+      height: auto;
+      border-radius: $border-radius;
+      border: 1px solid $border-color;
+    }
+
+    .border {
+      border-color: $border-color !important;
+    }
+
+    .rounded {
+      border-radius: $border-radius !important;
+    }
+
+    .p-3 {
+      padding: $spacing-2 !important;
+    }
+
+    .text-danger {
+      font-size: 0.875rem;
+      margin-top: $spacing-half;
+    }
+
+    .btn-outline-primary,
+    .btn-outline-danger {
+      min-width: 80px;
+      font-size: 0.85rem;
+    }
+
+    .btn + .btn {
+      margin-left: $spacing-half;
     }
   }
 
-  /* ===================== Sécurité / 2FA ===================== */
-  .security-card, .password-form, .two-fa-container {
-    background-color: $card-bg;
-    padding: $spacing-2;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
-    transition: background 0.3s ease, color 0.3s ease, transform 0.2s ease;
-    &:hover { transform: translateY(-2px); }
-
-    input { margin-bottom: $spacing-half; }
-    small { display: block; margin-top: $spacing-quarter; }
-    .text-danger { margin-top: $spacing-half; }
-  }
-
-  .form-check { display: flex; align-items: center; gap: $spacing-unit; }
-
-  /* ===================== Transactions ===================== */
-  app-transactions { margin-top: $spacing-2; }
-
-  /* ===================== Responsive ===================== */
+  // ========================
+  // Responsive adjustments
+  // ========================
   @media (max-width: 768px) {
-    .accounts-container { padding: 0 $spacing-unit; }
-    .nav-tabs { flex-wrap: wrap; }
-    .list-group-item { flex-direction: column; align-items: flex-start; gap: $spacing-half; }
-    form { max-width: 100%; }
+    .accounts-container {
+      padding: $spacing-half;
+
+      .row {
+        flex-direction: column;
+
+        .col-md-6 {
+          margin-bottom: $spacing-unit;
+        }
+      }
+    }
   }
 
-  /* ===================== Dark Mode ===================== */
+  // ========================
+  // Dark mode
+  // ========================
   :host-context(.dark-mode) {
     background-color: $dark-bg;
-    color: $color-dark-section-text;
-
-    h1, h2, h3, h4, h5, h6, p, label, span, td, th, small, li { color: $color-dark-section-text; }
+    color: $text-light;
 
     .accounts-container {
-      form, .security-card, .password-form, .two-fa-container {
-        background-color: $dark-card-bg;
-        color: $color-dark-section-text;
+      background-color: transparent;
 
-        input, textarea, select { background-color: $dark-card-bg; color: $color-dark-section-text; border-color: darken($dark-card-bg, 6%); }
+      form,
+      .list-group-item,
+      .border {
+        background-color: $dark-card-bg;
+        color: $text-light;
+        border-color: $border-dark;
       }
 
-      .list-group-item { background-color: $dark-card-bg; color: $color-dark-section-text; &:hover { background-color: rgba($primary-color, 0.1); } }
+      .nav-tabs .nav-link {
+        color: $text-light;
+        &.active {
+          background-color: $dark-card-bg;
+          border-color: $border-dark $border-dark $dark-card-bg;
+          color: $primary-dark;
+        }
+      }
 
-      .btn-primary { background-color: $primary-dark; color: $text-light; &:hover { background-color: lighten($primary-dark, 6%); transform: translateY(-2px); } }
-      .btn-outline { color: $primary-dark; border-color: $primary-dark; &:hover { background-color: $primary-dark; color: $text-light; transform: translateY(-2px); } }
+      input.form-control,
+      select.form-control {
+        background-color: $bg-dark;
+        color: $text-light;
+        border-color: $border-dark;
+
+        &:read-only {
+          background-color: $bg-muted-dark;
+        }
+      }
+
+      .btn-primary {
+        background-color: $primary-dark;
+        border-color: $primary-dark;
+        color: $text-light;
+      }
+
+      .btn-outline-primary,
+      .btn-outline-danger {
+        border-color: $primary-dark;
+        color: $primary-dark;
+      }
+
+      .spinner-border {
+        border-top-color: $primary-dark;
+      }
     }
   }
 }
