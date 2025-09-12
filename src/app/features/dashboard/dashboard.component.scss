@@ -1,13 +1,88 @@
 @import '../../../assets/variables';
 
-// ================================
-// Container général
-// ================================
 .dashboard-container {
-  padding: $padding-section;
   font-family: $font-base;
-  background-color: $bg-main;
-  color: $text-secondary;
+  color: $text-primary;
+  padding: $padding-section;
+
+  // ================================
+  // Modal général
+  // ================================
+  .modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.5);
+    z-index: $z-modal;
+
+    .modal-content {
+      background-color: $bg-card;
+      padding: $spacing-unit * 2;
+      border-radius: 1rem;
+      box-shadow: $box-shadow-card;
+      width: 100%;
+      max-width: 400px;
+      transition: $transition-base;
+
+      h4 {
+        font-size: $font-size-lg;
+        font-weight: 700;
+        color: $color-night-blue;
+        margin-bottom: $spacing-unit;
+      }
+
+      label {
+        font-weight: 500;
+        color: $text-secondary;
+        display: block;
+        margin-bottom: 0.25rem;
+      }
+
+      input,
+      select {
+        width: 100%;
+        padding: $spacing-unit * 0.5;
+        margin-bottom: $spacing-unit;
+        border-radius: 0.5rem;
+        border: 1px solid $border-color;
+        font-size: $font-size-base;
+        transition: $transition-base;
+
+        &:focus {
+          outline: none;
+          border-color: $color-violet;
+          box-shadow: 0 0 0 3px rgba($color-violet, 0.1);
+        }
+      }
+
+      .btn {
+        padding: $spacing-unit * 0.5 $spacing-unit;
+        border-radius: 0.5rem;
+        font-weight: 600;
+        transition: $transition-base;
+
+        &.btn-primary {
+          background-color: $color-violet;
+          color: $text-inverse;
+
+          &:hover {
+            opacity: 0.9;
+          }
+        }
+
+        &.btn-secondary {
+          background-color: rgba(0,0,0,0.05);
+          color: $text-primary;
+
+          &:hover {
+            background-color: rgba(0,0,0,0.1);
+          }
+        }
+      }
+    }
+  }
 
   // ================================
   // Header utilisateur
@@ -16,311 +91,370 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 2rem;
+    margin-bottom: $spacing-unit * 2;
 
     h1 {
-      color: $text-primary;
-      font-size: $h2-font-size;
+      font-size: $font-size-xl;
+      color: $color-night-blue;
+      font-weight: 700;
     }
 
     .user-info {
       display: flex;
       align-items: center;
-      gap: $spacing-half;
+      gap: $spacing-unit;
 
       span {
         font-weight: 500;
+        color: $text-secondary;
       }
 
       .avatar {
         width: 40px;
         height: 40px;
-        background: $primary-color;
-        color: #fff;
-        border-radius: 50%;
+        background-color: $color-violet;
+        color: $text-inverse;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-weight: bold;
-        font-size: 1rem;
+        border-radius: 50%;
+        font-weight: 700;
+        font-size: $font-size-base;
       }
     }
   }
 
   // ================================
-  // Alertes
+  // Alert
   // ================================
   .alert {
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
+    margin-bottom: $spacing-unit * 2;
   }
 
   // ================================
-  // Accès rapide aux comptes
+  // Bank access (aligné à droite)
   // ================================
   .bank-access {
     display: flex;
-    flex-wrap: wrap;
-    gap: $spacing-half;
+    justify-content: flex-end; // aligné à droite
+    gap: $spacing-unit;
 
     .btn {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      font-weight: 500;
+      position: relative;
+      z-index: 1;
+
+      &.btn-primary {
+        background: $gradient-logo;
+        color: $text-inverse;
+        font-weight: 600;
+
+        &:hover {
+          opacity: 0.9;
+        }
+      }
+
+      &.btn-outline-secondary {
+        background-color: rgba(0,0,0,0.05);
+        color: $text-primary;
+
+        &:hover {
+          background-color: rgba(0,0,0,0.1);
+        }
+      }
     }
   }
 
   // ================================
-  // Stats grid
+  // Statistiques
   // ================================
   .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: $spacing-unit;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: $spacing-unit * 2;
+    margin-bottom: $spacing-unit * 3;
 
     .stat-card {
-      background: $bg-card;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
-      padding: 1.5rem;
+      background-color: $bg-card;
+      padding: $spacing-unit * 1.5;
+      border-radius: 1rem;
+      box-shadow: $box-shadow-card;
       display: flex;
       align-items: center;
-      gap: $spacing-half;
-      transition: $transition;
-
-      &:hover {
-        transform: translateY(-2px);
-      }
+      gap: $spacing-unit;
 
       .stat-icon {
         font-size: 2rem;
-        color: $primary-color;
+        color: $color-violet;
       }
 
       .stat-content {
-        h3 { margin: 0; font-size: 1.5rem; color: $text-primary; }
-        p { margin: 0; font-size: $p-font-size; color: $text-secondary; }
-      }
-
-      .progress {
-        height: 8px;
-        border-radius: $border-radius;
-        background-color: lighten($bg-card, 10%);
-
-        .progress-bar {
-          border-radius: $border-radius;
+        h3 {
+          font-size: $font-size-lg;
+          font-weight: 700;
+          color: $color-night-blue;
         }
 
-        .bg-success { background-color: $primary-color; }
-        .bg-warning { background-color: $secondary-color; }
-        .bg-danger  { background-color: $error-color; }
+        p {
+          font-size: $font-size-base;
+          color: $text-secondary;
+          margin: 0;
+        }
+
+        .progress {
+          border-radius: 0.5rem;
+          overflow: hidden;
+        }
       }
     }
   }
 
   // ================================
-  // Résumé du prêt actuel
+  // Current loan summary
   // ================================
   .current-loan-summary {
-    background: $bg-card;
-    padding: 1.5rem;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
-    margin-bottom: 2rem;
+    background-color: $bg-card;
+    padding: $spacing-unit * 2;
+    border-radius: 1rem;
+    box-shadow: $box-shadow-card;
+    margin-bottom: $spacing-unit * 3;
 
-    h3 { color: $text-primary; margin-bottom: 1rem; }
-    p { margin-bottom: 0.5rem; }
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: 700;
+      color: $color-night-blue;
+      margin-bottom: $spacing-unit;
+    }
+
+    p {
+      margin-bottom: $spacing-unit / 2;
+    }
 
     .btn {
-      margin-right: $spacing-half;
+      margin-right: $spacing-unit;
     }
 
     .badge {
-      border-radius: $border-radius;
-      font-size: 0.8rem;
+      font-size: $font-size-sm;
     }
   }
 
   // ================================
-  // Échéances à venir
+  // Payment reminders
   // ================================
   .payment-reminders {
-    margin-bottom: 2rem;
+    margin-bottom: $spacing-unit * 3;
 
-    h3 { color: $text-primary; margin-bottom: 1rem; }
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: 700;
+      color: $color-night-blue;
+      margin-bottom: $spacing-unit;
+    }
 
     .installment-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: $spacing-half;
+      gap: $spacing-unit;
 
       .installment-card {
-        background: $bg-card;
-        padding: 1rem;
-        border-radius: $border-radius;
-        box-shadow: $box-shadow;
-        transition: $transition;
-
-        &:hover { transform: translateY(-2px); }
+        background-color: $bg-card;
+        padding: $spacing-unit;
+        border-radius: 1rem;
+        box-shadow: $box-shadow-card;
 
         .installment-header {
           display: flex;
           justify-content: space-between;
-          font-weight: 500;
-          margin-bottom: 0.5rem;
+          margin-bottom: $spacing-unit / 2;
+
+          .installment-date {
+            font-weight: 600;
+          }
 
           .installment-status {
-            &.pending { color: $primary-color; }
-            &.paid { color: $secondary-color; }
-            &.overdue { color: $error-color; font-weight: bold; }
+            font-weight: 600;
+            &.paid { color: $color-success; }
+            &.unpaid { color: $color-error; }
           }
         }
 
         .installment-amount {
-          font-weight: bold;
-          font-size: 1.2rem;
-          color: $text-primary;
+          font-weight: 700;
+          color: $color-night-blue;
         }
       }
     }
-
-    .text-muted { color: darken($text-secondary, 30%); }
   }
 
   // ================================
-  // Nouvelle demande de prêt
+  // New loan CTA
   // ================================
   .new-loan-cta {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: $spacing-unit * 3;
 
-    h4 { color: $text-primary; margin-bottom: 1rem; }
+    h4 {
+      font-size: $font-size-lg;
+      font-weight: 700;
+      color: $color-night-blue;
+      margin-bottom: $spacing-unit;
+    }
 
-    .btn-primary { font-weight: 500; }
+    .btn-primary {
+      background: $gradient-logo;
+      color: $text-inverse;
+      font-weight: 600;
+
+      &:hover {
+        opacity: 0.9;
+      }
+    }
   }
 
   // ================================
-  // Graphiques
+  // Charts row
   // ================================
   .charts-row {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: $spacing-2;
-    margin-bottom: 2rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: $spacing-unit * 2;
+    margin-bottom: $spacing-unit * 3;
+    justify-items: center;
 
     canvas {
-      background: $bg-card;
-      padding: 1rem;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
-    }
-
-    @include respond-md {
-      grid-template-columns: 1fr;
+      background-color: $bg-card;
+      padding: $spacing-unit;
+      border-radius: 1rem;
+      box-shadow: $box-shadow-card;
+      width: 100% !important;
+      max-width: 400px;
+      height: 300px !important;
+      position: relative;
+      z-index: 1; // derrière les boutons
     }
   }
 
   // ================================
-  // Transactions récentes
+  // Recent transactions
   // ================================
   .recent-transactions {
-    h3 { color: $text-primary; margin-bottom: 1rem; }
+    margin-bottom: $spacing-unit * 3;
+
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: 700;
+      color: $color-night-blue;
+      margin-bottom: $spacing-unit;
+    }
 
     .transaction-list {
       display: flex;
       flex-direction: column;
-      gap: $spacing-half;
+      gap: $spacing-unit;
 
       .transaction-item {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        background: $bg-card;
-        padding: 0.8rem 1rem;
-        border-radius: $border-radius;
-        box-shadow: $box-shadow;
-        transition: $transition;
+        padding: $spacing-unit;
+        background-color: $bg-card;
+        border-radius: 1rem;
+        box-shadow: $box-shadow-card;
 
-        &:hover { transform: translateY(-2px); }
+        .tx-icon {
+          font-size: 1.5rem;
+          color: $color-violet;
+        }
 
-        .tx-icon { font-size: 1.5rem; color: $primary-color; }
         .tx-details {
           flex: 1;
-          margin-left: $spacing-half;
+          margin-left: $spacing-unit;
 
-          strong { color: $text-primary; }
-          span { font-size: 0.9rem; color: darken($text-secondary, 20%); }
-          .tx-link { color: $primary-color; text-decoration: underline; }
+          strong {
+            color: $color-night-blue;
+          }
+
+          span {
+            font-size: $font-size-sm;
+            color: $text-secondary;
+          }
+
+          .tx-link {
+            color: $color-violet;
+            font-size: $font-size-sm;
+
+            &:hover {
+              text-decoration: underline;
+            }
+          }
         }
 
         .tx-amount {
-          font-weight: bold;
-          color: $text-primary;
+          font-weight: 700;
+          color: $color-night-blue;
 
-          &.credit { color: $primary-color; }
+          &.credit {
+            color: $color-success;
+          }
         }
       }
     }
 
     .view-all {
-      display: block;
-      margin-top: 1rem;
-      color: $primary-color;
-      font-weight: 500;
-      text-decoration: none;
+      display: inline-block;
+      margin-top: $spacing-unit;
+      font-weight: 600;
+      color: $color-violet;
 
-      &:hover { color: $hover-color; }
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  // ================================
+  // Loading screen
+  // ================================
+  .loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: $padding-section;
+
+    .spinner-border {
+      width: 3rem;
+      height: 3rem;
+      margin-bottom: $spacing-unit;
+    }
+
+    p {
+      font-size: $font-size-base;
+      color: $text-secondary;
     }
   }
 }
 
 // ================================
-// Modals
+// Responsive
 // ================================
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: $z-header;
+@media (max-width: 768px) {
+  .dashboard-container {
+    padding: $spacing-unit;
 
-  .modal-content {
-    background: $bg-card;
-    padding: 2rem;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
-    width: 100%;
-    max-width: 500px;
-    transition: $transition;
+    .stats-grid,
+    .installment-grid,
+    .charts-row {
+      grid-template-columns: 1fr;
+    }
 
-    h4 { color: $text-primary; margin-bottom: 1rem; }
-
-    label { font-weight: 500; }
-    input, select { margin-bottom: 1rem; }
-
-    .btn { margin-right: $spacing-half; }
+    .bank-access {
+      justify-content: flex-start;
+      flex-direction: column;
+      gap: $spacing-unit / 2;
+    }
   }
-}
-
-// ================================
-// Loading
-// ================================
-.loading-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  padding: 2rem;
-
-  .spinner-border { color: $primary-color; }
-
-  p { color: $text-secondary; }
 }

@@ -1,6 +1,8 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const pool = new Pool({
   user: process.env.DB_USER,
   host: process.env.DB_HOST,
@@ -10,9 +12,9 @@ const pool = new Pool({
   connectionTimeoutMillis: 5000,
   idleTimeoutMillis: 30000,
   max: 20,
-  ssl: {
-    rejectUnauthorized: false // permet de se connecter avec le certificat auto-signé de Render
-  },
+  ssl: isProduction
+    ? { rejectUnauthorized: false } // Render → SSL requis
+    : false // Local → pas de SSL
 });
 
 let poolEnded = false;

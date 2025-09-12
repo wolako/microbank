@@ -1,122 +1,139 @@
 @import '../../../../assets/variables';
 
+// ================================
+// Container principal
+// ================================
 .verify-email {
-  max-width: 480px;
-  margin: 4rem auto;
-  padding: 2.5rem;
-  background: $light-card-bg;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  text-align: center;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-section;
   font-family: $font-base;
+  background-color: $bg-secondary;
+  color: $text-primary;
+  transition: $transition-base;
+
+  :host-context(.dark-mode) & {
+    background-color: $bg-header;
+    color: $text-inverse;
+  }
 
   h2 {
-    font-size: $h2-font-size;
-    font-weight: 600;
-    margin-bottom: 1rem;
-    color: $primary-color;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    margin-bottom: $spacing-unit;
+    text-align: center;
+
+    :host-context(.dark-mode) & {
+      color: $text-inverse;
+    }
   }
 
   p {
-    font-size: $p-font-size;
-    line-height: $p-line-height;
+    font-size: $font-size-base;
     color: $text-secondary;
-    margin-bottom: 1.5rem;
+    text-align: center;
+    margin-bottom: $spacing-unit * 1.5;
+
+    :host-context(.dark-mode) & {
+      color: lighten($text-inverse, 20%);
+    }
   }
 
   .alert {
-    border-radius: $border-radius;
-    font-size: 0.95rem;
+    width: 100%;
+    max-width: 420px;
+    text-align: center;
+    margin-bottom: $spacing-unit;
+
+    &.alert-success {
+      background-color: rgba($color-success, 0.1);
+      color: $color-success;
+      border: 1px solid $color-success;
+    }
   }
 
   button.btn {
-    font-weight: 500;
-    padding: 0.7rem 1.2rem;
-    border-radius: $border-radius;
-    transition: $transition;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-half $spacing-unit;
+    font-weight: 600;
+    border-radius: 0.4rem;
+    cursor: pointer;
+    transition: $transition-base;
 
     &.btn-outline-primary {
-      border: 1px solid $primary-color;
-      color: $primary-color;
-      background: transparent;
+      border: 1px solid $color-violet;
+      background-color: transparent;
+      color: $color-violet;
 
       &:hover:not(:disabled) {
-        background: $primary-color;
-        color: $text-light;
+        background-color: $color-violet;
+        color: $text-inverse;
       }
 
       &:disabled {
         opacity: 0.65;
         cursor: not-allowed;
       }
+
+      :host-context(.dark-mode) & {
+        border-color: lighten($color-violet, 10%);
+        color: $text-inverse;
+
+        &:hover:not(:disabled) {
+          background-color: lighten($color-violet, 10%);
+          color: $text-inverse;
+        }
+      }
     }
   }
 
   a.btn-link {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: $primary-color;
+    color: $text-secondary;
     text-decoration: none;
-    transition: color $transition-speed;
+    margin-top: $spacing-unit;
 
     &:hover {
       text-decoration: underline;
-      color: $primary-light;
+    }
+
+    :host-context(.dark-mode) & {
+      color: lighten($text-inverse, 30%);
     }
   }
 }
 
-/* 🌙 Dark Mode */
-body.dark-mode {
+// ================================
+// Responsive
+// ================================
+@media (max-width: 768px) {
   .verify-email {
-    background: $dark-card-bg;
-    color: $text-light;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    padding: $padding-section / 1.5;
 
     h2 {
-      color: $primary-light;
+      font-size: $font-size-lg;
     }
 
     p {
-      color: $text-light;
-    }
-
-    button.btn-outline-primary {
-      border-color: $primary-light;
-      color: $primary-light;
-
-      &:hover:not(:disabled) {
-        background: $primary-light;
-        color: $text-light;
-      }
-    }
-
-    a.btn-link {
-      color: $primary-light;
-
-      &:hover {
-        color: lighten($primary-light, 8%);
-      }
+      font-size: $font-size-base;
     }
   }
 }
 
-/* 📱 Responsive */
 @media (max-width: 576px) {
   .verify-email {
-    margin: 2rem 1rem;
-    padding: 1.8rem;
+    padding: $spacing-unit;
 
     h2 {
-      font-size: $h2-font-size-md;
+      font-size: $font-size-base;
     }
 
     p {
-      font-size: 1rem;
-    }
-
-    button.btn {
-      width: 100%;
+      font-size: $font-size-sm;
     }
   }
 }

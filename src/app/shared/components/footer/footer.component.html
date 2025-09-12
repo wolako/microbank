@@ -1,30 +1,44 @@
-<footer class="footer" [ngClass]="{ 'dark-mode': isDarkMode, 'light-mode': !isDarkMode }">
+<footer class="footer">
   <div class="container">
-    <div class="row">
+    <div class="row g-4">
+      <!-- Section MicroBank -->
       <div class="col-md-4">
-        <h3>MicroBank</h3>
-        <p>Des solutions financières pour tous depuis {{ currentYear }}</p>
+        <div class="footer-card p-3 h-100">
+          <h3 class="footer-logo">MicroBank</h3>
+          <p>Des solutions financières pour tous depuis {{ currentYear }}</p>
+        </div>
       </div>
 
+      <!-- Liens utiles -->
       <div class="col-md-4">
-        <h4>Liens utiles</h4>
-        <ul>
-          <li><a routerLink="/about">À propos</a></li>
-          <li><a routerLink="/contact">Contact</a></li>
-          <li><a routerLink="/faq">FAQ</a></li>
-        </ul>
+        <div class="footer-card p-3 h-100">
+          <h4>Liens utiles</h4>
+          <ul class="footer-links">
+            <li><a routerLink="/about">À propos</a></li>
+            <li><a routerLink="/contact">Contact</a></li>
+            <li><a routerLink="/faq">FAQ</a></li>
+          </ul>
+        </div>
       </div>
 
+      <!-- Contact -->
       <div class="col-md-4">
-        <h4>Contact</h4>
-        <address>
-          email.&#64;microbank.com<br>
-          +228 00 00 00 00
-        </address>
+        <div class="footer-card p-3 h-100">
+          <h4>Contact</h4>
+          <address>
+            email.&#64;microbank.com<br>
+            +228 00 00 00 00
+          </address>
+          <div class="footer-social mt-3">
+            <a href="#"><i class="bi bi-facebook"></i></a>
+            <a href="#"><i class="bi bi-twitter"></i></a>
+            <a href="#"><i class="bi bi-linkedin"></i></a>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="copyright">
+    <div class="copyright mt-4 text-center">
       &copy; {{ currentYear }} MicroBank. Tous droits réservés.
     </div>
   </div>

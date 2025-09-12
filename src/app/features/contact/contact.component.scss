@@ -2,157 +2,188 @@
 
 .contact-page {
   font-family: $font-base;
-  background-color: $light-bg;
   color: $text-primary;
-  transition: background-color 0.35s ease, color 0.35s ease;
 
-  // Hero
+  // ================================
+  // Hero Section
+  // ================================
   .contact-hero {
-    padding: 4rem 1.5rem;
+    background: $gradient-logo;
+    color: $text-inverse;
+    padding: $padding-section 0;
     text-align: center;
 
-    h1 { font-size: 2.4rem; font-weight: 700; margin-bottom: 0.75rem; color: $primary-color; }
-    p { opacity: 0.95; color: $text-secondary; }
+    h1 {
+      font-size: $font-size-xxl;
+      font-weight: 700;
+      margin-bottom: $spacing-unit / 2;
+    }
+
+    p {
+      font-size: $font-size-lg;
+      color: rgba($text-inverse, 0.9);
+    }
   }
 
-  // Container
+  // ================================
+  // Contact Container
+  // ================================
   .contact-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem;
-    display: grid;
-    grid-template-columns: 1fr 360px;
-    gap: 1.5rem;
+    display: flex;
+    gap: $spacing-unit * 3;
+    padding: $spacing-unit * 3 0;
 
-    @media (max-width: 992px) { grid-template-columns: 1fr 320px; }
-    @media (max-width: 768px) { grid-template-columns: 1fr; padding: 1.5rem 1rem; }
-
-    // Infos
+    // ================================
+    // Contact Info
+    // ================================
     .contact-info {
+      flex: 1;
       display: flex;
       flex-direction: column;
-      gap: 1.25rem;
+      gap: $spacing-unit * 2;
 
       .info-card {
+        background-color: $bg-card;
+        padding: $padding-card;
+        border-radius: 1rem;
+        box-shadow: $box-shadow-card;
         display: flex;
-        flex-direction: column;
         align-items: center;
-        text-align: center;
-        padding: 1.5rem;
-        border-radius: $border-radius;
-        background-color: $light-card-bg;
-        box-shadow: $box-shadow;
-        transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+        gap: $spacing-unit;
 
-        i { font-size: 1.8rem; margin-bottom: 0.75rem; color: $primary-color; }
-        h3 { font-size: 1.1rem; margin-bottom: 0.25rem; color: $text-primary; }
-        p { line-height: 1.5; color: $text-secondary; }
-
-        &:hover { transform: translateY(-6px); }
-      }
-    }
-
-    // Form
-    .contact-form {
-      background-color: $light-card-bg;
-      padding: 1.5rem;
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
-      transition: background-color 0.3s ease, color 0.3s ease;
-
-      h2 { margin-bottom: 1.5rem; color: $primary-color; }
-
-      .alert { margin-bottom: 1.5rem; }
-
-      form {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-
-        .form-group {
-          display: flex;
-          flex-direction: column;
-
-          label { font-weight: 600; margin-bottom: 0.25rem; color: $text-primary; }
-          input, textarea {
-            padding: 0.75rem 1.5rem;
-            border: 1px solid $border-color;
-            border-radius: $border-radius;
-            font-size: 1rem;
-            background: transparent;
-            color: inherit;
-            transition: box-shadow 0.2s ease, border-color 0.2s ease;
-
-            &:focus {
-              outline: none;
-              border-color: $primary-color;
-              box-shadow: 0 0 0 4px rgba($primary-color, 0.06);
-            }
-          }
-
-          .error-message { color: $error-color; font-size: 0.9rem; margin-top: 0.25rem; }
+        i {
+          font-size: 2rem;
+          color: $color-violet;
         }
 
-        .btn-primary {
-          margin-top: 1.5rem;
-          padding: 0.75rem 1.5rem;
-          background-color: $primary-color;
-          color: $text-light;
-          border-radius: $border-radius;
+        h3 {
+          font-size: $font-size-lg;
           font-weight: 700;
-          cursor: pointer;
-          transition: transform 0.15s ease, background-color 0.2s ease;
+          margin-bottom: 0.25rem;
+          color: $color-night-blue;
+        }
 
-          &:hover:not(:disabled) { transform: translateY(-3px); background-color: lighten($primary-color, 6%); }
-          &:disabled { opacity: 0.65; cursor: not-allowed; transform: none; }
+        p {
+          font-size: $font-size-base;
+          color: $text-secondary;
+          margin: 0;
+          line-height: 1.5;
+        }
+      }
+    }
+
+    // ================================
+    // Contact Form
+    // ================================
+    .contact-form {
+      flex: 2;
+      background-color: $bg-card;
+      padding: $padding-card;
+      border-radius: 1rem;
+      box-shadow: $box-shadow-card;
+
+      h2 {
+        font-size: $font-size-xl;
+        font-weight: 700;
+        margin-bottom: $spacing-unit * 1.5;
+        color: $color-night-blue;
+      }
+
+      .alert {
+        padding: $spacing-unit / 2 $spacing-unit;
+        margin-bottom: $spacing-unit;
+        border-radius: 0.5rem;
+      }
+
+      .form-group {
+        margin-bottom: $spacing-unit * 1.5;
+
+        label {
+          font-weight: 500;
+          color: $text-secondary;
+          margin-bottom: 0.25rem;
+          display: block;
+        }
+
+        input,
+        textarea {
+          width: 100%;
+          padding: $spacing-unit / 1.5;
+          border-radius: 0.5rem;
+          border: 1px solid $border-color;
+          font-size: $font-size-base;
+          transition: $transition-base;
+
+          &:focus {
+            outline: none;
+            border-color: $color-violet;
+            box-shadow: 0 0 0 3px rgba($color-violet, 0.1);
+          }
+        }
+
+        .error-message {
+          color: $color-error;
+          font-size: $font-size-sm;
+          margin-top: 0.25rem;
+        }
+      }
+
+      button.btn-primary {
+        background: $gradient-logo;
+        color: $text-inverse;
+        font-weight: 600;
+        padding: $spacing-unit / 1.5 $spacing-unit * 2;
+        border-radius: 0.5rem;
+        transition: $transition-base;
+
+        &:hover {
+          opacity: 0.9;
+        }
+
+        .spinner-border {
+          width: 1rem;
+          height: 1rem;
         }
       }
     }
   }
 
+  // ================================
   // Map
-  .map-container iframe {
+  // ================================
+  .map-container {
+    margin-top: $spacing-unit * 3;
     width: 100%;
-    height: 420px;
-    border: 0;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: $box-shadow-card;
+
+    iframe {
+      border: 0;
+    }
   }
+}
 
-  // Dark Mode
-  :host-context(.dark-mode) {
-    background-color: $dark-bg;
-    color: $text-light;
-
-    .contact-hero {
-      background: linear-gradient(90deg, $primary-dark 0%, $primary-dark 100%);
-      color: $text-light;
-    }
-
+// ================================
+// Responsive
+// ================================
+@media (max-width: 992px) {
+  .contact-page {
     .contact-container {
-      .contact-info .info-card {
-        background-color: $dark-card-bg;
-        color: $text-light;
-        i { color: $primary-dark; }
-        h3 { color: $text-light; }
-        p { color: $text-light; }
-      }
+      flex-direction: column;
+      gap: $spacing-unit * 2;
+    }
+  }
+}
 
-      .contact-form {
-        background-color: $dark-card-bg;
-        color: $text-light;
-        h2 { color: $text-light; }
-        label { color: $text-light; }
-        input, textarea { color: $text-light; border-color: darken($dark-card-bg, 6%); }
-
-        .btn-primary { 
-          background-color: $primary-dark; 
-          color: $text-light;
-          &:hover:not(:disabled) { background-color: lighten($primary-dark, 6%); }
-        }
-      }
+@media (max-width: 576px) {
+  .contact-hero {
+    h1 {
+      font-size: $font-size-xl;
     }
 
-    .map-container iframe { filter: brightness(0.85); }
+    p {
+      font-size: $font-size-base;
+    }
   }
 }

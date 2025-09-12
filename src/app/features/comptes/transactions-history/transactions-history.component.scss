@@ -1,114 +1,155 @@
 @import '../../../../assets/variables';
 
 .transactions-history {
-  background-color: $light-card-bg;
-  color: $text-primary;
-  padding: $padding-section;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  transition: $transition;
   font-family: $font-base;
-  line-height: $line-height-base;
+  background-color: $bg-secondary;
+  padding: $padding-section;
 
-  h2, h4 {
-    font-weight: 600;
-    transition: color $transition-speed;
+  h2 {
+    font-size: $font-size-xl;
+    color: $color-night-blue;
+    margin-bottom: $spacing-unit * 1.5;
+    text-align: center;
   }
 
-  .form-label {
-    font-weight: 500;
-  }
+  /* 🔍 Filtres */
+  .row.mb-4 {
+    gap: 1rem;
 
-  select.form-select {
-    border-radius: $border-radius;
-    padding: 0.5rem;
-    border: 1px solid lighten($secondary-color, 40%);
-    transition: $transition;
+    label {
+      font-weight: 500;
+      color: $text-secondary;
+    }
 
-    &:focus {
-      border-color: $primary-color;
-      box-shadow: 0 0 6px rgba($primary-color, 0.4);
+    select.form-select {
+      border-radius: 0.375rem;
+      transition: $transition-base;
+
+      &:focus {
+        border-color: $color-violet;
+        box-shadow: 0 0 0 0.2rem rgba($color-violet, 0.25);
+      }
     }
   }
 
-  table {
-    background-color: transparent;
-    border-radius: $border-radius;
+  /* 📋 Table transactions */
+  .table-responsive {
+    background-color: $bg-card;
+    border-radius: 0.5rem;
     overflow: hidden;
+    box-shadow: $box-shadow-card;
+    margin-bottom: $spacing-unit * 2;
 
-    thead th {
-      background-color: $light-card-bg;
-      color: $text-primary;
-    }
+    table.table {
+      margin: 0;
+      border-radius: 0.5rem;
 
-    tbody tr {
-      transition: background-color 0.2s;
-    }
-
-    tbody tr:hover {
-      background-color: rgba($primary-color, 0.05);
-    }
-  }
-
-  .btn-outline-primary,
-  .btn-outline-secondary {
-    border-radius: $border-radius;
-    font-weight: 500;
-    transition: $transition;
-
-    &:hover {
-      background-color: $primary-color;
-      color: $text-light;
-    }
-  }
-
-  .pagination .page-link {
-    border-radius: $border-radius;
-    transition: $transition;
-  }
-
-  /* ================= Responsive ================= */
-  @media (max-width: 768px) {
-    table { font-size: 0.875rem; }
-
-    .pagination { flex-wrap: wrap; }
-
-    .btn-sm { margin-bottom: 0.5rem; }
-  }
-
-  /* ================= Dark Mode ================= */
-  :host-context(.dark-mode) & {
-    background-color: $dark-card-bg;
-    color: $text-light;
-
-    h2, h4 { color: $primary-light; }
-
-    table {
-      thead th {
-        background-color: darken($dark-card-bg, 5%);
-        color: $text-light;
+      th {
+        background-color: $color-night-blue;
+        color: $text-inverse;
+        font-size: $font-size-sm;
       }
 
-      tbody tr:hover {
-        background-color: rgba($primary-light, 0.05);
+      td {
+        vertical-align: middle;
+        font-size: $font-size-base;
+
+        &.text-success {
+          color: $color-success !important;
+        }
+
+        &.text-danger {
+          color: $color-error !important;
+        }
+      }
+
+      .btn {
+        font-size: $font-size-sm;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.375rem;
+        transition: $transition-base;
+
+        &.btn-outline-info {
+          border-color: $color-violet;
+          color: $color-violet;
+
+          &:hover {
+            background-color: $color-violet;
+            color: $text-inverse;
+          }
+        }
+
+        &.btn-outline-light {
+          border-color: $border-color;
+          color: $text-secondary;
+
+          &:hover {
+            background-color: $color-light-gray;
+          }
+        }
       }
     }
+  }
 
-    .btn-outline-primary,
-    .btn-outline-secondary {
-      color: $text-light;
-      border-color: $primary-light;
+  /* Pagination */
+  .pagination {
+    .page-item.active .page-link {
+      background-color: $color-violet;
+      border-color: $color-violet;
+      color: $text-inverse;
+    }
+
+    .page-link {
+      color: $color-night-blue;
+      transition: $transition-base;
 
       &:hover {
-        background-color: $primary-light;
-        color: $dark-bg;
+        background-color: $color-light-gray;
       }
     }
+  }
 
-    .pagination .page-link {
-      background-color: darken($dark-card-bg, 5%);
-      color: $text-light;
-      border-color: $secondary-dark;
+  /* ❗ Aucune donnée */
+  .alert-info {
+    background-color: lighten($color-info, 40%);
+    color: $color-info;
+    border-radius: 0.375rem;
+    padding: 0.75rem 1rem;
+    text-align: center;
+  }
+
+  /* 📊 Résumé mensuel */
+  .card.bg-dark {
+    background-color: $color-night-blue !important;
+    border-radius: 0.5rem;
+    box-shadow: $box-shadow-card;
+
+    .card-title {
+      font-size: $font-size-lg;
+      color: $color-violet;
+      margin-bottom: $spacing-unit;
+    }
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    padding: $spacing-unit;
+
+    h2 {
+      font-size: $font-size-lg;
+    }
+
+    table.table th,
+    table.table td {
+      font-size: $font-size-sm;
+    }
+
+    .row.mb-4 {
+      flex-direction: column;
+
+      .col-md-6 {
+        width: 100%;
+      }
     }
   }
 }

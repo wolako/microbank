@@ -1,93 +1,79 @@
 @import '../../../../assets/variables';
 
-.confirm-email-container {
-  max-width: 600px;
-  margin: 5rem auto;
-  padding: 2rem;
+.confirm-email-page {
+  font-family: $font-base;
+  color: $text-primary;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   text-align: center;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  background-color: $dark-card-bg;
-  color: $text-light;
-  transition: $transition;
+  padding: $spacing-unit;
 
-  body.light-mode & {
-    background-color: $light-card-bg;
-    color: $text-primary;
+  p {
+    font-size: $font-size-base;
+    color: $text-secondary;
+    margin-top: 0.5rem;
   }
 
   h2 {
-    font-size: 1.8rem;
-    margin-bottom: 1rem;
-    color: $text-primary; // Remplacement de text-color
-  }
-
-  p {
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
-    color: $text-secondary; // Remplacement de text-color
+    font-size: $font-size-xl;
+    margin-bottom: $spacing-unit;
   }
 
   .btn {
-    min-width: 150px;
-    padding: 0.5rem 1rem;
-    border-radius: $border-radius;
-    font-weight: 500;
-    transition: $transition;
+    margin-top: $spacing-unit;
+    padding: 0.75rem 1.5rem;
+    font-size: $font-size-base;
+    border-radius: 0.375rem;
+    transition: $transition-base;
+  }
 
-    &.btn-secondary {
-      background-color: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      color: $text-light;
+  .btn-secondary {
+    background-color: $bg-secondary;
+    color: $text-primary;
+    border: 1px solid $border-color;
 
-      &:hover {
-        background-color: rgba(255, 255, 255, 0.15);
-      }
-    }
-
-    &.btn-primary {
-      background-color: $primary-color;
-      border-color: $primary-color;
-      color: $text-light;
-
-      &:hover {
-        background-color: darken($primary-color, 10%);
-        border-color: darken($primary-color, 10%);
-      }
+    &:hover {
+      background-color: $color-night-blue;
+      color: $text-inverse;
+      border-color: $color-night-blue;
     }
   }
 
-  .status-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-  }
-
-  .loading-text {
-    font-size: 1.2rem;
-    color: $text-secondary; // Remplacement de text-color
-  }
-}
-
-// Responsive medium
-@media (max-width: 768px) {
-  .confirm-email-container {
-    margin: 3rem auto;
-    padding: 1.5rem;
-  }
-}
-
-// Responsive small
-@media (max-width: 576px) {
-  .confirm-email-container {
-    margin: 2rem auto;
-    padding: 1rem;
-
+  /* ✅ Success state */
+  .success {
     h2 {
-      font-size: 1.5rem;
+      color: $color-success;
+    }
+  }
+
+  /* ❌ Error state */
+  .error {
+    h2 {
+      color: $color-error;
+    }
+  }
+
+  /* Loading state */
+  .loading {
+    p {
+      font-style: italic;
+      color: $color-info;
+    }
+  }
+
+  @media (max-width: 768px) {
+    h2 {
+      font-size: $font-size-lg;
     }
 
     p {
-      font-size: 0.95rem;
+      font-size: $font-size-sm;
+    }
+
+    .btn {
+      width: 100%;
     }
   }
 }

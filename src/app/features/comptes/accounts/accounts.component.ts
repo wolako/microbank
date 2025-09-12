@@ -8,6 +8,7 @@ import { UserDocument } from '../../../shared/models/document.model';
 import { TransactionsComponent } from '../transactions/transactions.component';
 import { ToastService } from '../../../core/services/toast/toast.service';
 import { ToastComponent } from '../../../shared/components/toast/toast.component';
+import { animate, style, transition, trigger } from '@angular/animations';
 
 
 @Component({
@@ -15,7 +16,18 @@ import { ToastComponent } from '../../../shared/components/toast/toast.component
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, FormsModule, TransactionsComponent, ToastComponent],
   templateUrl: './accounts.component.html',
-  styleUrls: ['./accounts.component.scss']
+  styleUrls: ['./accounts.component.scss'],
+  animations: [
+    trigger('fadeInOut', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(10px)' }),
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+      ]),
+      transition(':leave', [
+        animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(10px)' }))
+      ])
+    ])
+  ]
 })
 export class AccountsComponent implements OnInit {
   userData: any;

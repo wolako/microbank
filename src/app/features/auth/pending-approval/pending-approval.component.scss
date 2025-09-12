@@ -1,6 +1,5 @@
 @import '../../../../assets/variables';
 
-
 .pending-approval-container {
   min-height: 100vh;
   display: flex;
@@ -10,16 +9,16 @@
   font-family: $font-base;
   background: $light-bg;
   color: $text-primary;
-  transition: $transition;
+  transition: $transition-base;
 
   .card {
-    background: $light-card-bg;
+    background: $bg-card;
     border-radius: $border-radius;
     padding: 2.5rem;
     max-width: 520px;
     width: 100%;
     text-align: center;
-    box-shadow: $box-shadow;
+    box-shadow: $box-shadow-card;
 
     .illustration {
       width: 120px;
@@ -30,79 +29,52 @@
     }
 
     h2 {
-      font-size: $h2-font-size;
+      font-size: $font-size-lg;
       font-weight: 700;
       margin-bottom: $spacing-unit;
       color: $text-primary;
+      line-height: 1.2; // remplace $line-height
     }
 
     p {
-      font-size: $p-font-size;
-      line-height: $p-line-height;
-      margin-bottom: $spacing-2;
+      font-size: $font-size-sm;
+      line-height: 1.4; // remplace $line-height
+      margin-bottom: $spacing-unit; // remplace $spacing-2
       color: $text-secondary;
 
       strong {
         font-weight: 600;
-        color: $primary-color;
+        color: $text-primary;
       }
     }
 
     .btn-cta {
       display: inline-block;
-      padding: $spacing-half $spacing-unit * 1.5;
+      padding: $spacing-half $spacing-unit; // remplace $spacing-unit * 1.5
       border-radius: $border-radius;
       font-weight: 600;
       text-decoration: none;
-      background: $gradient-light;
-      color: $text-light;
-      transition: $transition;
+      background: $gradient-logo; // remplace $gradient-light
+      color: $text-inverse;
+      transition: $transition-base; // remplace $transition
 
       &:hover {
-        background: darken($primary-color, 5%);
-      }
-    }
-  }
-}
-
-/* 🌙 Dark mode */
-:host-context(.dark-mode) .pending-approval-container {
-  background: $dark-bg;
-  color: $color-dark-section-text;
-
-  .card {
-    background: $dark-card-bg;
-    color: $color-dark-section-text;
-
-    h2 {
-      color: $color-dark-section-text;
-    }
-
-    p {
-      color: lighten($color-dark-section-text, 12%);
-    }
-
-    .btn-cta {
-      background: $gradient-dark;
-      color: $text-light;
-
-      &:hover {
-        background: lighten($primary-light, 5%);
+        background: darken($color-violet, 5%); // remplace $primary-color
       }
     }
   }
 }
 
 /* 📱 Responsive */
-@include respond-md {
+@media (max-width: 992px) {
   .pending-approval-container {
-    padding: $padding-section-md;
+    padding: $padding-section / 2; // remplace $padding-section-md
 
     .card {
       padding: 2rem;
 
       h2 {
-        font-size: $h2-font-size-md;
+        font-size: $font-size-lg; // remplace $h2-font-size-md
       }
 
       p {
@@ -112,7 +84,7 @@
   }
 }
 
-@include respond-sm {
+@media (max-width: 576px) {
   .pending-approval-container {
     .card {
       padding: 1.5rem;

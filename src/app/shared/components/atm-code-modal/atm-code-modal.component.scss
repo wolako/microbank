@@ -2,157 +2,76 @@
 
 .modal-backdrop {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top:0; left:0; right:0; bottom:0;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1050;
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba($color-black, 0.5);
   backdrop-filter: blur(5px);
+  z-index: $z-modal;
   animation: fadeIn 0.3s ease-in-out;
 
   .modal-dialog {
     max-width: 400px;
-    width: 90%;
+    width: 100%;
     animation: slideDown 0.3s ease-out;
 
     .modal-content {
-      border-radius: $border-radius;
-      box-shadow: $box-shadow;
+      border-radius: 1rem;
+      box-shadow: $box-shadow-card;
       overflow: hidden;
       border: none;
-      background-color: $light-card-bg;
+      background-color: $bg-card;
       color: $text-primary;
-      transition: background-color 0.3s ease, color 0.3s ease;
+      transition: $transition-base;
 
       .modal-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
         padding: $spacing-unit;
-        border-bottom: 1px solid rgba(0,0,0,0.1);
+        border-bottom: 1px solid lighten($color-black, 80%);
 
-        .modal-title {
-          font-weight: 700;
-        }
+        .modal-title { font-weight:700; color: $color-night-blue; }
 
         .btn-close {
-          background: none;
-          border: none;
-          font-size: 1.2rem;
-          cursor: pointer;
-
-          &::after {
-            content: '✕';
-            color: currentColor;
-          }
+          background:transparent; border:none; font-size:1.25rem; cursor:pointer; color:$text-secondary;
+          &:hover { color:$color-violet; }
+          &::after { content:'✕'; color: currentColor; }
         }
       }
 
       .modal-body {
         padding: $spacing-unit;
-
         input {
           width: 100%;
           text-align: center;
           letter-spacing: 4px;
-          padding: $spacing-half;
-          border-radius: $border-radius;
+          padding: $spacing-unit * 0.75;
+          border-radius: 8px;
           font-size: 1.2rem;
-          border: 1px solid $border-color;
-          background-color: rgba(0,0,0,0.05);
+          border:1px solid $border-color;
+          background-color: $bg-secondary;
           color: $text-primary;
-          transition: border-color 0.3s ease, box-shadow 0.3s ease;
-
+          transition: $transition-base;
           &:focus {
-            outline: none;
-            border-color: $primary-color;
-            box-shadow: 0 0 0 3px rgba($primary-color, 0.15);
+            outline:none;
+            border-color: $color-violet;
+            box-shadow:0 0 0 3px rgba($color-violet,0.15);
           }
         }
       }
 
       .modal-footer {
-        display: flex;
-        justify-content: flex-end;
-        gap: $spacing-half;
-        padding: $spacing-half;
-        border-top: 1px solid rgba(0,0,0,0.1);
-
-        .btn-primary {
-          background-color: $primary-color;
-          color: $text-light;
-          border-radius: $border-radius;
-          font-weight: 500;
-          padding: $spacing-half $spacing-unit;
-
-          &:hover {
-            background-color: $primary-light;
-          }
-        }
-
-        .btn-secondary {
-          background-color: rgba(0,0,0,0.05);
-          color: $text-primary;
-          border-radius: $border-radius;
-          font-weight: 500;
-          padding: $spacing-half $spacing-unit;
-
-          &:hover {
-            background-color: rgba(0,0,0,0.1);
-          }
-        }
+        display:flex;
+        justify-content:flex-end;
+        gap: $spacing-unit;
+        padding: $spacing-unit;
+        border-top:1px solid lighten($color-black,80%);
       }
     }
   }
 }
 
-/* Dark Mode */
-:host-context(.dark-mode) .modal-backdrop {
-  background-color: rgba(0, 0, 0, 0.6);
-
-  .modal-content {
-    background-color: $dark-card-bg;
-    color: $color-dark-section-text;
-
-    input {
-      border-color: rgba(255,255,255,0.3);
-      color: $color-dark-section-text;
-      background-color: rgba(255,255,255,0.1);
-
-      &:focus {
-        border-color: $primary-dark;
-        box-shadow: 0 0 0 3px rgba($primary-dark, 0.2);
-      }
-    }
-
-    .btn-primary {
-      background-color: $primary-dark;
-      color: $text-light;
-
-      &:hover {
-        background-color: lighten($primary-dark, 6%);
-      }
-    }
-
-    .btn-secondary {
-      background-color: rgba(255,255,255,0.15);
-      color: $color-dark-section-text;
-
-      &:hover {
-        background-color: rgba(255,255,255,0.25);
-      }
-    }
-  }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes slideDown {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes slideDown { from { transform: translateY(-20px); opacity:0; } to { transform: translateY(0); opacity:1; } }

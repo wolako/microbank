@@ -8,15 +8,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-  background-color: $light-bg;
+  padding: $spacing-unit * 2;
+  background-color: $bg-secondary;
   color: $text-primary;
-  transition: background-color 0.35s ease, color 0.35s ease;
-
-  :host-context(.dark-mode) & {
-    background-color: $dark-bg;
-    color: $color-dark-section-text;
-  }
+  transition: $transition-base;
 }
 
 // ================================
@@ -25,49 +20,37 @@
 .auth-card {
   width: 100%;
   max-width: 400px;
-  padding: $spacing-2;
-  border-radius: $border-radius;
-  background-color: $light-card-bg;
-  box-shadow: $box-shadow;
-  transition: background-color 0.3s ease, color 0.3s ease;
-
-  :host-context(.dark-mode) & {
-    background-color: $dark-card-bg;
-    color: $color-dark-section-text;
-  }
+  padding: $padding-card;
+  border-radius: 0.75rem;
+  background-color: $bg-card;
+  box-shadow: $box-shadow-card;
+  transition: $transition-base;
 
   // ================================
   // Header
   // ================================
   .auth-header {
     text-align: center;
-    margin-bottom: $spacing-2;
+    margin-bottom: $spacing-unit * 2;
 
     .logo {
       max-width: 90px;
-      margin-bottom: $spacing-half;
+      margin-bottom: $spacing-unit / 2;
+      border-radius: 0.25rem;
     }
 
     h2 {
-      font-size: 1.8rem;
+      font-size: $font-size-xl;
       font-weight: 700;
-      color: $primary-color;
+      color: $color-night-blue;
       margin-bottom: 0.5rem;
-      transition: color 0.3s ease;
-
-      :host-context(.dark-mode) & {
-        color: $primary-dark;
-      }
+      transition: $transition-base;
     }
 
     p {
-      font-size: 1rem;
+      font-size: $font-size-base;
       color: $text-secondary;
-      transition: color 0.3s ease;
-
-      :host-context(.dark-mode) & {
-        color: lighten($color-dark-section-text, 10%);
-      }
+      transition: $transition-base;
     }
   }
 
@@ -85,77 +68,59 @@
 
       label {
         font-weight: 600;
-        margin-bottom: $spacing-quarter;
+        margin-bottom: $spacing-unit / 4;
         color: $text-primary;
-        transition: color 0.3s ease;
-
-        :host-context(.dark-mode) & {
-          color: $color-dark-section-text;
-        }
+        transition: $transition-base;
       }
 
       input {
-        padding: $spacing-half $spacing-unit;
+        padding: $spacing-unit / 2 $spacing-unit;
         border: 1px solid $border-color;
-        border-radius: $border-radius;
-        font-size: 1rem;
-        background-color: transparent;
-        color: inherit;
-        transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 0.5rem;
+        font-size: $font-size-base;
+        background-color: $bg-primary;
+        color: $text-primary;
+        transition: $transition-base;
 
         &:focus {
           outline: none;
-          border-color: $primary-color;
-          box-shadow: 0 0 0 4px rgba($primary-color, 0.15);
-        }
-
-        :host-context(.dark-mode) & {
-          border-color: darken($dark-card-bg, 6%);
-          color: $color-dark-section-text;
-
-          &:focus {
-            border-color: $primary-dark;
-            box-shadow: 0 0 0 4px rgba($primary-dark, 0.15);
-          }
+          border-color: $color-violet;
+          box-shadow: 0 0 0 0.2rem rgba($color-violet, 0.25);
         }
       }
 
       .text-danger {
-        font-size: 0.875rem;
+        font-size: $font-size-sm;
         margin-top: 0.25rem;
       }
     }
 
     .forgot-password {
-      font-size: 0.9rem;
-      color: $primary-color;
+      font-size: $font-size-sm;
+      color: $color-violet;
       text-decoration: none;
-      margin-top: $spacing-half;
-      transition: color 0.2s ease;
+      margin-top: $spacing-unit / 2;
+      transition: $transition-base;
 
       &:hover {
         text-decoration: underline;
-      }
-
-      :host-context(.dark-mode) & {
-        color: $primary-dark;
       }
     }
 
     button.btn-primary {
       margin-top: $spacing-unit;
-      padding: $spacing-half $spacing-unit;
-      background-color: $primary-color;
-      color: $text-light;
+      padding: $spacing-unit / 2 $spacing-unit;
+      background-color: $color-night-blue;
+      color: $text-inverse;
       border: none;
-      border-radius: $border-radius;
+      border-radius: 0.5rem;
       font-weight: 700;
       cursor: pointer;
-      transition: transform 0.15s ease, background-color 0.2s ease;
+      transition: transform 0.15s ease, $transition-base;
 
       &:hover:not(:disabled) {
         transform: translateY(-2px);
-        background-color: $primary-light;
+        background-color: $color-violet;
       }
 
       &:disabled {
@@ -163,15 +128,10 @@
         cursor: not-allowed;
         transform: none;
       }
+    }
 
-      :host-context(.dark-mode) & {
-        background-color: $primary-dark;
-        color: $text-light;
-
-        &:hover:not(:disabled) {
-          background-color: lighten($primary-dark, 6%);
-        }
-      }
+    .alert {
+      margin-top: $spacing-unit / 2;
     }
   }
 
@@ -182,28 +142,15 @@
     text-align: center;
     margin-top: $spacing-unit;
 
-    p {
-      font-size: 0.95rem;
-      color: $text-secondary;
-      transition: color 0.3s ease;
+    a {
+      color: $color-night-blue;
+      font-weight: 600;
+      text-decoration: none;
+      transition: $transition-base;
 
-      :host-context(.dark-mode) & {
-        color: $color-dark-section-text;
-      }
-
-      a {
-        color: $primary-color;
-        font-weight: 600;
-        text-decoration: none;
-        transition: color 0.2s ease;
-
-        &:hover {
-          text-decoration: underline;
-        }
-
-        :host-context(.dark-mode) & {
-          color: $primary-dark;
-        }
+      &:hover {
+        color: $color-violet;
+        text-decoration: underline;
       }
     }
   }
@@ -212,28 +159,36 @@
 // ================================
 // Responsive
 // ================================
-@include respond-md {
+@media (max-width: 768px) {
   .auth-container {
-    padding: 1.5rem;
+    padding: $spacing-unit * 1.5;
 
     .auth-card {
-      padding: 1.5rem;
+      padding: $spacing-unit * 1.5;
 
-      .auth-header h2 { font-size: 1.5rem; }
-      .auth-header p { font-size: 0.95rem; }
+      .auth-header h2 {
+        font-size: $font-size-lg;
+      }
+      .auth-header p {
+        font-size: $font-size-sm;
+      }
     }
   }
 }
 
-@include respond-sm {
+@media (max-width: 576px) {
   .auth-container {
-    padding: 1rem;
+    padding: $spacing-unit;
 
     .auth-card {
-      padding: 1rem;
+      padding: $spacing-unit;
 
-      .auth-header h2 { font-size: 1.3rem; }
-      .auth-header p { font-size: 0.9rem; }
+      .auth-header h2 {
+        font-size: $font-size-base;
+      }
+      .auth-header p {
+        font-size: $font-size-sm;
+      }
     }
   }
 }

@@ -1,103 +1,84 @@
 @import '../../../../assets/variables';
 
-.loan-products {
+// ================================
+// Container principal
+// ================================
+.container {
   padding: $padding-section;
   font-family: $font-base;
-  background-color: $light-bg;
-  color: $text-secondary;
-  transition: $transition;
-  max-width: 1200px;
-  margin: 0 auto;
+  color: $text-primary;
 
   h3 {
-    font-size: $h2-font-size;
-    color: $text-primary;
-    margin-bottom: 1.5rem;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $color-night-blue;
+    margin-bottom: $spacing-unit * 2;
   }
 
+  // ================================
+  // Tableau produits de prêt
+  // ================================
   table {
     width: 100%;
-    border-collapse: collapse;
-    border-radius: $border-radius;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: $box-shadow;
-    background-color: $light-card-bg;
-    transition: $transition;
+    box-shadow: $box-shadow-card;
+    background-color: $bg-card;
+    transition: $transition-base;
 
     thead {
-      background-color: lighten($light-card-bg, 5%);
+      background-color: $color-violet;
+      color: $text-inverse;
 
       th {
-        text-align: center;
+        padding: $spacing-unit / 2;
         font-weight: 600;
-        padding: 0.75rem;
-        color: $text-primary;
+        text-align: left;
       }
     }
 
     tbody {
       tr {
+        border-bottom: 1px solid $border-color;
         transition: background-color 0.2s ease;
 
         &:hover {
-          background-color: rgba($primary-color, 0.05);
+          background-color: lighten($color-light-gray, 5%);
         }
 
         td {
-          text-align: center;
-          padding: 0.65rem;
+          padding: $spacing-unit / 2;
+          vertical-align: middle;
         }
       }
     }
   }
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    padding: $padding-section-md;
+  p.text-muted {
+    font-style: italic;
+    margin-top: $spacing-unit;
+  }
+}
 
-    table {
-      font-size: 0.9rem;
+// ================================
+// Responsive
+// ================================
+@media (max-width: 768px) {
+  table {
+    font-size: $font-size-sm;
 
-      th,
-      td {
-        padding: 0.5rem;
-      }
+    th, td {
+      padding: $spacing-unit / 3;
     }
   }
 }
 
-/* Dark mode (Angular host context) */
-:host-context(.dark-mode) {
-  .loan-products {
-    background-color: $dark-bg;
-    color: $text-light;
-
-    h3 {
-      color: $primary-light;
-    }
-
-    table {
-      background-color: $dark-card-bg;
-
-      thead {
-        background-color: lighten($dark-card-bg, 5%);
-
-        th {
-          color: $text-light;
-        }
-      }
-
-      tbody {
-        tr {
-          &:hover {
-            background-color: rgba($primary-light, 0.12);
-          }
-
-          td {
-            color: $text-light;
-          }
-        }
-      }
-    }
+@media (max-width: 576px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 }

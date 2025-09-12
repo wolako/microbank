@@ -2,121 +2,89 @@
 
 .loan-list-container {
   font-family: $font-base;
-  padding: 3rem; // $spacing-unit * 4
-  background-color: $light-bg;
-  color: $text-primary;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  background-color: $bg-secondary;
+  padding: $padding-section 0;
 
   h2 {
-    margin-bottom: 2.25rem; // $spacing-unit * 3
-    font-size: 2rem;
-    color: $primary-color; // remplace $color-light-primary
-    transition: color 0.4s ease;
+    font-size: $font-size-xl;
+    color: $color-night-blue;
+    margin-bottom: $spacing-unit * 2;
+    text-align: center;
   }
 
   .alert {
-    font-size: 0.95rem;
-    padding: 0.75rem 1.5rem; // $spacing-half $spacing-unit
-    margin-bottom: 1.5rem; // $spacing-unit * 2
+    font-size: $font-size-base;
+    padding: $spacing-unit;
+    border-radius: 0.5rem;
   }
 
   table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 0.95rem;
-    text-align: left;
-    background-color: $light-card-bg;
-    border-radius: $border-radius;
+    background-color: $bg-card;
+    border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: $box-shadow;
-    transition: all 0.3s ease;
+    box-shadow: $box-shadow-card;
+    font-size: $font-size-base;
 
-    thead {
-      background-color: $primary-color;
-      color: $text-light;
+    th, td {
+      padding: $spacing-unit;
+      text-align: left;
+      border-bottom: 1px solid $border-color;
+    }
 
-      th {
-        padding: 0.75rem 1.5rem;
-        font-weight: 600;
+    th {
+      background-color: $bg-secondary;
+      color: $color-night-blue;
+      font-weight: 600;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tbody tr:hover {
+      background-color: lighten($bg-secondary, 5%);
+      transition: $transition-base;
+    }
+
+    .btn-outline-primary {
+      font-size: $font-size-sm;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.25rem;
+      transition: $transition-base;
+
+      &:hover {
+        background-color: $color-violet;
+        border-color: $color-violet;
+        color: $text-inverse;
       }
     }
 
-    tbody {
-      tr {
-        transition: background-color 0.3s ease;
+    span {
+      &.status-paid {
+        color: $color-success;
+        font-weight: 600;
+      }
 
-        &:hover { background-color: rgba(0,0,0,0.03); }
+      &.status-pending {
+        color: $color-warning;
+        font-weight: 600;
+      }
 
-        td {
-          padding: 0.75rem 1.5rem;
-          vertical-align: middle;
-
-          span {
-            &.status-paid { color: green; font-weight: 600; }
-            &.status-active { color: orange; font-weight: 600; }
-            &.status-pending { color: blue; font-weight: 600; }
-            &.status-late { color: red; font-weight: 600; }
-          }
-
-          a.btn {
-            font-size: 0.85rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: $border-radius;
-            transition: all 0.3s ease;
-
-            &:hover {
-              transform: translateY(-2px);
-              box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            }
-          }
-        }
+      &.status-late {
+        color: $color-error;
+        font-weight: 600;
       }
     }
   }
 
-  // ========================
-  // Dark Mode
-  // ========================
-  :host-context(.dark-mode) {
-    background-color: $dark-bg;
-    color: $text-light;
+  @media (max-width: 768px) {
+    padding: $spacing-unit * 2 0;
 
-    h2 { color: $primary-dark; }
-
-    .alert {
-      background-color: $dark-card-bg;
-      color: $text-light;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    table {
-      background-color: $dark-card-bg;
-      color: $text-light;
-
-      thead {
-        background-color: $primary-dark;
-        color: $text-light;
-      }
-
-      tbody {
-        tr:hover { background-color: rgba(255,255,255,0.05); }
-
-        td span.status-paid { color: lightgreen; }
-        td span.status-active { color: orange; }
-        td span.status-pending { color: lightblue; }
-        td span.status-late { color: red; }
-
-        td a.btn-outline-primary {
-          border-color: $primary-dark;
-          color: $primary-dark;
-
-          &:hover {
-            background-color: $primary-dark;
-            color: $text-light;
-          }
-        }
-      }
+    table, th, td {
+      font-size: $font-size-sm;
     }
   }
 }

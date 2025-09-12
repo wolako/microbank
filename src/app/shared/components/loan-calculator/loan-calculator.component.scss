@@ -7,21 +7,21 @@
   align-items: flex-start;
   gap: $spacing-unit * 3;
   padding: $spacing-unit * 4;
-  background-color: $light-bg;
+  background-color: $bg-secondary;
   color: $text-primary;
-  transition: $transition;
+  transition: $transition-base;
 
   // ------------------------------
   // Formulaire
   // ------------------------------
   .calculator-form {
     flex: 1 1 360px;
-    background-color: $light-card-bg;
+    background-color: $bg-card;
     padding: $spacing-unit * 3;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
+    border-radius: 12px;
+    box-shadow: $box-shadow-card;
     animation: fadeInUp 0.6s ease forwards;
-    transition: $transition;
+    transition: $transition-base;
 
     .form-group {
       margin-bottom: $spacing-unit * 2;
@@ -39,10 +39,10 @@
         gap: $spacing-unit;
 
         .input-group-text {
-          background-color: $light-bg;
-          border: 1px solid $border-color;
+          background-color: $bg-secondary;
+          border: 1px solid lighten($color-night-blue, 40%);
           padding: $spacing-unit * 0.5 $spacing-unit;
-          border-radius: $border-radius;
+          border-radius: 8px;
           font-weight: 600;
           color: inherit;
         }
@@ -50,26 +50,26 @@
         input[type="range"] {
           flex: 1;
           height: 6px;
-          accent-color: $primary-color;
-          background: lighten($primary-color, 45%);
-          border-radius: $border-radius;
+          accent-color: $color-violet;
+          background: lighten($color-violet, 45%);
+          border-radius: 8px;
           cursor: pointer;
         }
 
         input[type="number"] {
           width: 110px;
           padding: $spacing-unit * 0.5;
-          border: 1px solid $border-color;
-          border-radius: $border-radius;
+          border: 1px solid lighten($color-night-blue, 40%);
+          border-radius: 8px;
           background-color: transparent;
           color: inherit;
           font-size: 1rem;
-          transition: $transition;
+          transition: $transition-base;
 
           &:focus {
             outline: none;
-            border-color: $primary-color;
-            box-shadow: 0 0 0 3px rgba($primary-color, 0.15);
+            border-color: $color-violet;
+            box-shadow: 0 0 0 3px rgba($color-violet, 0.15);
           }
         }
       }
@@ -86,17 +86,17 @@
     .btn.btn-primary {
       width: 100%;
       padding: $spacing-unit;
-      background: $gradient-light;
-      color: $text-light;
+      background: $gradient-logo;
+      color: $text-inverse;
       font-weight: 700;
       border: none;
-      border-radius: $border-radius;
+      border-radius: 8px;
       cursor: pointer;
-      transition: $transition;
+      transition: $transition-base;
 
       &:hover:not(:disabled) {
         transform: translateY(-3px);
-        background: linear-gradient(135deg, darken($primary-color, 5%), $primary-light);
+        background: linear-gradient(135deg, darken($color-night-blue, 5%), lighten($color-violet, 10%));
       }
 
       &:disabled {
@@ -111,12 +111,12 @@
   // ------------------------------
   .calculator-results {
     flex: 1 1 280px;
-    background-color: $light-card-bg;
+    background-color: $bg-card;
     padding: $spacing-unit * 3;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
+    border-radius: 12px;
+    box-shadow: $box-shadow-card;
     animation: fadeInUp 0.6s ease forwards;
-    transition: $transition;
+    transition: $transition-base;
 
     .result-item {
       display: flex;
@@ -129,59 +129,7 @@
       strong {
         font-size: 1.2rem;
         font-weight: 700;
-        color: $primary-color;
-      }
-    }
-  }
-
-  // ------------------------------
-  // Mode sombre
-  // ------------------------------
-  :host-context(.dark-mode) & {
-    background-color: $dark-bg;
-    color: $color-dark-section-text;
-
-    .calculator-form,
-    .calculator-results {
-      background-color: $dark-card-bg;
-      color: $color-dark-section-text;
-
-      label,
-      .range-labels {
-        color: lighten($color-dark-section-text, 15%);
-      }
-
-      .input-group-text {
-        background-color: $dark-bg;
-        border-color: darken($dark-card-bg, 5%);
-      }
-
-      input[type="range"] {
-        accent-color: $primary-light;
-        background: lighten($primary-light, 15%);
-      }
-
-      input[type="number"] {
-        border-color: darken($dark-card-bg, 6%);
-        color: $color-dark-section-text;
-
-        &:focus {
-          border-color: $primary-light;
-          box-shadow: 0 0 0 3px rgba($primary-light, 0.25);
-        }
-      }
-
-      .btn.btn-primary {
-        background: $gradient-dark;
-        color: $text-light;
-
-        &:hover:not(:disabled) {
-          background: linear-gradient(135deg, lighten($primary-dark, 8%), $secondary-dark);
-        }
-      }
-
-      .result-item strong {
-        color: $primary-light;
+        color: $color-violet;
       }
     }
   }

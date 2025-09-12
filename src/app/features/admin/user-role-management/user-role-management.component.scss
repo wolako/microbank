@@ -1,66 +1,94 @@
 @import '../../../../assets/variables';
 
-
-.user-role {
+// ================================
+// Container principal
+// ================================
+.container {
   padding: $padding-section;
   font-family: $font-base;
-  background-color: $light-bg;
-  color: $text-secondary;
+  color: $text-primary;
 
   h3 {
-    font-size: $h2-font-size;
-    color: $text-primary;
-    margin-bottom: 1.5rem;
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $color-night-blue;
+    margin-bottom: $spacing-unit * 2;
   }
 
+  // ================================
+  // Messages
+  // ================================
   .alert {
-    border-radius: $border-radius;
-    padding: 0.75rem 1rem;
-    font-size: $p-font-size;
-    margin-bottom: 1rem;
+    border-radius: 0.5rem;
+    padding: $spacing-unit;
+    font-size: $font-size-base;
+    transition: $transition-base;
+
+    &.alert-success {
+      background-color: lighten($color-success, 35%);
+      color: $color-success;
+    }
+
+    &.alert-danger {
+      background-color: lighten($color-error, 35%);
+      color: $color-error;
+    }
   }
 
+  // ================================
+  // Tableau gestion rôles
+  // ================================
   table {
     width: 100%;
-    border-collapse: collapse;
-    border-radius: $border-radius;
+    border-collapse: separate;
+    border-spacing: 0;
+    border-radius: 0.5rem;
     overflow: hidden;
-    box-shadow: $box-shadow;
-    background-color: $light-card-bg;
-    transition: $transition;
+    box-shadow: $box-shadow-card;
+    background-color: $bg-card;
+    transition: $transition-base;
 
     thead {
-      background-color: lighten($light-card-bg, 3%);
+      background-color: $color-violet;
+      color: $text-inverse;
 
       th {
-        text-align: center;
+        padding: $spacing-unit / 2;
         font-weight: 600;
-        padding: 0.75rem;
-        color: $text-primary;
+        text-align: left;
       }
     }
 
     tbody {
       tr {
+        border-bottom: 1px solid $border-color;
+        transition: background-color 0.2s ease;
+
         &:hover {
-          background-color: rgba($primary-color, 0.05);
-          transition: $transition;
+          background-color: lighten($color-light-gray, 5%);
         }
 
         td {
-          text-align: center;
-          padding: 0.65rem;
+          padding: $spacing-unit / 2;
+          vertical-align: middle;
 
           select.form-select {
-            border-radius: $border-radius;
-            transition: $transition;
+            border-radius: 0.25rem;
+            border: 1px solid $border-color;
+            padding: 0.25rem 0.5rem;
+            transition: $transition-base;
+
+            &:focus {
+              border-color: $color-violet;
+              box-shadow: 0 0 0 0.2rem rgba(106, 13, 173, 0.25);
+              outline: none;
+            }
           }
 
-          button {
-            font-size: 0.85rem;
-            padding: 0.35rem 0.6rem;
-            border-radius: $border-radius;
-            transition: $transition;
+          button.btn-sm {
+            font-size: $font-size-sm;
+            padding: 0.25rem 0.5rem;
+            transition: $transition-base;
 
             &:hover {
               opacity: 0.85;
@@ -70,73 +98,25 @@
       }
     }
   }
+}
 
-  /* Responsive */
-  @media (max-width: 768px) {
-    padding: $padding-section-md;
+// ================================
+// Responsive
+// ================================
+@media (max-width: 768px) {
+  table {
+    font-size: $font-size-sm;
 
-    table {
-      font-size: 0.85rem;
-
-      th,
-      td {
-        padding: 0.5rem;
-      }
-
-      td button,
-      td select.form-select {
-        font-size: 0.75rem;
-      }
+    th, td {
+      padding: $spacing-unit / 3;
     }
   }
 }
 
-/* Dark mode */
-[data-theme='dark'] {
-  .user-role {
-    background-color: $dark-bg;
-    color: $text-light;
-
-    h3 {
-      color: $primary-light;
-    }
-
-    .alert {
-      background-color: $dark-card-bg;
-      color: $text-light;
-    }
-
-    table {
-      background-color: $dark-card-bg;
-
-      thead {
-        background-color: lighten($dark-card-bg, 3%);
-        th {
-          color: $text-light;
-        }
-      }
-
-      tbody {
-        tr {
-          &:hover {
-            background-color: rgba($primary-light, 0.15);
-          }
-
-          td {
-            color: $text-light;
-
-            select.form-select {
-              background-color: $dark-card-bg;
-              color: $text-light;
-              border: 1px solid $secondary-dark;
-            }
-
-            button {
-              color: $text-light;
-            }
-          }
-        }
-      }
-    }
+@media (max-width: 576px) {
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 }

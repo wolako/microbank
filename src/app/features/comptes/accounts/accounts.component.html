@@ -1,178 +1,175 @@
 <div class="container mt-4 accounts-container">
-  <h2 class="mb-4">Mon compte</h2>
+  <!-- Titre -->
+  <h2 class="mb-4 text-center">Mon compte</h2>
 
-  <!-- Tabs navigation -->
-  <ul class="nav nav-tabs mb-3">
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'profile'" (click)="activeTab = 'profile'">
-        Profil
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'documents'" (click)="activeTab = 'documents'">
-        Documents
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'notifications'" (click)="activeTab = 'notifications'">
-        Notifications
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'security'" (click)="activeTab = 'security'">
-        Sécurité
-      </a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" [class.active]="activeTab === 'transactions'" (click)="activeTab = 'transactions'">
-        Transactions
-      </a>
-    </li>
-  </ul>
-
-  <!-- ===================== Profil ===================== -->
-  <div *ngIf="activeTab === 'profile'">
-    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Prénom</label>
-          <input type="text" class="form-control" formControlName="firstName" [readonly]="!isEditing" />
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Nom</label>
-          <input type="text" class="form-control" formControlName="lastName" [readonly]="!isEditing" />
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Email</label>
-          <input type="email" class="form-control" formControlName="email" [readonly]="!isEditing" />
-        </div>
-        <div class="col-md-6 mb-3">
-          <label class="form-label">Téléphone</label>
-          <input type="text" class="form-control" formControlName="phone" [readonly]="!isEditing" />
-        </div>
-      </div>
-
-      <div class="d-flex gap-2">
-        <button *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="isEditing = true">
-          Modifier
-        </button>
-        <div *ngIf="isEditing">
-          <button type="submit" class="btn btn-success" [disabled]="isLoading">
-            <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
-            Enregistrer
-          </button>
-          <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Annuler</button>
-        </div>
-      </div>
-    </form>
-  </div>
-
-  <!-- ===================== Documents ===================== -->
-  <div *ngIf="activeTab === 'documents'">
-    <div class="mb-3">
-      <label for="docUpload" class="form-label">Ajouter un document</label>
-      <input type="file" id="docUpload" class="form-control" (change)="onFileSelected($event)" />
-    </div>
-
-    <div *ngIf="uploading" class="text-info">
-      <span class="spinner-border spinner-border-sm"></span> Upload en cours...
-    </div>
-
-    <ul class="list-group mt-3">
-      <li *ngFor="let doc of documents" class="list-group-item d-flex justify-content-between align-items-center">
-        {{ doc.original_name }}
-        <div>
-          <button class="btn btn-sm btn-outline-primary me-2" (click)="downloadDocument(doc)">
-            Télécharger
-          </button>
-          <button class="btn btn-sm btn-outline-danger" (click)="deleteDocument(doc.id)">
-            Supprimer
-          </button>
-        </div>
+  <!-- Wrapper pour onglets + contenu -->
+  <div class="tabs-content-wrapper d-flex flex-column flex-lg-row gap-3">
+    <!-- Tabs navigation -->
+    <ul class="nav nav-tabs flex-lg-column mb-3" role="tablist">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'profile'" (click)="activeTab = 'profile'">Profil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'documents'" (click)="activeTab = 'documents'">Documents</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'notifications'" (click)="activeTab = 'notifications'">Notifications</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'security'" (click)="activeTab = 'security'">Sécurité</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'transactions'" (click)="activeTab = 'transactions'">Transactions</a>
       </li>
     </ul>
-  </div>
 
-  <!-- ===================== Notifications ===================== -->
-  <div *ngIf="activeTab === 'notifications'">
-    <form [formGroup]="notificationForm" (ngSubmit)="updateNotificationPreferences()">
-      <div class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" id="notifEmail" [formControl]="emailNotificationsControl" />
-        <label class="form-check-label" for="notifEmail">Recevoir les notifications par email</label>
+    <!-- Contenu des onglets -->
+    <div class="tab-content flex-fill">
+      <!-- Profil -->
+      <div *ngIf="activeTab === 'profile'" class="card tab-card p-3 mb-3">
+        <h4 class="mb-3">Informations personnelles</h4>
+        <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+          <div class="row">
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Prénom</label>
+              <input type="text" class="form-control" formControlName="firstName" [readonly]="!isEditing" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Nom</label>
+              <input type="text" class="form-control" formControlName="lastName" [readonly]="!isEditing" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control" formControlName="email" [readonly]="!isEditing" />
+            </div>
+            <div class="col-md-6 mb-3">
+              <label class="form-label">Téléphone</label>
+              <input type="text" class="form-control" formControlName="phone" [readonly]="!isEditing" />
+            </div>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="isEditing = true">Modifier</button>
+            <div *ngIf="isEditing">
+              <button type="submit" class="btn btn-success" [disabled]="isLoading">
+                <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>Enregistrer
+              </button>
+              <button type="button" class="btn btn-secondary" (click)="cancelEdit()">Annuler</button>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="form-check mb-3">
-        <input class="form-check-input" type="checkbox" id="notifSMS" [formControl]="smsNotificationsControl" />
-        <label class="form-check-label" for="notifSMS">Recevoir les notifications par SMS</label>
+
+      <!-- Documents -->
+      <div *ngIf="activeTab === 'documents'" class="card tab-card p-3 mb-3">
+        <h4 class="mb-3">Mes documents</h4>
+        <div class="mb-3">
+          <label for="docUpload" class="form-label">Ajouter un document</label>
+          <input type="file" id="docUpload" class="form-control" (change)="onFileSelected($event)" />
+        </div>
+
+        <div *ngIf="uploading" class="text-info mb-2">
+          <span class="spinner-border spinner-border-sm"></span> Upload en cours...
+        </div>
+
+        <ul class="list-group">
+          <li *ngFor="let doc of documents" class="list-group-item d-flex justify-content-between align-items-center">
+            {{ doc.original_name }}
+            <div>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="downloadDocument(doc)">Télécharger</button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteDocument(doc.id)">Supprimer</button>
+            </div>
+          </li>
+        </ul>
       </div>
-      <button class="btn btn-success" type="submit">Sauvegarder</button>
-    </form>
-  </div>
 
-  <!-- ===================== Sécurité ===================== -->
-  <div *ngIf="activeTab === 'security'">
-    <!-- Mot de passe -->
-    <div class="mb-4">
-      <button class="btn btn-outline-primary mb-3" (click)="showPasswordForm = !showPasswordForm">
-        {{ showPasswordForm ? 'Annuler' : 'Changer le mot de passe' }}
-      </button>
+      <!-- Notifications -->
+      <div *ngIf="activeTab === 'notifications'" class="card tab-card p-3 mb-3 notification-card">
+        <h4 class="mb-3">Préférences de notification</h4>
+        <form [formGroup]="notificationForm" (ngSubmit)="updateNotificationPreferences()">
+          <div class="d-flex align-items-center justify-content-between mb-3">
+            <label class="form-label mb-0">Notifications par email</label>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="notifEmail" [formControl]="emailNotificationsControl" />
+            </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-between mb-4">
+            <label class="form-label mb-0">Notifications par SMS</label>
+            <div class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="notifSMS" [formControl]="smsNotificationsControl" />
+            </div>
+          </div>
 
-      <form *ngIf="showPasswordForm" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
-        <div class="mb-3">
-          <label class="form-label">Ancien mot de passe</label>
-          <input type="password" class="form-control" formControlName="oldPassword" />
+          <button type="submit" class="btn btn-save-notif">Sauvegarder</button>
+        </form>
+      </div>
+
+      <!-- Sécurité -->
+      <div *ngIf="activeTab === 'security'" class="card tab-card p-3 mb-3">
+        <h4 class="mb-3">Sécurité du compte</h4>
+
+        <!-- Changement mot de passe -->
+        <div class="mb-4">
+          <button class="btn btn-outline-primary mb-3" (click)="showPasswordForm = !showPasswordForm">
+            {{ showPasswordForm ? 'Annuler' : 'Changer le mot de passe' }}
+          </button>
+
+          <form *ngIf="showPasswordForm" [formGroup]="passwordForm" (ngSubmit)="changePassword()">
+            <div class="mb-3">
+              <label class="form-label">Ancien mot de passe</label>
+              <input type="password" class="form-control" formControlName="oldPassword" />
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Nouveau mot de passe</label>
+              <input type="password" class="form-control" formControlName="newPassword" />
+              <small class="text-muted">
+                Le mot de passe doit contenir : 
+                <span [class.text-success]="hasMinLength()">8 caractères</span>,
+                <span [class.text-success]="hasUpperCase()">1 majuscule</span>,
+                <span [class.text-success]="hasLowerCase()">1 minuscule</span>,
+                <span [class.text-success]="hasNumber()">1 chiffre</span>,
+                <span [class.text-success]="hasSpecialChar()">1 caractère spécial</span>
+              </small>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Confirmer le mot de passe</label>
+              <input type="password" class="form-control" formControlName="confirmPassword" />
+            </div>
+
+            <div *ngIf="passwordError" class="text-danger mb-2">{{ passwordError }}</div>
+
+            <button type="submit" class="btn btn-success" [disabled]="isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>Valider
+            </button>
+          </form>
         </div>
-        <div class="mb-3">
-          <label class="form-label">Nouveau mot de passe</label>
-          <input type="password" class="form-control" formControlName="newPassword" />
-          <small class="text-muted">
-            Le mot de passe doit contenir au moins :  
-            <span [class.text-success]="hasMinLength()">8 caractères</span>,  
-            <span [class.text-success]="hasUpperCase()">1 majuscule</span>,  
-            <span [class.text-success]="hasLowerCase()">1 minuscule</span>,  
-            <span [class.text-success]="hasNumber()">1 chiffre</span>,  
-            <span [class.text-success]="hasSpecialChar()">1 caractère spécial</span>.
-          </small>
-        </div>
-        <div class="mb-3">
-          <label class="form-label">Confirmer le mot de passe</label>
-          <input type="password" class="form-control" formControlName="confirmPassword" />
-        </div>
 
-        <div *ngIf="passwordError" class="text-danger mb-2">{{ passwordError }}</div>
+        <!-- 2FA -->
+        <div class="d-flex flex-column">
+          <div class="form-check form-switch mb-3">
+            <input class="form-check-input" type="checkbox" id="twoFA" [checked]="twoFactorEnabled"
+                   (change)="toggleTwoFactor($event)" [disabled]="isLoading2FA" />
+            <label class="form-check-label" for="twoFA">Activer la double authentification (2FA)</label>
+          </div>
 
-        <button type="submit" class="btn btn-success" [disabled]="isLoading">
-          <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-1"></span>
-          Valider
-        </button>
-      </form>
+          <div *ngIf="show2FAModal" class="border rounded p-3 mt-2">
+            <p>Scannez ce QR Code avec votre application d’authentification :</p>
+            <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR Code" class="mb-3" />
+            <div class="mb-3">
+              <label>Code à 6 chiffres</label>
+              <input type="text" class="form-control" [(ngModel)]="twoFactorToken" name="twoFactorToken" maxlength="6" />
+            </div>
+            <div *ngIf="twoFactorError" class="text-danger">{{ twoFactorError }}</div>
+            <button class="btn btn-success" (click)="confirmTwoFactor()" [disabled]="isLoading2FA">Confirmer</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Transactions -->
+      <div *ngIf="activeTab === 'transactions'" class="tab-card p-3 mb-3">
+        <app-transactions></app-transactions>
+      </div>
     </div>
-
-    <!-- 2FA -->
-    <div>
-      <div class="form-check form-switch mb-3">
-        <input class="form-check-input" type="checkbox" id="twoFA" [checked]="twoFactorEnabled"
-               (change)="toggleTwoFactor($event)" [disabled]="isLoading2FA" />
-        <label class="form-check-label" for="twoFA">Activer la double authentification (2FA)</label>
-      </div>
-
-      <div *ngIf="show2FAModal" class="border rounded p-3">
-        <p>Scannez ce QR Code avec votre application d’authentification :</p>
-        <img *ngIf="qrCodeUrl" [src]="qrCodeUrl" alt="QR Code" class="mb-3" />
-        <div class="mb-3">
-          <label>Code à 6 chiffres</label>
-          <input type="text" class="form-control" [(ngModel)]="twoFactorToken" name="twoFactorToken" maxlength="6" />
-        </div>
-        <div *ngIf="twoFactorError" class="text-danger">{{ twoFactorError }}</div>
-        <button class="btn btn-success" (click)="confirmTwoFactor()" [disabled]="isLoading2FA">
-          Confirmer
-        </button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===================== Transactions ===================== -->
-  <div *ngIf="activeTab === 'transactions'">
-    <app-transactions></app-transactions>
   </div>
 </div>
 

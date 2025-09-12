@@ -1,64 +1,62 @@
-// ================================
-// Couleurs
-// ================================
-$bg-main: #ffffff;            // Fond principal blanc
-$bg-card: #fefefe;            // Fond des cartes / sections
-$text-primary: #0b1a3f;       // Bleu nuit pour titres et menus
-$text-secondary: #000000;     // Texte noir standard
-$logo-gradient: linear-gradient(135deg, #0b1a3f, #6a1b9a); // Dégradé bleu nuit → violet
+// =============================
+// Palette de couleurs
+// =============================
+$color-white: #ffffff;
+$color-light-gray: #f5f6f8;
+$color-night-blue: #0a1f44;
+$color-violet: #6a0dad;
+$color-black: #000000;
 
-$primary-color: #0b1a3f;      // Couleur principale bleu nuit (boutons, accents)
-$secondary-color: #6a1b9a;    // Accent violet
-$hover-color: #3c5a9a;        // Bleu clair pour hover
-$error-color: #dc3545;        // Rouge danger
+// Dégradés
+$gradient-logo: linear-gradient(135deg, $color-night-blue, $color-violet);
 
-// ================================
-// Bordures et arrondis
-// ================================
-$border-radius: 0.5rem;
-$box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+// Couleurs de texte
+$text-primary: $color-black;
+$text-secondary: #4a4a4a;
+$text-inverse: $color-white;
 
-// ================================
-// Transitions
-// ================================
-$transition: all 0.3s ease;
+// Couleurs d’UI
+$bg-primary: $color-white;
+$bg-secondary: $color-light-gray;
+$bg-header: $color-night-blue;
+$bg-card: $color-white;
+$light-bg: $bg-secondary; // ajouté pour les composants
+$border-color: #e0e0e0;
 
-// ================================
-// Spacing & typography
-// ================================
-$padding-section: 3rem 1.5rem;
-$padding-section-md: 2rem 1rem;
+// Etats
+$color-success: #28a745;
+$color-error: #dc3545;
+$color-warning: #ffc107;
+$color-info: #17a2b8;
 
-$font-base: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-$line-height-base: 1.6;
-$h2-font-size: 2.2rem;
-$h2-font-size-md: 1.8rem;
-$p-font-size: 1.1rem;
-$p-line-height: 1.7;
+// =============================
+// Typographie
+// =============================
+$font-base: 'Roboto', sans-serif;
+$font-size-base: 1rem;     // 16px, Bootstrap friendly
+$font-size-sm: 0.875rem;
+$font-size-lg: 1.125rem;
+$font-size-xl: 1.5rem;
+$font-size-xxl: 2rem;
 
-// ================================
-// Z-index et utilitaires
-// ================================
-$z-header: 1000;
-$spacing-unit: 1rem;
-$spacing-half: 0.5rem;
-$spacing-2: 2rem;
+// =============================
+// Espacements perso (px)
+// =============================
+$spacing-unit: 16px;        // base
+$spacing-half: 8px;         // moitié
+$padding-section: 64px;
+$padding-card: 32px;
 
-// ================================
-// Mixins
-// ================================
-@mixin text-color($primary, $secondary) {
-  color: $primary;
-  a {
-    color: $secondary;
-    &:hover {
-      color: lighten($secondary, 10%);
-    }
-  }
-}
+// =============================
+// Border radius / effets
+// =============================
+$border-radius: 8px;        // ajouté
+$box-shadow-card: 0 4px 12px rgba(0, 0, 0, 0.05);
+$transition-base: all 0.3s ease;
 
-@mixin respond-md {
-  @media (max-width: 768px) {
-    @content;
-  }
-}
+// =============================
+// Z-index
+// =============================
+$z-navbar: 1000;
+$z-modal: 1200;
+$z-tooltip: 1100;

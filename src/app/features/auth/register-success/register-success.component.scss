@@ -1,96 +1,113 @@
-/* register-success.component.scss */
-.container {
-  max-width: 600px;
-  margin: 4rem auto;
-  padding: 2.5rem;
-  background: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+@import '../../../../assets/variables';
+
+// ================================
+// Container principal
+// ================================
+.register-success-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: $padding-section;
+  font-family: $font-base;
+  background-color: $bg-secondary;
+  color: $text-primary;
   text-align: center;
+  transition: $transition-base;
+
+  :host-context(.dark-mode) & {
+    background-color: $bg-header;
+    color: $text-inverse;
+  }
 
   h2 {
-    font-size: 1.9rem;
-    font-weight: 600;
-    margin-bottom: 1.2rem;
-    color: #28a745; // success green
+    font-size: $font-size-xl;
+    font-weight: 700;
+    color: $color-success;
+    margin-bottom: $spacing-unit;
+
+    :host-context(.dark-mode) & {
+      color: lighten($color-success, 15%);
+    }
   }
 
   p {
-    font-size: 1rem;
-    color: #444;
-    margin-bottom: 1rem;
-    line-height: 1.6;
+    font-size: $font-size-base;
+    color: $text-secondary;
+    margin-top: $spacing-unit;
+
+    :host-context(.dark-mode) & {
+      color: lighten($text-secondary, 15%);
+    }
 
     &.text-muted {
-      font-size: 0.9rem;
-      color: #6c757d;
-      margin-top: 0.8rem;
+      color: $text-secondary;
+      font-size: $font-size-sm;
+
+      :host-context(.dark-mode) & {
+        color: lighten($text-secondary, 35%);
+      }
     }
   }
 
   a.btn {
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.7rem 1.4rem;
-    border-radius: 8px;
-    margin-top: 1.5rem;
-    transition: all 0.3s ease;
+    display: inline-block;
+    margin-top: $spacing-unit * 2;
+    padding: $spacing-half $spacing-unit * 1.5;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    color: $text-inverse;
+    background-color: $color-violet;
+    text-decoration: none;
+    transition: $transition-base;
 
-    &.btn-primary {
-      background-color: #007bff;
-      border: none;
+    &:hover {
+      background-color: lighten($color-violet, 6%);
+    }
+
+    :host-context(.dark-mode) & {
+      background-color: $color-violet;
+      color: $text-inverse;
 
       &:hover {
-        background-color: darken(#007bff, 7%);
+        background-color: lighten($color-violet, 6%);
       }
     }
   }
 }
 
-/* 🌙 Dark Mode */
-body.dark-mode {
-  .container {
-    background: #1e1e2f;
-    color: #f1f1f1;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+// ================================
+// Responsive
+// ================================
+@media (max-width: 768px) {
+  .register-success-container {
+    padding: $padding-section / 1.5;
 
     h2 {
-      color: #4cd964; // bright green for dark mode
+      font-size: $font-size-lg;
     }
 
     p {
-      color: #dcdcdc;
-
-      &.text-muted {
-        color: #aaa;
-      }
-    }
-
-    a.btn-primary {
-      background-color: #3399ff;
-
-      &:hover {
-        background-color: lighten(#3399ff, 5%);
-      }
+      font-size: $font-size-base;
     }
   }
 }
 
-/* 📱 Responsive */
 @media (max-width: 576px) {
-  .container {
-    padding: 1.8rem;
+  .register-success-container {
+    padding: $spacing-unit;
 
     h2 {
-      font-size: 1.5rem;
+      font-size: $font-size-base;
     }
 
     p {
-      font-size: 0.95rem;
+      font-size: $font-size-sm;
     }
 
     a.btn {
       width: 100%;
+      padding: $spacing-half $spacing-unit;
     }
   }
 }

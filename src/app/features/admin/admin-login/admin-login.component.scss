@@ -1,72 +1,134 @@
 @import '../../../../assets/variables';
 
+// ================================
+// Container principal
+// ================================
 .login-wrapper {
   min-height: 100vh;
-  background: $gradient-light;
-  font-family: $font-base;
-}
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $bg-secondary;
+  padding: $padding-section;
+  transition: $transition-base;
 
-.login-card {
-  width: 100%;
-  max-width: 420px;
-  background: $light-card-bg;
-  border-radius: $border-radius;
-  box-shadow: $box-shadow;
-  transition: $transition;
-
-  h3 {
-    font-weight: 600;
-    color: $primary-color;
+  :host-context(.dark-mode) & {
+    background: $bg-header;
   }
 
-  .form-label {
-    font-weight: 500;
-    color: $text-primary;
-  }
-
-  .form-control {
-    border-radius: $border-radius;
-    padding: 0.65rem 1rem;
-    font-size: 1rem;
-    transition: $transition;
-    border: 1px solid #ddd;
-
-    &:focus {
-      border-color: $primary-light;
-      box-shadow: 0 0 6px rgba(60, 90, 154, 0.4);
-      outline: none;
-    }
-  }
-
-  .btn-primary {
-    background: $gradient-light;
-    border: none;
-    padding: 0.7rem;
-    font-weight: 600;
-    border-radius: $border-radius;
-    transition: $transition;
-
-    &:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
-    }
-
-    &:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-  }
-
-  .alert {
-    border-radius: $border-radius;
-    font-size: 0.95rem;
-  }
-}
-
-// 📱 Responsive
-@media (max-width: 576px) {
   .login-card {
-    margin: 0 1rem;
-    padding: 1.5rem;
+    width: 100%;
+    max-width: 400px;
+    padding: $padding-card;
+    border-radius: $border-radius;
+    background-color: $bg-card;
+    box-shadow: $box-shadow-card;
+    transition: $transition-base;
+    text-align: center;
+
+    :host-context(.dark-mode) & {
+      background-color: darken($bg-card, 8%);
+      color: $text-inverse;
+    }
+
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: 700;
+      margin-bottom: $spacing-unit * 2;
+      color: $color-night-blue;
+
+      :host-context(.dark-mode) & {
+        color: $color-violet;
+      }
+    }
+
+    form {
+      .form-label {
+        font-weight: 500;
+        color: $text-primary;
+
+        :host-context(.dark-mode) & {
+          color: $text-inverse;
+        }
+      }
+
+      .form-control {
+        border-radius: $border-radius;
+        border: 1px solid $border-color;
+        padding: $spacing-half $spacing-unit;
+        transition: $transition-base;
+
+        &:focus {
+          outline: none;
+          border-color: $color-violet;
+          box-shadow: 0 0 0 3px rgba($color-violet, 0.15);
+        }
+
+        :host-context(.dark-mode) & {
+          background-color: transparent;
+          color: $text-inverse;
+          border-color: lighten($border-color, 20%);
+        }
+      }
+
+      button[type='submit'] {
+        margin-top: $spacing-unit * 1.5;
+        padding: $spacing-half $spacing-unit;
+        border-radius: $border-radius;
+        font-weight: 700;
+        background: $gradient-logo;
+        color: $text-inverse;
+        border: none;
+        cursor: pointer;
+        transition: $transition-base;
+
+        &:hover:not(:disabled) {
+          transform: translateY(-2px);
+          background: linear-gradient(135deg, lighten($color-night-blue, 5%), lighten($color-violet, 5%));
+        }
+
+        &:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+          transform: none;
+        }
+      }
+
+      .alert {
+        margin-top: $spacing-unit;
+        font-size: $font-size-sm;
+      }
+    }
+  }
+}
+
+// ================================
+// Responsive
+// ================================
+@media (max-width: 768px) {
+  .login-wrapper {
+    padding: $spacing-unit * 2;
+
+    .login-card {
+      padding: $spacing-unit * 2;
+
+      h3 {
+        font-size: $font-size-lg;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .login-wrapper {
+    padding: $spacing-unit;
+
+    .login-card {
+      padding: $spacing-unit;
+
+      h3 {
+        font-size: $font-size-base;
+      }
+    }
   }
 }

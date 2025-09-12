@@ -1,99 +1,155 @@
 @import '../../../../assets/variables';
 
+// ================================
+// Two-Factor Auth Modal
+// ================================
 .modal-backdrop {
   position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba($color-black, 0.5);
   display: flex;
-  align-items: center;
   justify-content: center;
-  z-index: 1050;
+  align-items: center;
+  z-index: $z-modal;
   padding: 1rem;
-  animation: fadeIn 0.3s ease-in-out;
-
-  &.light-mode { background: rgba(0,0,0,0.4); }
-  &.dark-mode { background: rgba(0,0,0,0.8); }
 
   .modal-dialog {
     max-width: 400px;
     width: 100%;
-    animation: slideIn 0.3s ease-out forwards;
 
     .modal-content {
+      background-color: $bg-card;
       border-radius: 1rem;
-      box-shadow: 0 0.5rem 1.5rem rgba(0,0,0,0.5);
-      display: flex;
-      flex-direction: column;
-      padding: 1.5rem;
-      transition: background 0.3s ease, color 0.3s ease;
+      padding: $spacing-unit * 4;
+      box-shadow: $box-shadow-card;
+      transition: $transition-base;
 
-      &.light-mode { background-color: $light-bg; color: $text-dark; }
-      &.dark-mode { background-color: $dark-card-bg; color: $text-light; }
+      // ------------------------------
+      // Header
+      // ------------------------------
+      .modal-header {
+        border-bottom: none;
+        padding-bottom: 0;
 
-      .modal-header, .modal-footer { border-color: rgba($primary-color,0.2); }
+        .modal-title {
+          font-size: $font-size-lg;
+          font-weight: 700;
+          color: $color-night-blue;
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+        }
 
-      .modal-header .btn-close {
-        border: none;
-        background: transparent;
-        font-size: 1.2rem;
-        cursor: pointer;
-        color: inherit;
+        .btn-close {
+          background: transparent;
+          border: none;
+          font-size: 1.25rem;
+          cursor: pointer;
+          color: $text-secondary;
+
+          &:hover {
+            color: $color-violet;
+          }
+        }
       }
 
+      // ------------------------------
+      // Body
+      // ------------------------------
       .modal-body {
-        p { margin-bottom: 0.75rem; }
-        input {
-          border-radius: 0.5rem;
-          padding: 0.5rem;
-          width: 100%;
-          font-size: 1.2rem;
+        padding-top: $spacing-unit * 0.5;
+
+        p {
+          color: $text-primary;
+          font-size: $font-size-base;
+          margin-bottom: $spacing-unit;
+        }
+
+        input.form-control {
           text-align: center;
-          transition: background 0.3s, color 0.3s, border 0.3s;
+          font-size: $font-size-lg;
+          padding: $spacing-unit * 0.75;
+          border-radius: 8px;
+          border: 1px solid $border-color;
+          transition: $transition-base;
 
-          &.light-mode {
-            background-color: rgba(0,0,0,0.05);
-            border: 1px solid rgba(0,0,0,0.2);
-            color: $text-dark;
-            &::placeholder { color: rgba(0,0,0,0.4); }
-          }
-
-          &.dark-mode {
-            background-color: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.3);
-            color: $text-light;
-            &::placeholder { color: rgba(255,255,255,0.5); }
+          &:focus {
+            outline: none;
+            border-color: $color-violet;
+            box-shadow: 0 0 0 3px rgba($color-violet, 0.15);
           }
         }
 
-        .text-danger { color: $error-color; }
+        .text-danger {
+          font-size: $font-size-sm;
+          margin-top: $spacing-unit * 0.5;
+        }
       }
 
+      // ------------------------------
+      // Footer
+      // ------------------------------
       .modal-footer {
-        display: flex;
+        border-top: none;
+        padding-top: $spacing-unit * 0.75;
         justify-content: space-between;
-        gap: 0.5rem;
 
-        .btn-primary {
-          background: $primary-color;
-          color: $text-light;
-          &:hover { background: darken($primary-color,10%); }
-        }
+        .btn {
+          border-radius: 8px;
+          padding: $spacing-unit * 0.75 $spacing-unit * 1.5;
+          font-weight: 600;
+          transition: $transition-base;
 
-        .btn-secondary {
-          background: rgba(0,0,0,0.05);
-          color: $text-dark;
-          &:hover { background: rgba(0,0,0,0.1); }
+          &.btn-primary {
+            background: $gradient-logo;
+            color: $text-inverse;
+
+            &:disabled {
+              opacity: 0.6;
+              cursor: not-allowed;
+            }
+
+            &:not(:disabled):hover {
+              opacity: 0.9;
+            }
+          }
+
+          &.btn-secondary {
+            background-color: $bg-secondary;
+            color: $color-night-blue;
+
+            &:hover {
+              background-color: lighten($bg-secondary, 5%);
+            }
+          }
         }
       }
     }
   }
 }
 
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+// ================================
+// Responsive
+// ================================
+@media (max-width: 576px) {
+  .modal-backdrop {
+    padding: 0.5rem;
 
-@keyframes slideIn {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+    .modal-dialog {
+      .modal-content {
+        padding: $spacing-unit * 3;
+
+        .modal-title {
+          font-size: $font-size-base;
+        }
+
+        input.form-control {
+          font-size: $font-size-base;
+        }
+      }
+    }
+  }
 }

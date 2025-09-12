@@ -2,9 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthService } from '../../../core/services/auth/auth.service';
-import { ThemeService } from '../../../core/services/themes/theme.service';
 import { AsyncPipe, NgIf, NgFor } from '@angular/common';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +13,6 @@ import { map } from 'rxjs/operators';
 })
 export class HeaderComponent {
   isMenuCollapsed = true;
-  isDarkMode = false;
 
   readonly navLinks = [
     { path: '/', label: 'Accueil', exact: true },
@@ -25,17 +22,8 @@ export class HeaderComponent {
 
   constructor(
     public authService: AuthService,
-    private router: Router,
-    private themeService: ThemeService
-  ) {
-    this.themeService.darkMode$.subscribe(mode => {
-      this.isDarkMode = mode;
-    });
-  }
-
-  toggleTheme() {
-    this.themeService.toggleTheme();
-  }
+    private router: Router
+  ) {}
 
   scrollToLoans() {
     if (this.router.url === '/' || this.router.url.startsWith('/#')) {

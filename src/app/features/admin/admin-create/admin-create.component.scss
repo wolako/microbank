@@ -1,139 +1,160 @@
 @import '../../../../assets/variables';
 
+// ================================
+// Container principal
+// ================================
 .admin-create-page {
-  padding: 3rem 1rem;
-  background: $light-bg;
+  min-height: 100vh;
+  padding: $padding-section;
   font-family: $font-base;
-  transition: $transition;
+  background-color: $bg-secondary;
+  color: $text-primary;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: $transition-base;
 
-  .card {
-    background: $light-card-bg;
-    border-radius: $border-radius;
-    box-shadow: $box-shadow;
-    transition: $transition;
+  :host-context(.dark-mode) & {
+    background-color: $bg-header;
+    color: $text-inverse;
   }
 
-  h3 {
-    color: $primary-color;
-    font-weight: 600;
-    font-size: 1.6rem;
-  }
-
-  label.form-label {
-    font-weight: 600;
-    color: $text-primary;
-    transition: $transition;
-  }
-
-  input.form-control,
-  select.form-select {
-    border-radius: $border-radius;
-    border: 1px solid lighten($primary-color, 45%);
-    padding: 0.65rem 1rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
-
-    &:focus {
-      border-color: $primary-color;
-      box-shadow: 0 0 0 4px rgba($primary-color, 0.08);
-      outline: none;
-    }
-  }
-
-  .text-danger.small {
-    font-size: 0.85rem;
-  }
-
-  button.btn-primary {
-    font-weight: 600;
-    border-radius: $border-radius;
-    background: $primary-color;
-    border: none;
-    padding: 0.8rem;
-    transition: transform 0.15s ease, background-color 0.2s ease;
-
-    &:hover:not(:disabled) {
-      transform: translateY(-2px);
-      background: $primary-light;
-    }
-
-    &:disabled {
-      opacity: 0.65;
-      cursor: not-allowed;
-    }
-  }
-
-  .alert {
-    border-radius: $border-radius;
-    font-size: 0.95rem;
-  }
-}
-
-/* 🌙 Dark Mode */
-body.dark-mode {
-  .admin-create-page {
-    background: $dark-bg;
-    color: $text-light;
+  .container {
+    width: 100%;
+    max-width: 700px;
 
     .card {
-      background: $dark-card-bg;
-      color: $text-light;
-      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.5);
-    }
+      background-color: $bg-card;
+      border-radius: $border-radius;
+      padding: $padding-card;
+      box-shadow: $box-shadow-card;
+      transition: $transition-base;
 
-    h3 {
-      color: $primary-light;
-    }
-
-    label.form-label {
-      color: $text-light;
-    }
-
-    input.form-control,
-    select.form-select {
-      background: transparent;
-      border: 1px solid lighten($dark-card-bg, 10%);
-      color: $text-light;
-
-      &:focus {
-        border-color: $primary-light;
-        box-shadow: 0 0 0 4px rgba($primary-light, 0.12);
+      :host-context(.dark-mode) & {
+        background-color: darken($bg-card, 8%);
+        color: $text-inverse;
       }
-    }
 
-    button.btn-primary {
-      background: $primary-light;
-      color: $text-light;
+      h3 {
+        font-size: $font-size-xl;
+        font-weight: 700;
+        margin-bottom: $spacing-unit * 1.5;
+        text-align: center;
 
-      &:hover:not(:disabled) {
-        background: lighten($primary-light, 8%);
+        :host-context(.dark-mode) & {
+          color: $text-inverse;
+        }
+      }
+
+      form {
+        .form-label {
+          font-weight: 600;
+          color: $text-primary;
+
+          :host-context(.dark-mode) & {
+            color: $text-inverse;
+          }
+        }
+
+        .form-control, .form-select {
+          padding: $spacing-half $spacing-unit;
+          font-size: $font-size-base;
+          border: 1px solid $border-color;
+          border-radius: $border-radius;
+          transition: border-color 0.2s ease, box-shadow 0.2s ease;
+          background-color: transparent;
+          color: inherit;
+
+          &:focus {
+            outline: none;
+            border-color: $color-violet;
+            box-shadow: 0 0 0 4px rgba($color-violet, 0.1);
+          }
+
+          :host-context(.dark-mode) & {
+            border-color: darken($bg-card, 6%);
+            color: $text-inverse;
+
+            &:focus {
+              border-color: lighten($color-violet, 10%);
+              box-shadow: 0 0 0 4px rgba(lighten($color-violet, 10%), 0.15);
+            }
+          }
+        }
+
+        .text-danger {
+          font-size: 0.85rem;
+        }
+
+        .d-grid button {
+          margin-top: $spacing-unit;
+          padding: $spacing-half $spacing-unit;
+          font-weight: 700;
+          border-radius: $border-radius;
+          background-color: $color-violet;
+          color: $text-inverse;
+          border: none;
+          cursor: pointer;
+          transition: $transition-base;
+
+          &:hover:not(:disabled) {
+            background-color: darken($color-violet, 5%);
+          }
+
+          &:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+          }
+        }
+      }
+
+      .alert {
+        margin-top: $spacing-unit * 2;
+        text-align: center;
+
+        &.alert-success {
+          background-color: rgba($color-success, 0.1);
+          color: $color-success;
+          border: 1px solid $color-success;
+        }
+
+        &.alert-danger {
+          background-color: rgba($color-error, 0.1);
+          color: $color-error;
+          border: 1px solid $color-error;
+        }
       }
     }
   }
 }
 
-/* 📱 Responsive */
+// ================================
+// Responsive
+// ================================
 @media (max-width: 768px) {
   .admin-create-page {
-    padding: 2rem 0.8rem;
+    padding: $padding-section / 1.5;
 
     .card {
-      padding: 1.5rem !important;
-    }
+      padding: $padding-card / 1.5;
 
-    h3 {
-      font-size: 1.4rem;
-    }
-
-    input.form-control,
-    select.form-select {
-      font-size: 0.95rem;
-      padding: 0.55rem 0.9rem;
-    }
-
-    button.btn-primary {
-      font-size: 1rem;
-      padding: 0.7rem;
+      h3 {
+        font-size: $font-size-lg;
+      }
     }
   }
 }
 
+@media (max-width: 576px) {
+  .admin-create-page {
+    padding: $spacing-unit;
+
+    .card {
+      padding: $spacing-unit;
+
+      h3 {
+        font-size: $font-size-base;
+      }
+    }
+  }
+}

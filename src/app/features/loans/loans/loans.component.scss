@@ -2,128 +2,112 @@
 
 .loans-section {
   font-family: $font-base;
-  padding: 3rem 0; // $spacing-unit * 4
-  background-color: $light-bg;
-  color: $text-primary;
-  transition: background-color 0.4s ease, color 0.4s ease;
+  background-color: $bg-secondary;
+  padding: $padding-section 0;
 
   .section-header {
     text-align: center;
-    margin-bottom: 3rem; // $spacing-unit * 4
+    margin-bottom: $spacing-unit * 3;
 
-    h1 { 
-      font-size: 2.5rem; 
-      color: $primary-color; // remplace $color-light-primary
-      margin-bottom: 0.75rem; // $spacing-half
-      transition: color 0.4s ease;
+    h1 {
+      font-size: $font-size-xxl;
+      color: $color-night-blue;
+      margin-bottom: $spacing-unit / 2;
+      font-weight: 700;
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: $font-size-lg;
       color: $text-secondary;
-      transition: color 0.4s ease;
     }
   }
 
   .loan-products-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem; // $spacing-unit * 2
-
-    @media (max-width: 1200px) { grid-template-columns: repeat(2, 1fr); }
-    @media (max-width: 768px) { grid-template-columns: 1fr; }
-  }
-
-  .product-card {
-    background-color: $light-card-bg;
-    border-radius: $border-radius;
-    padding: 1.5rem; // $spacing-unit * 2
-    box-shadow: $box-shadow;
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease, border 0.3s ease;
-    cursor: pointer;
-
-    &.selected {
-      border: 2px solid $primary-color;
-      transform: scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
-
-    &:hover {
-      transform: translateY(-5px) scale(1.02);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-    }
-
-    .product-icon {
-      font-size: 3rem;
-      color: $primary-color;
-      margin-bottom: 0.75rem; // $spacing-half
-      transition: color 0.3s ease;
-    }
-
-    h3 {
-      margin-bottom: 0.75rem;
-      font-weight: 600;
-      color: $text-primary;
-      transition: color 0.3s ease;
-    }
-
-    .product-details {
-      margin-bottom: 3rem; // $spacing-unit * 2
-      p {
-        font-size: 0.95rem;
-        margin-bottom: 0.25rem; // $spacing-quarter
-        color: $text-secondary;
-
-        strong { color: $text-primary; }
-      }
-    }
-
-    button.btn-outline {
-      padding: 0.75rem 1.5rem;
-      border-radius: $border-radius;
-      border: 1px solid $primary-color;
-      color: $primary-color;
-      background: transparent;
-      font-weight: 600;
-      transition: all 0.3s ease;
-
-      &:hover {
-        background-color: $primary-color;
-        color: $text-light;
-        transform: translateY(-2px);
-      }
-    }
-  }
-
-  // Dark Mode
-  :host-context(.dark-mode) {
-    background-color: $dark-bg;
-    color: $text-light;
-
-    .section-header {
-      h1 { color: $primary-dark; }
-      p { color: $text-light; }
-    }
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: $spacing-unit * 2;
 
     .product-card {
-      background-color: $dark-card-bg;
-      color: $text-light;
+      background-color: $bg-card;
+      border-radius: 1rem;
+      padding: $padding-card;
+      box-shadow: $box-shadow-card;
+      transition: $transition-base;
+      cursor: pointer;
+      text-align: center;
 
-      .product-icon { color: $primary-dark; }
-      h3 { color: $primary-dark; }
-      .product-details p { color: $text-light; strong { color: $primary-dark; } }
+      &.selected {
+        border: 2px solid $color-violet;
+      }
 
-      &.selected { border-color: $primary-dark; }
-      button.btn-outline {
-        border-color: $primary-dark;
-        color: $primary-dark;
+      &:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+      }
 
-        &:hover {
-          background-color: $primary-dark;
-          color: $text-light;
+      .product-icon {
+        font-size: $font-size-xxl;
+        color: $color-violet;
+        margin-bottom: $spacing-unit;
+      }
+
+      h3 {
+        font-size: $font-size-xl;
+        color: $color-night-blue;
+        margin-bottom: $spacing-unit / 2;
+      }
+
+      .product-details {
+        font-size: $font-size-base;
+        color: $text-secondary;
+        margin-bottom: $spacing-unit;
+
+        p {
+          margin: 0.25rem 0;
+
+          strong {
+            color: $text-primary;
+          }
         }
       }
+
+      button.btn-outline {
+        border: 2px solid $color-violet;
+        color: $color-violet;
+        font-weight: 600;
+        border-radius: 0.5rem;
+        padding: $spacing-unit / 1.5 $spacing-unit * 1.5;
+        transition: $transition-base;
+        background-color: transparent;
+
+        &:hover {
+          background: $color-violet;
+          color: $text-inverse;
+        }
+      }
+    }
+  }
+
+  // Modal 2FA
+  app-two-fa-modal {
+    z-index: $z-modal;
+  }
+}
+
+// ================================
+// Responsive
+// ================================
+@media (max-width: 768px) {
+  .loans-section {
+    padding: $spacing-unit * 2 0;
+
+    .section-header h1 {
+      font-size: $font-size-xl;
+    }
+
+    .loan-products-grid {
+      grid-template-columns: 1fr;
+      gap: $spacing-unit;
     }
   }
 }

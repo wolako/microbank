@@ -1,21 +1,21 @@
 <div class="registration-container">
   <div class="card">
-    <h2>Create Your Bank Account</h2>
+    <h2>Créer votre compte bancaire</h2>
     
     <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
       <div class="form-group">
-        <label>First Name</label>
+        <label>Prénom</label>
         <input type="text" formControlName="firstName">
         <div *ngIf="registerForm.get('firstName')?.invalid && registerForm.get('firstName')?.touched" class="error">
-          Valid first name required
+          Prénom valide requise
         </div>
       </div>
 
       <div class="form-group">
-        <label>Last Name</label>
+        <label>Nom</label>
         <input type="text" formControlName="lastName">
         <div *ngIf="registerForm.get('lastName')?.invalid && registerForm.get('lastName')?.touched" class="error">
-          Valid last name required
+          Votre Nom valide requise
         </div>
       </div>
 
@@ -23,7 +23,7 @@
         <label>Email</label>
         <input type="email" formControlName="email">
         <div *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.touched" class="error">
-          Valid email required
+          Votre adresse mail valide requise
         </div>
         <div *ngIf="registerForm.get('email')?.hasError('emailTaken') && registerForm.get('email')?.touched" class="error">
           Cet email est déjà utilisé
@@ -31,26 +31,31 @@
       </div>
 
       <div class="form-group">
-        <label>Phone Number</label>
+        <label>Numero de téléphone</label>
         <input type="tel" formControlName="phone" placeholder="0612345678">
         <div *ngIf="registerForm.get('phone')?.invalid && registerForm.get('phone')?.touched" class="error">
-          10-digit phone number required
+          10-digit numéro de téléphone requise
         </div>
       </div>
 
       <div class="form-group">
-        <label>Password</label>
+        <label>Mot de passe</label>
         <input type="password" formControlName="password">
         <div *ngIf="registerForm.get('password')?.invalid && registerForm.get('password')?.touched" class="error">
-          Min 8 chars with uppercase, lowercase and number
+          Le mot de passe doit contenir au moins :  
+            <span>8 caractères</span>,  
+            <span>1 majuscule</span>,  
+            <span>1 minuscule</span>,  
+            <span>1 chiffre</span>,  
+            <span>1 caractère spécial</span>.
         </div>
       </div>
 
       <div class="form-group">
-        <label>Confirm Password</label>
+        <label>Confirmer votre mot de passe</label>
         <input type="password" formControlName="confirmPassword">
         <div *ngIf="registerForm.hasError('mismatch')" class="error">
-          Passwords must match
+          mot de passe doit corespondre
         </div>
       </div>
 

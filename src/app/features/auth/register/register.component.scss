@@ -8,38 +8,39 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2rem;
-  background-color: $light-bg;
+  padding: $padding-section;
+  font-family: $font-base;
+  background-color: $bg-secondary;
   color: $text-primary;
-  transition: background-color 0.35s ease, color 0.35s ease;
+  transition: $transition-base;
 
   :host-context(.dark-mode) & {
-    background-color: $dark-bg;
-    color: $color-dark-section-text;
+    background-color: $bg-header;
+    color: $text-inverse;
   }
 
   .card {
     width: 100%;
     max-width: 450px;
-    padding: $spacing-2;
-    border-radius: $border-radius;
-    background-color: $light-card-bg;
-    box-shadow: $box-shadow;
+    padding: $padding-card;
+    border-radius: 0.75rem;
+    background-color: $bg-card;
+    box-shadow: $box-shadow-card;
     transition: background-color 0.3s ease, color 0.3s ease;
 
     :host-context(.dark-mode) & {
-      background-color: $dark-card-bg;
-      color: $color-dark-section-text;
+      background-color: $bg-card;
+      color: $text-inverse;
     }
 
     h2 {
-      font-size: 1.8rem;
+      font-size: $font-size-xl;
       font-weight: 700;
-      margin-bottom: $spacing-2;
-      color: $primary-color;
+      margin-bottom: $spacing-unit * 2;
+      color: $color-night-blue;
 
       :host-context(.dark-mode) & {
-        color: $primary-dark;
+        color: $color-violet;
       }
     }
 
@@ -54,61 +55,61 @@
 
         label {
           font-weight: 600;
-          margin-bottom: $spacing-quarter;
+          margin-bottom: $spacing-unit / 4;
           color: $text-primary;
 
           :host-context(.dark-mode) & {
-            color: $color-dark-section-text;
+            color: $text-inverse;
           }
         }
 
         input {
-          padding: $spacing-half $spacing-unit;
+          padding: $spacing-unit / 2 $spacing-unit;
           border: 1px solid $border-color;
-          border-radius: $border-radius;
-          font-size: 1rem;
+          border-radius: 0.5rem;
+          font-size: $font-size-base;
           background-color: transparent;
           color: inherit;
           transition: border-color 0.2s ease, box-shadow 0.2s ease;
 
           &:focus {
             outline: none;
-            border-color: $primary-color;
-            box-shadow: 0 0 0 4px rgba($primary-color, 0.08);
+            border-color: $color-violet;
+            box-shadow: 0 0 0 4px rgba($color-violet, 0.08);
           }
 
           :host-context(.dark-mode) & {
-            border-color: darken($dark-card-bg, 6%);
-            color: $color-dark-section-text;
+            border-color: darken($bg-card, 6%);
+            color: $text-inverse;
 
             &:focus {
-              border-color: $primary-dark;
-              box-shadow: 0 0 0 4px rgba($primary-dark, 0.08);
+              border-color: $color-violet;
+              box-shadow: 0 0 0 4px rgba($color-violet, 0.08);
             }
           }
         }
 
         .error {
-          color: $error-color;
-          font-size: 0.85rem;
+          color: $color-error;
+          font-size: $font-size-sm;
           margin-top: 0.25rem;
         }
       }
 
       button[type="submit"] {
         margin-top: $spacing-unit;
-        padding: $spacing-half $spacing-unit;
-        border-radius: $border-radius;
+        padding: $spacing-unit / 2 $spacing-unit;
+        border-radius: 0.5rem;
         font-weight: 700;
-        background-color: $primary-color;
-        color: $text-light;
+        background-color: $color-violet;
+        color: $text-inverse;
         border: none;
         cursor: pointer;
         transition: background-color 0.2s ease, transform 0.15s ease;
 
         &:hover:not(:disabled) {
           transform: translateY(-2px);
-          background-color: $primary-light;
+          background-color: lighten($color-violet, 6%);
         }
 
         &:disabled {
@@ -118,18 +119,18 @@
         }
 
         :host-context(.dark-mode) & {
-          background-color: $primary-dark;
-          color: $text-light;
+          background-color: $color-violet;
+          color: $text-inverse;
 
           &:hover:not(:disabled) {
-            background-color: lighten($primary-dark, 6%);
+            background-color: lighten($color-violet, 6%);
           }
         }
       }
 
       .error-message {
         margin-top: $spacing-unit;
-        color: $error-color;
+        color: $color-error;
         font-weight: 600;
         text-align: center;
       }
@@ -140,29 +141,29 @@
 // ================================
 // Responsive
 // ================================
-@include respond-md {
+@media (max-width: 768px) {
   .registration-container {
-    padding: 1.5rem;
+    padding: $padding-section / 1.5;
 
     .card {
-      padding: $spacing-unit * 1.5;
+      padding: $padding-card * 0.8;
 
       h2 {
-        font-size: 1.6rem;
+        font-size: $font-size-lg;
       }
     }
   }
 }
 
-@include respond-sm {
+@media (max-width: 576px) {
   .registration-container {
-    padding: 1rem;
+    padding: $spacing-unit;
 
     .card {
-      padding: $spacing-unit;
+      padding: $spacing-unit * 1.5;
 
       h2 {
-        font-size: 1.4rem;
+        font-size: $font-size-base;
       }
     }
   }

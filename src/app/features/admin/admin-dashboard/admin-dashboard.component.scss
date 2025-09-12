@@ -1,109 +1,137 @@
 @import '../../../../assets/variables';
 
-.container {
-  max-width: 1200px;
+// ================================
+// Container principal
+// ================================
+.admin-dashboard {
   font-family: $font-base;
-}
+  color: $text-primary;
+  background-color: $bg-secondary;
+  min-height: 100vh;
+  padding: $padding-section;
+  transition: $transition-base;
 
-h2 {
-  font-weight: 600;
-  color: $primary-color;
-  margin-bottom: 1.5rem;
-  font-size: $h2-font-size;
-
-  @media (max-width: 768px) {
-    font-size: $h2-font-size-md;
+  :host-context(.dark-mode) & {
+    background-color: $bg-header;
+    color: $text-inverse;
   }
-}
 
-// 📌 Navigation (onglets)
-.nav-pills {
-  .nav-link {
-    border-radius: 50px;
-    font-weight: 500;
-    padding: 0.6rem 1.2rem;
-    color: $primary-color;
-    background-color: transparent;
-    transition: $transition;
+  h2 {
+    font-size: $font-size-xl;
+    font-weight: 700;
+    margin-bottom: $spacing-unit * 2;
 
-    &:hover {
-      background: $gradient-light;
-      color: $text-light;
-    }
-
-    &.active {
-      background: $primary-color;
-      color: $text-light;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    :host-context(.dark-mode) & {
+      color: $text-inverse;
     }
   }
-}
 
-// 📊 Cartes statistiques
-.card {
-  border: none;
-  border-radius: $border-radius;
-  background: $light-card-bg;
-  box-shadow: $box-shadow;
-  transition: $transition;
+  // ================================
+  // Navigation
+  // ================================
+  .nav {
+    margin-bottom: $spacing-unit * 2;
 
-  &:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
-  }
-
-  .card-body {
-    padding: 1.5rem;
-    text-align: center;
-
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: 600;
+    .nav-link {
+      border-radius: $border-radius;
       color: $text-secondary;
-      margin-bottom: 0.75rem;
-    }
+      font-weight: 500;
+      margin-right: $spacing-half;
+      transition: $transition-base;
 
-    .card-text {
-      font-size: 1.4rem;
-      font-weight: bold;
-      color: $primary-color;
-    }
+      &:hover,
+      &.active {
+        background: $gradient-logo;
+        color: $text-inverse;
+      }
 
-    ul {
-      padding: 0;
-      margin: 0;
-      list-style: none;
+      :host-context(.dark-mode) & {
+        color: $text-inverse;
 
-      li {
-        font-size: 0.95rem;
-        margin: 0.3rem 0;
-        color: $text-secondary;
-
-        strong {
-          color: $primary-color;
+        &:hover,
+        &.active {
+          color: $text-inverse;
         }
       }
     }
   }
-}
 
-// 📱 Responsive
-@media (max-width: 768px) {
-  .nav-pills {
-    flex-wrap: wrap;
+  // ================================
+  // Stat cards
+  // ================================
+  .row {
+    margin-bottom: $spacing-unit * 2;
 
-    .nav-link {
-      margin-bottom: 0.5rem;
+    .card {
+      background-color: $bg-card;
+      border-radius: $border-radius;
+      box-shadow: $box-shadow-card;
+      transition: $transition-base;
+
+      :host-context(.dark-mode) & {
+        background-color: darken($bg-card, 8%);
+        color: $text-inverse;
+      }
+
+      .card-body {
+        h5.card-title {
+          font-size: $font-size-lg;
+          font-weight: 600;
+          margin-bottom: $spacing-half;
+        }
+
+        p.card-text, ul {
+          font-size: $font-size-base;
+          color: $text-secondary;
+
+          :host-context(.dark-mode) & {
+            color: lighten($text-secondary, 40%);
+          }
+        }
+
+        ul li {
+          margin-bottom: $spacing-half / 2;
+        }
+
+        strong {
+          color: $color-violet;
+
+          :host-context(.dark-mode) & {
+            color: lighten($color-violet, 15%);
+          }
+        }
+      }
     }
   }
 
-  .card-body {
-    .card-title {
-      font-size: 1rem;
+  // ================================
+  // Responsive
+  // ================================
+  @media (max-width: 768px) {
+    padding: $padding-section / 1.5;
+
+    h2 {
+      font-size: $font-size-lg;
+    }
+  }
+
+  @media (max-width: 576px) {
+    padding: $spacing-unit;
+
+    h2 {
+      font-size: $font-size-base;
     }
 
-    .card-text {
-      font-size: 1.2rem;
+    .nav {
+      flex-wrap: wrap;
+
+      .nav-link {
+        margin-bottom: $spacing-half;
+      }
+    }
+
+    .row .card {
+      margin-bottom: $spacing-unit;
     }
   }
 }
