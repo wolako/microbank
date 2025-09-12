@@ -77,8 +77,13 @@ export class LoanApplyComponent {
       phone: ['', [Validators.required, Validators.pattern(/^\d{8,15}$/)]],
       amount: [null, [Validators.required, Validators.min(this.product.minAmount)]],
       term: [null, [Validators.required, Validators.min(this.product.minTerm)]],
-      interestRate: [this.product.interestRate, Validators.required],
+      interestRate: [{ value: this.product.interestRate, disabled: true }, Validators.required],
       reason: ['']
+    });
+
+    // 🔹 On patch la valeur explicitement (sécurité)
+    this.form.patchValue({
+      interestRate: this.product.interestRate
     });
 
     this.setupFieldValidations();
