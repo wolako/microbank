@@ -1,31 +1,33 @@
 <div class="transactions-history container py-4">
   <h2 class="mb-4">📄 Historique des transactions</h2>
 
-  <!-- 🔍 Filtres -->
-  <div class="row mb-4">
-    <div class="col-md-6">
-      <label class="form-label">Filtrer par type :</label>
-      <select class="form-select" [(ngModel)]="filterType" (change)="applyFilter()">
-        <option value="">Tous</option>
-        <option value="deposit_manual">Dépôt manuel</option>
-        <option value="deposit_mobile">Dépôt Mobile</option>
-        <option value="deposit_card">Dépôt Carte</option>
-        <option value="deposit_wire">Dépôt virement</option>
-        <option value="withdrawal_mobile">Retrait Mobile Money</option>
-        <option value="withdrawal_card">Retrait Carte bancaire</option>
-        <option value="withdrawal_atm">Retrait Guichet automatique</option>
-        <option value="transfer">Transfert</option>
-        <option value="wire">Virement</option>
-        <option value="bill_payment">Paiement facture</option>
-        <option value="purchase">Achat en ligne</option> 
-      </select>
-    </div>
-    <div class="col-md-6">
-      <label class="form-label">Filtrer par canal :</label>
-      <select class="form-select" [(ngModel)]="filterChannel" (change)="applyFilter()">
-        <option value="">Tous</option>
-        <option *ngFor="let ch of availableChannels" [value]="ch">{{ ch }}</option>
-      </select>
+  <!-- 🔍 Filtres dans une carte -->
+  <div class="filter-card mb-4">
+    <div class="row g-3 align-items-end">
+      <div class="col-md-6">
+        <label class="form-label">Filtrer par type :</label>
+        <select class="form-select" [(ngModel)]="filterType" (change)="applyFilter()">
+          <option value="">Tous</option>
+          <option value="deposit_manual">Dépôt manuel</option>
+          <option value="deposit_mobile">Dépôt Mobile</option>
+          <option value="deposit_card">Dépôt Carte</option>
+          <option value="deposit_wire">Dépôt virement</option>
+          <option value="withdrawal_mobile">Retrait Mobile Money</option>
+          <option value="withdrawal_card">Retrait Carte bancaire</option>
+          <option value="withdrawal_atm">Retrait Guichet automatique</option>
+          <option value="transfer">Transfert</option>
+          <option value="wire">Virement</option>
+          <option value="bill_payment">Paiement facture</option>
+          <option value="purchase">Achat en ligne</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Filtrer par canal :</label>
+        <select class="form-select" [(ngModel)]="filterChannel" (change)="applyFilter()">
+          <option value="">Tous</option>
+          <option *ngFor="let ch of availableChannels" [value]="ch">{{ ch }}</option>
+        </select>
+      </div>
     </div>
   </div>
 

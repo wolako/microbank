@@ -97,11 +97,33 @@
       padding: 1rem;
       border-radius: 12px;
       margin-top: 0.5rem;
+
+      // Animation slide-down
+      max-height: 0;
+      overflow: hidden;
+      opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+
+      &.show {
+        max-height: 500px; // assez grand pour contenir les menus
+        opacity: 1;
+      }
     }
 
-    .nav-link {
-      display: block;
-      margin: 0.5rem 0;
+    // Centrage des liens
+    .navbar-nav {
+      justify-content: center;
+      text-align: center;
+      width: 100%;
+
+      .nav-item {
+        margin: 0.5rem 0;
+      }
+
+      .nav-link {
+        display: inline-block;
+        margin: 0.25rem 0;
+      }
     }
 
     .btn {

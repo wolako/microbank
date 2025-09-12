@@ -12,17 +12,21 @@
     text-align: center;
   }
 
-  /* 🔍 Filtres */
-  .row.mb-4 {
-    gap: 1rem;
+  /* 🔍 Filtres dans une carte */
+  .filter-card {
+    background: $bg-card;
+    border-radius: 0.75rem;
+    padding: 1.25rem 1.5rem;
+    box-shadow: $box-shadow-card;
+    animation: fadeSlideIn 0.6s ease-out;
 
     label {
       font-weight: 500;
       color: $text-secondary;
     }
 
-    select.form-select {
-      border-radius: 0.375rem;
+    .form-select {
+      border-radius: 0.5rem;
       transition: $transition-base;
 
       &:focus {
@@ -131,6 +135,18 @@
     }
   }
 
+  /* Animation */
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
     padding: $spacing-unit;
@@ -144,8 +160,12 @@
       font-size: $font-size-sm;
     }
 
-    .row.mb-4 {
-      flex-direction: column;
+    .filter-card {
+      padding: 1rem;
+
+      .row {
+        flex-direction: column;
+      }
 
       .col-md-6 {
         width: 100%;

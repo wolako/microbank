@@ -1,88 +1,91 @@
 @import '../../../assets/variables';
 
-.dashboard-container {
-  font-family: $font-base;
-  color: $text-primary;
-  padding: $padding-section;
+/* ================================
+   Modals globaux (accessible partout)
+================================ */
+.modal {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.5);
+  z-index: $z-modal;
 
-  // ================================
-  // Modal général
-  // ================================
-  .modal {
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: rgba(0,0,0,0.5);
-    z-index: $z-modal;
+  .modal-content {
+    background-color: $bg-card;
+    padding: $spacing-unit * 2;
+    border-radius: 1rem;
+    box-shadow: $box-shadow-card;
+    width: 100%;
+    max-width: 400px;
+    transition: $transition-base;
 
-    .modal-content {
-      background-color: $bg-card;
-      padding: $spacing-unit * 2;
-      border-radius: 1rem;
-      box-shadow: $box-shadow-card;
+    h4 {
+      font-size: $font-size-lg;
+      font-weight: 700;
+      color: $color-night-blue;
+      margin-bottom: $spacing-unit;
+    }
+
+    label {
+      font-weight: 500;
+      color: $text-secondary;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    input,
+    select {
       width: 100%;
-      max-width: 400px;
+      padding: $spacing-unit * 0.5;
+      margin-bottom: $spacing-unit;
+      border-radius: 0.5rem;
+      border: 1px solid $border-color;
+      font-size: $font-size-base;
       transition: $transition-base;
 
-      h4 {
-        font-size: $font-size-lg;
-        font-weight: 700;
-        color: $color-night-blue;
-        margin-bottom: $spacing-unit;
+      &:focus {
+        outline: none;
+        border-color: $color-violet;
+        box-shadow: 0 0 0 3px rgba($color-violet, 0.1);
       }
+    }
 
-      label {
-        font-weight: 500;
-        color: $text-secondary;
-        display: block;
-        margin-bottom: 0.25rem;
-      }
+    .btn {
+      padding: $spacing-unit * 0.5 $spacing-unit;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      transition: $transition-base;
 
-      input,
-      select {
-        width: 100%;
-        padding: $spacing-unit * 0.5;
-        margin-bottom: $spacing-unit;
-        border-radius: 0.5rem;
-        border: 1px solid $border-color;
-        font-size: $font-size-base;
-        transition: $transition-base;
+      &.btn-primary {
+        background-color: $color-violet;
+        color: $text-inverse;
 
-        &:focus {
-          outline: none;
-          border-color: $color-violet;
-          box-shadow: 0 0 0 3px rgba($color-violet, 0.1);
+        &:hover {
+          opacity: 0.9;
         }
       }
 
-      .btn {
-        padding: $spacing-unit * 0.5 $spacing-unit;
-        border-radius: 0.5rem;
-        font-weight: 600;
-        transition: $transition-base;
+      &.btn-secondary {
+        background-color: rgba(0,0,0,0.05);
+        color: $text-primary;
 
-        &.btn-primary {
-          background-color: $color-violet;
-          color: $text-inverse;
-
-          &:hover {
-            opacity: 0.9;
-          }
-        }
-
-        &.btn-secondary {
-          background-color: rgba(0,0,0,0.05);
-          color: $text-primary;
-
-          &:hover {
-            background-color: rgba(0,0,0,0.1);
-          }
+        &:hover {
+          background-color: rgba(0,0,0,0.1);
         }
       }
     }
   }
+}
+
+/* ================================
+   Dashboard principal
+================================ */
+.dashboard-container {
+  font-family: $font-base;
+  color: $text-primary;
+  padding: $padding-section;
 
   // ================================
   // Header utilisateur
@@ -132,11 +135,11 @@
   }
 
   // ================================
-  // Bank access (aligné à droite)
+  // Bank access
   // ================================
   .bank-access {
     display: flex;
-    justify-content: flex-end; // aligné à droite
+    justify-content: flex-end;
     gap: $spacing-unit;
 
     .btn {
@@ -333,7 +336,7 @@
       max-width: 400px;
       height: 300px !important;
       position: relative;
-      z-index: 1; // derrière les boutons
+      z-index: 1;
     }
   }
 
@@ -438,9 +441,9 @@
   }
 }
 
-// ================================
-// Responsive
-// ================================
+/* ================================
+   Responsive
+================================ */
 @media (max-width: 768px) {
   .dashboard-container {
     padding: $spacing-unit;
